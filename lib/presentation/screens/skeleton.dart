@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:read_write_app/presentation/screens/new_note_screen.dart';
 import 'package:read_write_app/presentation/screens/notes_screen.dart';
 import 'package:read_write_app/presentation/screens/reminders_screen.dart';
 import 'package:read_write_app/presentation/screens/providers/user_provider.dart';
@@ -27,21 +28,21 @@ class _SkeletonState extends State<Skeleton> {
       ),
 
         bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
+          onDestinationSelected: (int navigationIndex) {
             setState(() {
-              currentPageIndex = index;
-              setAppBarTitle(index);
+              currentPageIndex = navigationIndex;
+              setAppBarTitle(navigationIndex);
             });
           },
           selectedIndex: currentPageIndex,
-          indicatorColor: Colors.amber,
+          indicatorColor: Color.fromARGB(255, 117, 98, 48),
           destinations: const [
             NavigationDestination(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.description),
               label: 'Notes'
               ),
             NavigationDestination(
-              icon: Icon(Icons.devices_other),
+              icon: Icon(Icons.calendar_month),
               label: 'Reminders'
               ),
           ],
@@ -58,8 +59,8 @@ class _SkeletonState extends State<Skeleton> {
   
 // FUNCTIONS
 
-  void setAppBarTitle(int index) {
-    switch (index) {
+  void setAppBarTitle(int currentPageIndex) {
+    switch (currentPageIndex) {
       case 0:
         {
           context.read<UserProvider>().changeAppBarTitle(text: 'Notes');
@@ -87,7 +88,7 @@ class _NewNoteButton extends StatelessWidget {
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
       icon: const Icon(Icons.note_add),
       onPressed: () {
-        
+        Navigator.push(context, MaterialPageRoute(builder: (context) => NewNoteScreen()));
       },
     );
   }
