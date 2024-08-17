@@ -11,6 +11,13 @@ class NewNoteScreen extends StatelessWidget {
         centerTitle: true,
         title: Text('New Note'),
       ),
+      body: Column(
+        children: [
+          TextField(
+            
+          )
+        ],
+      )
     );
   }
 }
