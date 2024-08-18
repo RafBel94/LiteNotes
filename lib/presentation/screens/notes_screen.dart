@@ -101,8 +101,8 @@ class _NoteButton extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  noteProvider.removeNote(note);
                   Navigator.pop(context);
+                  noteProvider.removeNote(note);
                 },
               ),
             ],
