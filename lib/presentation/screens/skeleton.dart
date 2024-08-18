@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:read_write_app/presentation/screens/new_note_screen.dart';
+import 'package:read_write_app/presentation/screens/user_note_screen.dart';
 import 'package:read_write_app/presentation/screens/notes_screen.dart';
 import 'package:read_write_app/presentation/screens/reminders_screen.dart';
 import 'package:read_write_app/presentation/screens/providers/user_provider.dart';
@@ -35,7 +36,7 @@ class _SkeletonState extends State<Skeleton> {
             });
           },
           selectedIndex: currentPageIndex,
-          indicatorColor: Color.fromARGB(255, 117, 98, 48),
+          indicatorColor: const Color.fromARGB(255, 117, 98, 48),
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.description),
@@ -49,7 +50,7 @@ class _SkeletonState extends State<Skeleton> {
           ),
 
       body: <Widget>[
-        const NotesScreen(),
+        NotesScreen(),
         RemindersScreen()][currentPageIndex
         ],
       

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-class NewNoteScreen extends StatelessWidget {
-  const NewNoteScreen({super.key});
+class UserNoteScreen extends StatelessWidget {
+  const UserNoteScreen({super.key});
 
 
   @override
