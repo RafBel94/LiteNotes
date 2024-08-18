@@ -1,5 +1,4 @@
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
