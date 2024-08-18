@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:read_write_app/presentation/screens/new_note_screen.dart';
-import 'package:read_write_app/presentation/screens/user_note_screen.dart';
 import 'package:read_write_app/presentation/screens/notes_screen.dart';
+import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
 import 'package:read_write_app/presentation/screens/reminders_screen.dart';
 import 'package:read_write_app/presentation/screens/providers/user_provider.dart';
 
@@ -17,9 +17,12 @@ class _SkeletonState extends State<Skeleton> {
     int currentPageIndex = 0;
 
     final UserProvider userProvider = UserProvider();
+    
 
    @override
   Widget build(BuildContext context) {
+
+    final NoteProvider noteProvider = context.watch<NoteProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -50,11 +53,11 @@ class _SkeletonState extends State<Skeleton> {
           ),
 
       body: <Widget>[
-        NotesScreen(),
+        NotesScreen(noteProvider: noteProvider),
         RemindersScreen()][currentPageIndex
         ],
       
-        floatingActionButton: currentPageIndex == 0 ? _NewNoteButton() : _NewReminderButton(),
+        floatingActionButton: currentPageIndex == 0 ? _NewNoteButton(noteProvider: noteProvider) : _NewReminderButton(),
       );
   }
   
@@ -82,6 +85,10 @@ class _SkeletonState extends State<Skeleton> {
 
 class _NewNoteButton extends StatelessWidget {
 
+  final NoteProvider noteProvider;
+
+  const _NewNoteButton({required this.noteProvider});
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -89,7 +96,7 @@ class _NewNoteButton extends StatelessWidget {
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
       icon: const Icon(Icons.note_add),
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => NewNoteScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => NewNoteScreen(noteProvider: noteProvider)));
       },
     );
   }

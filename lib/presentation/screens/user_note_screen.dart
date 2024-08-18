@@ -1,8 +1,18 @@
 
 import 'package:flutter/material.dart';
+import 'package:read_write_app/domain/entities/note.dart';
+import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
 
 class UserNoteScreen extends StatelessWidget {
-  const UserNoteScreen({super.key});
+
+  final Note note;
+  final TextEditingController titleController;
+  final TextEditingController noteTextController;
+  final NoteProvider noteProvider;
+
+  UserNoteScreen({super.key, required this.noteProvider, required this.note})
+      : titleController = TextEditingController(text: note.title),
+        noteTextController = TextEditingController(text: note.text);
 
 
   @override
@@ -10,17 +20,30 @@ class UserNoteScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: Colors.black,),
+        leading: BackButton(
+          color: Colors.black,
+          onPressed: () {
+            String title = titleController.text;
+            String text = noteTextController.text;
+
+            note.title = title;
+            note.text = text;
+
+            noteProvider.updateNote(note);
+            
+            Navigator.pop(context);
+          }
+        ),
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         centerTitle: true,
-        title: const Text('New Note', style: TextStyle(color: Colors.black),),
+        title: Text(note.title, style: const TextStyle(color: Colors.black),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
 
-            _TitleTextField(),
+            _TitleTextField(titleController: titleController,),
 
 
             const Divider(
@@ -29,7 +52,7 @@ class UserNoteScreen extends StatelessWidget {
               endIndent: 5,
             ),
 
-            Expanded(child: _NoteTextField()),
+            Expanded(child: _NoteTextField(noteTextController: noteTextController,)),
           ],
         ),
       )
@@ -37,10 +60,13 @@ class UserNoteScreen extends StatelessWidget {
   }
 }
 
+
 class _TitleTextField extends StatelessWidget {
 
-  final TextEditingController titleController = TextEditingController();
+  final TextEditingController titleController;
   final FocusNode titleFocusNode = FocusNode();
+
+   _TitleTextField({required this.titleController});  // Aquí se inicializa el controlador con el título
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +79,7 @@ class _TitleTextField extends StatelessWidget {
         hintText: 'Title',
         hintStyle: const TextStyle(fontSize: 18)
       ),
+      
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
@@ -62,8 +89,10 @@ class _TitleTextField extends StatelessWidget {
 
 class _NoteTextField extends StatelessWidget {
 
-  final TextEditingController noteTextController = TextEditingController();
+  final TextEditingController noteTextController;
   final FocusNode noteTextFocusNode = FocusNode();
+
+  _NoteTextField({required this.noteTextController});
 
   @override
   Widget build(BuildContext context) {

@@ -10,12 +10,12 @@ class Note {
 
   factory Note.create({
     required String title,
-    required String content,
+    required String text,
   }) {
     return Note(
       id: const Uuid().v4(), // Genera un ID único usando UUID
       title: title,
-      text: content,
+      text: text,
     );
   }
 

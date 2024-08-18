@@ -1,16 +1,36 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:read_write_app/domain/entities/note.dart';
+import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
 
 class NewNoteScreen extends StatelessWidget {
-  const NewNoteScreen({super.key});
 
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController noteTextController = TextEditingController();
+  final NoteProvider noteProvider;
+
+  NewNoteScreen({super.key, required this.noteProvider});
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: Colors.black,),
+        leading: BackButton(
+          color: Colors.black,
+          onPressed: () {
+            String title = titleController.text;
+            String text = noteTextController.text;
+
+            Note note = Note.create(title: title, text: text);
+
+            noteProvider.addNote(note);
+            
+            Navigator.pop(context);
+          }
+        ),
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         centerTitle: true,
         title: const Text('New Note', style: TextStyle(color: Colors.black),),
@@ -20,7 +40,7 @@ class NewNoteScreen extends StatelessWidget {
         child: Column(
           children: [
 
-            _TitleTextField(),
+            _TitleTextField(titleController: titleController),
 
 
             const Divider(
@@ -29,7 +49,7 @@ class NewNoteScreen extends StatelessWidget {
               endIndent: 5,
             ),
 
-            Expanded(child: _NoteTextField()),
+            Expanded(child: _NoteTextField(noteTextController: noteTextController)),
           ],
         ),
       )
@@ -37,10 +57,13 @@ class NewNoteScreen extends StatelessWidget {
   }
 }
 
+
 class _TitleTextField extends StatelessWidget {
 
-  final TextEditingController titleController = TextEditingController();
   final FocusNode titleFocusNode = FocusNode();
+  final TextEditingController titleController;
+
+  _TitleTextField({required this.titleController});
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +85,10 @@ class _TitleTextField extends StatelessWidget {
 
 class _NoteTextField extends StatelessWidget {
 
-  final TextEditingController noteTextController = TextEditingController();
   final FocusNode noteTextFocusNode = FocusNode();
+  final TextEditingController noteTextController;
+
+  _NoteTextField({required this.noteTextController});
 
   @override
   Widget build(BuildContext context) {
