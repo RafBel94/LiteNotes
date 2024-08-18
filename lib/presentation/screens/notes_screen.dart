@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
 import 'package:read_write_app/presentation/screens/user_note_screen.dart';
@@ -8,23 +7,28 @@ class NotesScreen extends StatelessWidget {
 
   final NoteProvider noteProvider;
   
-  NotesScreen({
+  const NotesScreen({
     super.key, required this.noteProvider,
   });
 
   @override
   Widget build(BuildContext context) {
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-      child: GridView.builder(
-        gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
-        itemCount: noteProvider.noteList.length,
-        itemBuilder: (context, index) {
-          final Note note = noteProvider.noteList[index];
-
-          return _NoteButton(title: note.title, note: note, noteProvider: noteProvider,);
-        },
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color.fromARGB(255, 24, 24, 24)
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        child: GridView.builder(
+          gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+          itemCount: noteProvider.noteList.length,
+          itemBuilder: (context, index) {
+            final Note note = noteProvider.noteList[index];
+      
+            return _NoteButton(note: note, noteProvider: noteProvider,);
+          },
+        ),
       ),
     );
   }
@@ -32,11 +36,10 @@ class NotesScreen extends StatelessWidget {
 
 class _NoteButton extends StatelessWidget {
 
-  final String title;
   final Note note;
   final NoteProvider noteProvider;
 
-  const _NoteButton({required this.title, required this.note, required this.noteProvider});
+  const _NoteButton({required this.note, required this.noteProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,24 @@ class _NoteButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => UserNoteScreen(note: note, noteProvider: noteProvider,)));
       },
-      child: Text(title, style: const TextStyle(fontSize: 30, color: Colors.white),)
+      child: Column(
+        children: [
+          Text(
+            note.title,
+            style: const TextStyle(fontSize: 30, color: Color.fromARGB(255, 242, 221, 159)),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Expanded(
+            child: Text(
+              note.text,
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
+        ],
+      )
       );
   }
 }
