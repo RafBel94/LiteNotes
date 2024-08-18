@@ -55,18 +55,21 @@ class _NoteButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => UserNoteScreen(note: note, noteProvider: noteProvider,)));
       },
+      onLongPress: () {
+        showLongPressMenu(context);
+      },
       child: Column(
         children: [
           Text(
             note.title,
-            style: const TextStyle(fontSize: 30, color: Color.fromARGB(255, 242, 221, 159)),
+            style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 242, 221, 159)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Expanded(
             child: Text(
               note.text,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
+              style: const TextStyle(fontSize: 15, color: Colors.white),
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
             ),
@@ -74,5 +77,38 @@ class _NoteButton extends StatelessWidget {
         ],
       )
       );
+  }
+  
+  showLongPressMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10)
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserNoteScreen(note: note, noteProvider: noteProvider,)));
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  noteProvider.removeNote(note);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

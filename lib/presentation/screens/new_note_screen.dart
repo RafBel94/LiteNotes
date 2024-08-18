@@ -20,13 +20,9 @@ class NewNoteScreen extends StatelessWidget {
         leading: BackButton(
           color: Colors.black,
           onPressed: () {
-            String title = titleController.text;
-            String text = noteTextController.text;
 
-            Note note = Note.create(title: title, text: text);
+            addNote(titleController.text, noteTextController.text, noteProvider);
 
-            noteProvider.addNote(note);
-            
             Navigator.pop(context);
           }
         ),
@@ -51,8 +47,35 @@ class NewNoteScreen extends StatelessWidget {
             Expanded(child: _NoteTextField(noteTextController: noteTextController)),
           ],
         ),
-      )
+      ),
+
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.delete),
+        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
+        iconSize: 50,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
     );
+  }
+  
+ void addNote(String title, String text, NoteProvider noteProvider) {
+    String trimmedTitle = title.trim();
+    String trimmedText = text.trim();
+
+    if (trimmedText.isNotEmpty) {
+      if (trimmedTitle.isEmpty) {
+        trimmedTitle = 'No Title';
+      }
+
+      Note note = Note.create(title: trimmedTitle, text: text);
+      noteProvider.addNote(note);
+      
+    }else if (trimmedText.isEmpty && trimmedTitle.isNotEmpty) {
+      Note note = Note.create(title: trimmedTitle, text: text);
+      noteProvider.addNote(note);
+    }
   }
 }
 

@@ -23,13 +23,8 @@ class UserNoteScreen extends StatelessWidget {
         leading: BackButton(
           color: Colors.black,
           onPressed: () {
-            String title = titleController.text;
-            String text = noteTextController.text;
 
-            note.title = title;
-            note.text = text;
-
-            noteProvider.updateNote(note);
+            updateNote(titleController.text, noteTextController.text, noteProvider);
             
             Navigator.pop(context);
           }
@@ -55,8 +50,34 @@ class UserNoteScreen extends StatelessWidget {
             Expanded(child: _NoteTextField(noteTextController: noteTextController,)),
           ],
         ),
-      )
+      ),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.delete),
+        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
+        iconSize: 50,
+        onPressed: () {
+          noteProvider.removeNote(note);
+          Navigator.pop(context);
+        },
+      ),
     );
+  }
+  
+  void updateNote(String title, String text, NoteProvider noteProvider) {
+    String trimmedText = text.trim();
+    String trimmedTitle = title.trim();
+
+    if (trimmedText.isNotEmpty || trimmedTitle.isNotEmpty) {
+      if (trimmedTitle.isEmpty) {
+        trimmedTitle = 'No title';
+      }
+
+      note.title = trimmedTitle;
+      note.text = text;
+      noteProvider.updateNote(note);
+    } else {
+      noteProvider.removeNote(note);
+    }
   }
 }
 

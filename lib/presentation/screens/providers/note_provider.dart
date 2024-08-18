@@ -10,6 +10,11 @@ class NoteProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeNote(Note note) {
+    noteList.remove(note);
+    notifyListeners();
+  }
+
   void updateNote(Note note) {
     for(Note n in noteList){
       if(n.id == note.id){
