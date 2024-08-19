@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
 
-class UserNoteScreen extends StatelessWidget {
-
+class UserNoteScreen extends StatefulWidget {
   final Note note;
   final TextEditingController titleController;
   final TextEditingController noteTextController;
@@ -14,31 +13,44 @@ class UserNoteScreen extends StatelessWidget {
       : titleController = TextEditingController(text: note.title),
         noteTextController = TextEditingController(text: note.text);
 
+  @override
+  State<StatefulWidget> createState() => _UserNoteScreenState();
+}
+
+class _UserNoteScreenState extends State<UserNoteScreen> {
+
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return PopScope(
+      onPopInvoked: (bool didPop) {
+        if(didPop){
+          updateNote(widget.titleController.text, widget.noteTextController.text, widget.noteProvider);
+
+        }
+      },
+      child: Scaffold(
       appBar: AppBar(
         leading: BackButton(
           color: Colors.black,
           onPressed: () {
 
-            updateNote(titleController.text, noteTextController.text, noteProvider);
+            updateNote(widget.titleController.text, widget.noteTextController.text, widget.noteProvider);
             
             Navigator.pop(context);
           }
         ),
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         centerTitle: true,
-        title: Text(note.title, style: const TextStyle(color: Colors.black),),
+        title: Text(widget.note.title, style: const TextStyle(color: Colors.black),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
 
-            _TitleTextField(titleController: titleController,),
+            _TitleTextField(titleController: widget.titleController,),
 
 
             const Divider(
@@ -47,7 +59,7 @@ class UserNoteScreen extends StatelessWidget {
               endIndent: 5,
             ),
 
-            Expanded(child: _NoteTextField(noteTextController: noteTextController,)),
+            Expanded(child: _NoteTextField(noteTextController: widget.noteTextController,)),
           ],
         ),
       ),
@@ -56,11 +68,11 @@ class UserNoteScreen extends StatelessWidget {
         style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
         iconSize: 50,
         onPressed: () {
-          noteProvider.removeNote(note);
+          widget.noteProvider.removeNote(widget.note);
           Navigator.pop(context);
         },
       ),
-    );
+    ));
   }
   
   void updateNote(String title, String text, NoteProvider noteProvider) {
@@ -72,11 +84,11 @@ class UserNoteScreen extends StatelessWidget {
         trimmedTitle = 'No title';
       }
 
-      note.title = trimmedTitle;
-      note.text = text;
-      noteProvider.updateNote(note);
+      widget.note.title = trimmedTitle;
+      widget.note.text = text;
+      noteProvider.updateNote(widget.note);
     } else {
-      noteProvider.removeNote(note);
+      noteProvider.removeNote(widget.note);
     }
   }
 }

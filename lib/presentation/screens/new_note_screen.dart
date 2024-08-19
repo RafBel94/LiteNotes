@@ -4,24 +4,37 @@ import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
 
-class NewNoteScreen extends StatelessWidget {
+class NewNoteScreen extends StatefulWidget {
+  final NoteProvider noteProvider;
+
+  const NewNoteScreen({super.key, required this.noteProvider});
+
+  @override
+  State<StatefulWidget> createState() => _NewNoteScreenState();
+}
+
+class _NewNoteScreenState extends State<NewNoteScreen> {
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteTextController = TextEditingController();
-  final NoteProvider noteProvider;
 
-  NewNoteScreen({super.key, required this.noteProvider});
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return PopScope(
+      onPopInvoked: (bool didPop) {
+        if(didPop){
+          addNote(titleController.text, noteTextController.text, widget.noteProvider);
+        }
+      },
+      child: Scaffold(
       appBar: AppBar(
         leading: BackButton(
           color: Colors.black,
           onPressed: () {
 
-            addNote(titleController.text, noteTextController.text, noteProvider);
+            addNote(titleController.text, noteTextController.text, widget.noteProvider);
 
             Navigator.pop(context);
           }
@@ -57,7 +70,7 @@ class NewNoteScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-    );
+    ));
   }
   
  void addNote(String title, String text, NoteProvider noteProvider) {
