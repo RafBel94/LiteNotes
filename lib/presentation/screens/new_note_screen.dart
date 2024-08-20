@@ -23,21 +23,15 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
   Widget build(BuildContext context) {
 
     return PopScope(
-      onPopInvoked: (bool didPop) {
+      onPopInvokedWithResult: (bool didPop, context) {
         if(didPop){
           addNote(titleController.text, noteTextController.text, widget.noteProvider);
         }
       },
       child: Scaffold(
       appBar: AppBar(
-        leading: BackButton(
+        leading: const BackButton(
           color: Colors.black,
-          onPressed: () {
-
-            addNote(titleController.text, noteTextController.text, widget.noteProvider);
-
-            Navigator.pop(context);
-          }
         ),
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         centerTitle: true,
@@ -63,7 +57,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       ),
 
       floatingActionButton: IconButton(
-        icon: Icon(Icons.delete),
+        icon: const Icon(Icons.delete),
         style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
         iconSize: 50,
         onPressed: () {

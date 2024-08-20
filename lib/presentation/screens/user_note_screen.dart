@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
@@ -18,63 +17,69 @@ class UserNoteScreen extends StatefulWidget {
 }
 
 class _UserNoteScreenState extends State<UserNoteScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return PopScope(
-      onPopInvoked: (bool didPop) {
-        if(didPop){
-          updateNote(widget.titleController.text, widget.noteTextController.text, widget.noteProvider);
-
-        }
-      },
-      child: Scaffold(
-      appBar: AppBar(
-        leading: BackButton(
-          color: Colors.black,
-          onPressed: () {
-
-            updateNote(widget.titleController.text, widget.noteTextController.text, widget.noteProvider);
-            
-            Navigator.pop(context);
+        onPopInvokedWithResult: (bool didPop, context) {
+          if (didPop) {
+            updateNote(widget.titleController.text,
+                widget.noteTextController.text, widget.noteProvider);
           }
-        ),
-        backgroundColor: const Color.fromARGB(255, 254, 204, 54),
-        centerTitle: true,
-        title: Text(widget.note.title, style: const TextStyle(color: Colors.black),),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-
-            _TitleTextField(titleController: widget.titleController,),
-
-
-            const Divider(
-              color: Color.fromARGB(203, 249, 212, 102),
-              indent: 5,
-              endIndent: 5,
-            ),
-
-            Expanded(child: _NoteTextField(noteTextController: widget.noteTextController,)),
-          ],
-        ),
-      ),
-      floatingActionButton: IconButton(
-        icon: Icon(Icons.delete),
-        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
-        iconSize: 50,
-        onPressed: () {
-          widget.noteProvider.removeNote(widget.note);
-          Navigator.pop(context);
         },
-      ),
-    ));
+        child: Scaffold(
+          appBar: AppBar(
+            leading: const BackButton(
+              color: Colors.black,
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.info),
+                color: Colors.black,
+                onPressed: () {
+                  showInfoMenu(context);
+                },
+              )
+            ],
+            backgroundColor: const Color.fromARGB(255, 254, 204, 54),
+            centerTitle: true,
+            title: Text(
+              widget.note.title,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                _TitleTextField(
+                  titleController: widget.titleController,
+                ),
+                const Divider(
+                  color: Color.fromARGB(203, 249, 212, 102),
+                  indent: 5,
+                  endIndent: 5,
+                ),
+                Expanded(
+                    child: _NoteTextField(
+                  noteTextController: widget.noteTextController,
+                )),
+              ],
+            ),
+          ),
+          floatingActionButton: IconButton(
+            icon: const Icon(Icons.delete),
+            style: const ButtonStyle(
+                backgroundColor:
+                    WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
+            iconSize: 50,
+            onPressed: () {
+              widget.noteProvider.removeNote(widget.note);
+              Navigator.pop(context);
+            },
+          ),
+        ));
   }
-  
+
   void updateNote(String title, String text, NoteProvider noteProvider) {
     String trimmedText = text.trim();
     String trimmedTitle = title.trim();
@@ -91,15 +96,29 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
       noteProvider.removeNote(widget.note);
     }
   }
+  
+  void showInfoMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10)
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          child: Text('Creation date: ${widget.note.creationDate.toString().split('.').first}')
+        );
+      },
+    );
+  }
 }
 
-
 class _TitleTextField extends StatelessWidget {
-
   final TextEditingController titleController;
   final FocusNode titleFocusNode = FocusNode();
 
-   _TitleTextField({required this.titleController});  // Aquí se inicializa el controlador con el título
+  _TitleTextField(
+      {required this.titleController}); // Aquí se inicializa el controlador con el título
 
   @override
   Widget build(BuildContext context) {
@@ -108,11 +127,9 @@ class _TitleTextField extends StatelessWidget {
       focusNode: titleFocusNode,
       style: const TextStyle(fontSize: 22),
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        hintText: 'Title',
-        hintStyle: const TextStyle(fontSize: 18)
-      ),
-      
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          hintText: 'Title',
+          hintStyle: const TextStyle(fontSize: 18)),
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
@@ -121,7 +138,6 @@ class _TitleTextField extends StatelessWidget {
 }
 
 class _NoteTextField extends StatelessWidget {
-
   final TextEditingController noteTextController;
   final FocusNode noteTextFocusNode = FocusNode();
 
@@ -148,4 +164,3 @@ class _NoteTextField extends StatelessWidget {
     );
   }
 }
-
