@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
+import 'package:read_write_app/presentation/widgets/shared/delete_confirmation_dialog.dart';
 
 class UserNoteScreen extends StatefulWidget {
   final Note note;
@@ -72,9 +73,13 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 backgroundColor:
                     WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
             iconSize: 50,
-            onPressed: () {
-              widget.noteProvider.removeNote(widget.note);
-              Navigator.pop(context);
+            onPressed: () async {
+              bool? confirmation = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
+
+              if (confirmation!) {
+                Navigator.pop(context);
+                widget.noteProvider.removeNote(widget.note);
+              }
             },
           ),
         ));
@@ -96,18 +101,44 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
       noteProvider.removeNote(widget.note);
     }
   }
-  
+
   void showInfoMenu(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       builder: (context) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          child: Text('Creation date: ${widget.note.creationDate.toString().split('.').first}')
-        );
+        return SizedBox(
+          width: size.width * 0.9,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 10,),
+                RichText(
+                  text: 
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Creation date:   ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16
+                        ),
+                      ),
+                      TextSpan(
+                        text: widget.note.creationDate.toString().split('.').first,
+                        style: const TextStyle(
+                          fontSize: 16
+                        )
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10,)
+              ],
+            )
+            );
       },
     );
   }

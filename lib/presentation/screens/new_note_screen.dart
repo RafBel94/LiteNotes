@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
+import 'package:read_write_app/presentation/widgets/shared/delete_confirmation_dialog.dart';
 
 class NewNoteScreen extends StatefulWidget {
   final NoteProvider noteProvider;
@@ -54,15 +55,6 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             Expanded(child: _NoteTextField(noteTextController: noteTextController)),
           ],
         ),
-      ),
-
-      floatingActionButton: IconButton(
-        icon: const Icon(Icons.delete),
-        style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
-        iconSize: 50,
-        onPressed: () {
-          Navigator.pop(context);
-        },
       ),
     ));
   }
