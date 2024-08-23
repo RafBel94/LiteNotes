@@ -18,13 +18,37 @@ class UserNoteScreen extends StatefulWidget {
 }
 
 class _UserNoteScreenState extends State<UserNoteScreen> {
+  late String oldNoteText;
+  late String oldNoteTitle;
+
+  @override
+  // Initialize values with the state
+  void initState() {
+    super.initState();
+    // Guarda los valores iniciales
+    oldNoteText = widget.noteTextController.text.trim();
+    oldNoteTitle = widget.titleController.text.trim();
+  }
+
+  @override
+  // Things to do when app closes
+  void dispose() {
+    compareAndUpdateNote(
+      widget.titleController.text,
+      widget.noteTextController.text,
+      oldNoteTitle,
+      oldNoteText,
+      widget.noteProvider,
+    );
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
         onPopInvokedWithResult: (bool didPop, context) {
           if (didPop) {
-            updateNote(widget.titleController.text,
-                widget.noteTextController.text, widget.noteProvider);
+            compareAndUpdateNote(widget.titleController.text, widget.noteTextController.text, oldNoteTitle, oldNoteText, widget.noteProvider);
           }
         },
         child: Scaffold(
@@ -55,10 +79,8 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 _TitleTextField(
                   titleController: widget.titleController,
                 ),
-                const Divider(
-                  color: Color.fromARGB(203, 249, 212, 102),
-                  indent: 5,
-                  endIndent: 5,
+                const SizedBox(
+                  height: 10,
                 ),
                 Expanded(
                     child: _NoteTextField(
@@ -69,23 +91,28 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
           ),
           floatingActionButton: IconButton(
             icon: const Icon(Icons.delete),
-            style: const ButtonStyle(
-                backgroundColor:
-                    WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
+            style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
             iconSize: 50,
-            onPressed: () async {
-              bool? confirmation = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
-
-              if (confirmation!) {
-                Navigator.pop(context);
-                widget.noteProvider.removeNote(widget.note);
-              }
+            onPressed: () {
+              getDeleteConfirmation().then((confirmation) {
+                if (confirmation == true) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  widget.noteProvider.removeNote(widget.note);
+                }
+              });
             },
           ),
         ));
   }
 
-  void updateNote(String title, String text, NoteProvider noteProvider) {
+  Future<bool?> getDeleteConfirmation() async {
+    bool? result = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
+
+    return result ?? false;
+  }
+
+  void compareAndUpdateNote(String title, String text, String oldTitle, String oldText, NoteProvider noteProvider) {
     String trimmedText = text.trim();
     String trimmedTitle = title.trim();
 
@@ -96,6 +123,11 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
 
       widget.note.title = trimmedTitle;
       widget.note.text = text;
+
+      if (oldTitle != trimmedTitle || oldText != trimmedText) {
+        widget.note.modifiedDate = DateTime.now();
+      }
+
       noteProvider.updateNote(widget.note);
     } else {
       noteProvider.removeNote(widget.note);
@@ -110,35 +142,40 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       builder: (context) {
         return SizedBox(
-          width: size.width * 0.9,
+            width: size.width * 0.9,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 RichText(
-                  text: 
-                  TextSpan(
+                  text: TextSpan(
                     children: [
                       const TextSpan(
                         text: 'Creation date:   ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      TextSpan(
-                        text: widget.note.creationDate.toString().split('.').first,
-                        style: const TextStyle(
-                          fontSize: 16
-                        )
-                      ),
+                      TextSpan(text: widget.note.creationDate.toString().split('.').first, style: const TextStyle(fontSize: 16)),
                     ],
                   ),
                 ),
-                const SizedBox(height: 10,)
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Modified date:   ',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      TextSpan(text: widget.note.modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                )
               ],
-            )
-            );
+            ));
       },
     );
   }
@@ -148,8 +185,7 @@ class _TitleTextField extends StatelessWidget {
   final TextEditingController titleController;
   final FocusNode titleFocusNode = FocusNode();
 
-  _TitleTextField(
-      {required this.titleController}); // Aquí se inicializa el controlador con el título
+  _TitleTextField({required this.titleController}); // Aquí se inicializa el controlador con el título
 
   @override
   Widget build(BuildContext context) {
@@ -157,10 +193,7 @@ class _TitleTextField extends StatelessWidget {
       controller: titleController,
       focusNode: titleFocusNode,
       style: const TextStyle(fontSize: 22),
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          hintText: 'Title',
-          hintStyle: const TextStyle(fontSize: 18)),
+      decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)), hintText: 'Title', hintStyle: const TextStyle(fontSize: 18)),
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },

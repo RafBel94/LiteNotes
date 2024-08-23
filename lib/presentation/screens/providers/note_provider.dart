@@ -36,8 +36,13 @@ class NoteProvider extends ChangeNotifier {
       if(n.id == note.id){
         n = note;
         saveNoteList(noteList);
-        notifyListeners();
-        break;
+
+        // Wait to all operations to finish before notify listeners
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          notifyListeners();
+        });
+
+      break;
       }
     }
   }

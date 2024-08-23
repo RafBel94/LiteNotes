@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:read_write_app/domain/entities/note.dart';
 import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
-import 'package:read_write_app/presentation/widgets/shared/delete_confirmation_dialog.dart';
 
 class NewNoteScreen extends StatefulWidget {
   final NoteProvider noteProvider;
@@ -42,15 +41,11 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-
             _TitleTextField(titleController: titleController),
 
-
-            const Divider(
-              color: Color.fromARGB(203, 249, 212, 102),
-              indent: 5,
-              endIndent: 5,
-            ),
+            const SizedBox(
+                  height: 10,
+                ),
 
             Expanded(child: _NoteTextField(noteTextController: noteTextController)),
           ],

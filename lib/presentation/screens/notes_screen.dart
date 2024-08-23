@@ -19,8 +19,7 @@ class NotesScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
           itemCount: noteProvider.noteList.length,
           itemBuilder: (context, index) {
             final Note note = noteProvider.noteList[index];
@@ -46,10 +45,7 @@ class _NoteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         style: ButtonStyle(
-            shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
-            backgroundColor: const WidgetStatePropertyAll(
-                Color.fromARGB(25, 158, 158, 158))),
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))), backgroundColor: const WidgetStatePropertyAll(Color.fromARGB(25, 158, 158, 158))),
         onPressed: () {
           Navigator.push(
               context,
@@ -66,8 +62,7 @@ class _NoteButton extends StatelessWidget {
           children: [
             Text(
               note.title,
-              style: const TextStyle(
-                  fontSize: 20, color: Color.fromARGB(255, 242, 221, 159)),
+              style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 242, 221, 159)),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -109,12 +104,13 @@ class _NoteButton extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
-                  bool? confirmation = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
-
-                  if (confirmation!) {
-                    Navigator.pop(context);
-                    noteProvider.removeNote(note);
-                  }
+                  getDeleteConfirmation(context).then((confirmation) {
+                    if (confirmation == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      noteProvider.removeNote(note);
+                    }
+                  });
                 },
               ),
             ],
@@ -122,5 +118,11 @@ class _NoteButton extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<bool?> getDeleteConfirmation(BuildContext context) async {
+    bool? result = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
+
+    return result ?? false;
   }
 }

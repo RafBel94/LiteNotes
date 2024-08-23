@@ -93,7 +93,7 @@ class _NewNoteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       iconSize: 50,
-      style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
+      style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
       icon: const Icon(Icons.note_add),
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => NewNoteScreen(noteProvider: noteProvider)));
