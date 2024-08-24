@@ -15,9 +15,6 @@ class Skeleton extends StatefulWidget {
 class _SkeletonState extends State<Skeleton> {
     int currentPageIndex = 0;
 
-    String appTitle = 'Notes';
-    
-
    @override
   Widget build(BuildContext context) {
 
@@ -27,14 +24,13 @@ class _SkeletonState extends State<Skeleton> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         centerTitle: true,
-        title: Text(setAppBarTitle(currentPageIndex), style: const TextStyle(color: Colors.black),),
+        title: Text(currentPageIndex == 0 ? 'Notes' : 'Reminders', style: const TextStyle(color: Colors.black),),
       ),
 
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int navigationIndex) {
             setState(() {
               currentPageIndex = navigationIndex;
-              setAppBarTitle(navigationIndex);
             });
           },
           selectedIndex: currentPageIndex,
@@ -58,25 +54,6 @@ class _SkeletonState extends State<Skeleton> {
       
         floatingActionButton: currentPageIndex == 0 ? _NewNoteButton(noteProvider: noteProvider) : _NewReminderButton(),
       );
-  }
-  
-// FUNCTIONS
-
-  String setAppBarTitle(int currentPageIndex) {
-    switch (currentPageIndex) {
-      case 0:
-        {
-          return 'Notes';
-        }
-      case 1:
-        {
-          return 'Reminders';
-        }
-      default:
-        {
-          return 'Unknown';
-        }
-    }
   }
 }
 
