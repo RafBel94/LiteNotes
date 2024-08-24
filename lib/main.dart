@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:read_write_app/config/infracstructure/app_theme.dart';
-import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
-import 'package:read_write_app/presentation/screens/providers/user_provider.dart';
-import 'package:read_write_app/presentation/screens/skeleton.dart';
+import 'package:simple_notes/config/infracstructure/app_theme.dart';
+import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/user_provider.dart';
+import 'package:simple_notes/presentation/screens/skeleton.dart';
 
 void main() => runApp(const MyApp());
 

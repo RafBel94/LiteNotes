@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:read_write_app/presentation/screens/new_note_screen.dart';
-import 'package:read_write_app/presentation/screens/notes_screen.dart';
-import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
-import 'package:read_write_app/presentation/screens/reminders_screen.dart';
-import 'package:read_write_app/presentation/screens/providers/user_provider.dart';
+import 'package:simple_notes/presentation/screens/new_note_screen.dart';
+import 'package:simple_notes/presentation/screens/notes_screen.dart';
+import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/reminders_screen.dart';
+import 'package:simple_notes/presentation/screens/providers/user_provider.dart';
 
 class Skeleton extends StatefulWidget {
   const Skeleton({super.key});

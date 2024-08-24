@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:read_write_app/domain/entities/note.dart';
-import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
-import 'package:read_write_app/presentation/widgets/shared/delete_confirmation_dialog.dart';
+import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/widgets/shared/delete_confirmation_dialog.dart';
 
 class UserNoteScreen extends StatefulWidget {
   final Note note;

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:read_write_app/domain/entities/note.dart';
+import 'package:simple_notes/domain/entities/note.dart';
 
 class NoteProvider extends ChangeNotifier {
   List<Note> noteList = [];

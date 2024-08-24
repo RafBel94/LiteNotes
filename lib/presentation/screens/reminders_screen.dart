@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_write_app/presentation/screens/providers/user_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/user_provider.dart';
 
 class RemindersScreen extends StatelessWidget {
 

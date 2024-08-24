@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:read_write_app/domain/entities/note.dart';
-import 'package:read_write_app/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 
 class NewNoteScreen extends StatefulWidget {
   final NoteProvider noteProvider;
