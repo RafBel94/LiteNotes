@@ -89,6 +89,7 @@ class _TitleTextField extends StatelessWidget {
       style: const TextStyle(fontSize: 22),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        
         hintText: 'Title',
         hintStyle: const TextStyle(fontSize: 18)
       ),

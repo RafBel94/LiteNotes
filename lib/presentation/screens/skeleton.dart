@@ -4,7 +4,6 @@ import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/reminders_screen.dart';
-import 'package:simple_notes/presentation/screens/providers/user_provider.dart';
 
 class Skeleton extends StatefulWidget {
   const Skeleton({super.key});
@@ -16,7 +15,7 @@ class Skeleton extends StatefulWidget {
 class _SkeletonState extends State<Skeleton> {
     int currentPageIndex = 0;
 
-    final UserProvider userProvider = UserProvider();
+    String appTitle = 'Notes';
     
 
    @override
@@ -28,7 +27,7 @@ class _SkeletonState extends State<Skeleton> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         centerTitle: true,
-        title: Text(context.watch<UserProvider>().appBarTitle, style: const TextStyle(color: Colors.black),),
+        title: Text(setAppBarTitle(currentPageIndex), style: const TextStyle(color: Colors.black),),
       ),
 
         bottomNavigationBar: NavigationBar(
@@ -63,19 +62,19 @@ class _SkeletonState extends State<Skeleton> {
   
 // FUNCTIONS
 
-  void setAppBarTitle(int currentPageIndex) {
+  String setAppBarTitle(int currentPageIndex) {
     switch (currentPageIndex) {
       case 0:
         {
-          context.read<UserProvider>().changeAppBarTitle(text: 'Notes');
+          return 'Notes';
         }
       case 1:
         {
-          context.read<UserProvider>().changeAppBarTitle(text: 'Reminders');
+          return 'Reminders';
         }
       default:
         {
-          context.read<UserProvider>().changeAppBarTitle(text: 'App Default Title');
+          return 'Unknown';
         }
     }
   }

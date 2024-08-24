@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:simple_notes/presentation/screens/providers/user_provider.dart';
 
 class RemindersScreen extends StatelessWidget {
 
   RemindersScreen({super.key});
 
-  final UserProvider userProvider = UserProvider();
 
   @override
   Widget build(BuildContext context) {
