@@ -1,24 +1,28 @@
+import 'package:simple_notes/domain/entities/group.dart';
 import 'package:uuid/uuid.dart';
 
 class Note {
   String id;
   String title;
   String text;
+  Group? group;
   DateTime? creationDate;
   DateTime? modifiedDate;
 
-  Note({required this.id, required this.title, required this.text, this.creationDate, this.modifiedDate});
+  Note({required this.id, required this.title, required this.text, this.creationDate, this.modifiedDate, this.group});
 
   factory Note.create({
     required String title,
     required String text,
+    Group? group,
     DateTime? creationDate,
     DateTime? modifiedDate
   }) {
     return Note(
-      id: const Uuid().v4(), // Genera un ID único usando UUID
+      id: const Uuid().v4(),
       title: title,
       text: text,
+      group: group,
       creationDate: creationDate ?? DateTime.now(),
       modifiedDate: modifiedDate ?? DateTime.now()
     );
@@ -29,6 +33,7 @@ class Note {
       id: json['id'],
       title: json['title'],
       text: json['text'],
+      group: json['group'],
       creationDate: DateTime.parse(json['creationDate']),
       modifiedDate: DateTime.parse(json['modifiedDate'])
     );
@@ -39,6 +44,7 @@ class Note {
       'id': id,
       'title': title,
       'text': text,
+      'group': group,
       'creationDate': creationDate?.toIso8601String(),
       'modifiedDate': modifiedDate?.toIso8601String()
     };
