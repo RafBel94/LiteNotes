@@ -15,21 +15,21 @@ class Skeleton extends StatefulWidget {
 }
 
 class _SkeletonState extends State<Skeleton> {
-    int currentPageIndex = 0;
+  int currentPageIndex = 0;
 
-   @override
+  @override
   Widget build(BuildContext context) {
-
     final NoteProvider noteProvider = context.watch<NoteProvider>();
-    final GroupProvider groupProvider = context.read<GroupProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 254, 204, 54),
-        iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true,
-        title: Text(currentPageIndex == 0 ? 'Notes' : 'Reminders', style: const TextStyle(color: Colors.black),)
-      ),
+          backgroundColor: const Color.fromARGB(255, 254, 204, 54),
+          iconTheme: const IconThemeData(color: Colors.black),
+          centerTitle: true,
+          title: Text(
+            currentPageIndex == 0 ? 'Notes' : 'Reminders',
+            style: const TextStyle(color: Colors.black),
+          )),
 
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int navigationIndex) {
@@ -47,13 +47,9 @@ class _SkeletonState extends State<Skeleton> {
 
       drawer: _AppDrawer(),
 
-      body: <Widget>[
-        NotesScreen(noteProvider: noteProvider),
-        const RemindersScreen()][currentPageIndex
-        ],
-      
-        floatingActionButton: currentPageIndex == 0 ? _NewNoteButton(noteProvider: noteProvider) : _NewReminderButton(),
-      );
+      body: <Widget>[NotesScreen(noteProvider: noteProvider), const RemindersScreen()][currentPageIndex],
+      floatingActionButton: currentPageIndex == 0 ? _NewNoteButton(noteProvider: noteProvider) : _NewReminderButton(),
+    );
   }
 }
 
@@ -62,8 +58,7 @@ class _SkeletonState extends State<Skeleton> {
 class _AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    final Size size = MediaQuery.of(context).size;
+    final GroupProvider groupProvider = context.watch<GroupProvider>();
 
     return Drawer(
       elevation: 40,
@@ -73,7 +68,7 @@ class _AppDrawer extends StatelessWidget {
         children: <Widget>[
 
           Container(
-            height: size.height * 0.0815,
+            height: 80,
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 254, 204, 54),
             ),
@@ -81,18 +76,78 @@ class _AppDrawer extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.only(left: 16.0),
-                child: Text('Menu', style: TextStyle(color: Colors.black, fontSize: 24,),),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                  ),
+                ),
               ),
             ),
           ),
 
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Inicio'),
-            onTap: () {
-              // Navegar o realizar alguna acción
-              Navigator.of(context).pop(); // Cerrar el Drawer
-            },
+          ExpansionTile(
+            title: const Text('Groups'),
+            backgroundColor: const Color.fromARGB(255, 42, 38, 29),
+            leading: const Icon(Icons.account_tree),
+            children: <Widget>[
+              Consumer<GroupProvider>(
+                builder: (context, provider, child) {
+                  return ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: provider.groupList.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                              style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent)),
+                              child: Text(
+                                provider.groupList[index].name,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                              onPressed: () {
+                                // Acción al presionar el botón
+                              },
+                            ),
+                          ),
+
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              groupProvider.removeGroupByName(provider.groupList[index].name);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+
+              Container(
+                margin: const EdgeInsets.only(bottom: 4),
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color.fromARGB(255, 138, 115, 50))
+                ),
+                child: ListTile(
+                  title: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add),
+                      Text('  New group', style: TextStyle(color: Colors.white, fontSize: 17),)
+                    ],
+                  ),
+                  onTap: () {
+                    groupProvider.addGroup(Group.create(name: 'Test', color: Colors.cyan));
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -100,11 +155,7 @@ class _AppDrawer extends StatelessWidget {
   }
 }
 
-
-
-
 class _NewNoteButton extends StatelessWidget {
-
   final NoteProvider noteProvider;
 
   const _NewNoteButton({required this.noteProvider});
@@ -123,16 +174,13 @@ class _NewNoteButton extends StatelessWidget {
 }
 
 class _NewReminderButton extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return IconButton(
       iconSize: 50,
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
       icon: const Icon(Icons.event),
-      onPressed: () {
-        
-      },
+      onPressed: () {},
     );
   }
 }
