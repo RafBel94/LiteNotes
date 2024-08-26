@@ -17,6 +17,7 @@ class NewNoteScreen extends StatefulWidget {
 class _NewNoteScreenState extends State<NewNoteScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteTextController = TextEditingController();
+  final GlobalKey<NoteGroupsScrollViewState> groupsScrollViewKey = GlobalKey<NoteGroupsScrollViewState>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                groupProvider.groupList.isNotEmpty ? const NoteGroupsScrollView() : SizedBox.shrink(),
+                groupProvider.groupList.isNotEmpty ? NoteGroupsScrollView(key: groupsScrollViewKey) : const SizedBox.shrink(),
                 
                 _TitleTextField(titleController: titleController),
                 const SizedBox(
@@ -62,15 +63,17 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
     String trimmedTitle = title.trim();
     String trimmedText = text.trim();
 
+    final selectedGroup = groupsScrollViewKey.currentState?.getSelectedGroup();
+
     if (trimmedText.isNotEmpty) {
       if (trimmedTitle.isEmpty) {
         trimmedTitle = 'No Title';
       }
 
-      Note note = Note.create(title: trimmedTitle, text: text);
+      Note note = Note.create(title: trimmedTitle, text: text, group: selectedGroup);
       noteProvider.addNote(note);
     } else if (trimmedText.isEmpty && trimmedTitle.isNotEmpty) {
-      Note note = Note.create(title: trimmedTitle, text: text);
+      Note note = Note.create(title: trimmedTitle, text: text, group: selectedGroup);
       noteProvider.addNote(note);
     }
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 
 class NoteProvider extends ChangeNotifier {
@@ -45,6 +46,15 @@ class NoteProvider extends ChangeNotifier {
       break;
       }
     }
+  }
+
+  void updateNoteGroups(Group group) {
+    for(Note n in noteList) {
+      if(n.group == group){
+        n.group = null;
+      }
+    }
+    notifyListeners();
   }
 
   String listToJson(List<Note> noteList) {

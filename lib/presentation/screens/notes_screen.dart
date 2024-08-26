@@ -44,8 +44,11 @@ class _NoteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        style: ButtonStyle(
-            shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))), backgroundColor: const WidgetStatePropertyAll(Color.fromARGB(25, 158, 158, 158))),
+        style: TextButton.styleFrom(
+          side: BorderSide(color: note.group != null ? note.group!.color : Colors.transparent),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: const Color.fromARGB(25, 158, 158, 158)
+        ),
         onPressed: () {
           Navigator.push(
               context,

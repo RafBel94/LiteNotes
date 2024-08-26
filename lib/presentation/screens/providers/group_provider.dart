@@ -29,18 +29,7 @@ class GroupProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void removeGroupByName(String name) {
-    for(Group g in groupList){
-      if(g.name == name){
-        groupList.remove(g);
-        break;
-      }
-    }
-    saveGroupList(groupList);
-    notifyListeners();
-  }
-
-  void updateNote(Group group) {
+  void updateGroup(Group group) {
     for(Group g in groupList){
       if(g.id == group.id){
         g = group;

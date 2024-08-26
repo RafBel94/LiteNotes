@@ -33,7 +33,7 @@ class Note {
       id: json['id'],
       title: json['title'],
       text: json['text'],
-      group: json['group'],
+      group: json['group'] != null ? Group.fromJson(json['group']) : null,
       creationDate: DateTime.parse(json['creationDate']),
       modifiedDate: DateTime.parse(json['modifiedDate'])
     );
@@ -44,7 +44,7 @@ class Note {
       'id': id,
       'title': title,
       'text': text,
-      'group': group,
+      'group': group?.toJson(),
       'creationDate': creationDate?.toIso8601String(),
       'modifiedDate': modifiedDate?.toIso8601String()
     };
