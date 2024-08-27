@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/user_note_screen.dart';
-import 'package:simple_notes/presentation/widgets/shared/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/remove_group_dialog.dart';
 
-class NotesScreen extends StatelessWidget {
+class NotesScreen extends StatefulWidget {
   final NoteProvider noteProvider;
 
   const NotesScreen({
@@ -13,6 +14,11 @@ class NotesScreen extends StatelessWidget {
   });
 
   @override
+  State<NotesScreen> createState() => NotesScreenState();
+}
+
+class NotesScreenState extends State<NotesScreen> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(color: Color.fromARGB(255, 24, 24, 24)),
@@ -20,13 +26,13 @@ class NotesScreen extends StatelessWidget {
         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
-          itemCount: noteProvider.noteList.length,
+          itemCount: widget.noteProvider.noteList.length,
           itemBuilder: (context, index) {
-            final Note note = noteProvider.noteList[index];
+            final Note note = widget.noteProvider.noteList[index];
 
             return _NoteButton(
               note: note,
-              noteProvider: noteProvider,
+              noteProvider: widget.noteProvider,
             );
           },
         ),
@@ -46,7 +52,7 @@ class _NoteButton extends StatelessWidget {
     return TextButton(
         style: TextButton.styleFrom(
           side: BorderSide(color: note.group != null ? note.group!.color : Colors.transparent),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           backgroundColor: const Color.fromARGB(25, 158, 158, 158)
         ),
         onPressed: () {
@@ -107,7 +113,7 @@ class _NoteButton extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
-                  getDeleteConfirmation(context).then((confirmation) {
+                  DeleteConfirmationDialog(context: context).showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
@@ -116,16 +122,23 @@ class _NoteButton extends StatelessWidget {
                   });
                 },
               ),
+              if (note.group != null)
+                IconButton(
+                  icon: const Icon(Icons.group_remove_rounded),
+                  onPressed: () async {
+                    final confirmation = await RemoveGroupDialog(context: context).showConfirmationDialog(context);
+                    if (confirmation == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      note.group = null;
+                      noteProvider.updateNote(note);
+                    }
+                  },
+                ),
             ],
           ),
         );
       },
     );
-  }
-
-  Future<bool?> getDeleteConfirmation(BuildContext context) async {
-    bool? result = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
-
-    return result ?? false;
   }
 }

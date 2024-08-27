@@ -4,6 +4,7 @@ import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/reminders_screen.dart';
+import 'package:simple_notes/presentation/widgets/SortButton.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
 
 class Skeleton extends StatefulWidget {
@@ -22,14 +23,18 @@ class _SkeletonState extends State<Skeleton> {
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 254, 204, 54),
-          iconTheme: const IconThemeData(color: Colors.black),
-          centerTitle: true,
-          title: Text(
-            currentPageIndex == 0 ? 'Notes' : 'Reminders',
-            style: const TextStyle(color: Colors.black),
-          )),
-      bottomNavigationBar: NavigationBar(
+        actions: const [
+          SortButton()
+        ],
+        backgroundColor: const Color.fromARGB(255, 254, 204, 54),
+        iconTheme: const IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text(
+          currentPageIndex == 0 ? 'Notes' : 'Reminders',
+          style: const TextStyle(color: Colors.black),
+        )),
+        
+        bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int navigationIndex) {
           setState(() {
             currentPageIndex = navigationIndex;
@@ -42,12 +47,17 @@ class _SkeletonState extends State<Skeleton> {
           NavigationDestination(icon: Icon(Icons.calendar_month), label: 'Reminders'),
         ],
       ),
+
       drawer: const AppDrawer(),
+
       body: <Widget>[NotesScreen(noteProvider: noteProvider), const RemindersScreen()][currentPageIndex],
+
       floatingActionButton: currentPageIndex == 0 ? _NewNoteButton(noteProvider: noteProvider) : _NewReminderButton(),
     );
   }
 }
+
+
 
 // WIDGETS
 

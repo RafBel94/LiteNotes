@@ -13,7 +13,7 @@ class NoteProvider extends ChangeNotifier {
     _loadNotes();
   }
 
-  // Método privado para cargar las notas desde el archivo JSON
+  
   Future<void> _loadNotes() async {
     noteList = await readJson('notes_data.json');
     notifyListeners();
@@ -33,19 +33,15 @@ class NoteProvider extends ChangeNotifier {
   }
 
   void updateNote(Note note) {
-    for(Note n in noteList){
-      if(n.id == note.id){
-        n = note;
-        saveNoteList(noteList);
-
-        // Wait to all operations to finish before notify listeners
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          notifyListeners();
-        });
-
-      break;
-      }
+    // Find the index of the note with same id as the parameter note
+    int index = noteList.indexWhere((n) => n.id == note.id);
+    if (index != -1) {
+      noteList[index] = note;
+      saveNoteList(noteList);
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   void updateNoteGroups(Group group) {
@@ -56,6 +52,30 @@ class NoteProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void sortListAlphabetically({required bool descendent}) {
+    if(descendent) {
+      // Ascendent ASCII value
+      noteList.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    } else {
+      // Descendent ASCII value
+      noteList.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
+    }
+
+    notifyListeners();
+  }
+
+  void sortListByModifiedDate({required bool recentFirst}) {
+    if(recentFirst) {
+      noteList.sort((a,b) => b.modifiedDate!.compareTo(a.modifiedDate!));
+    } else {
+      noteList.sort((a,b) => a.modifiedDate!.compareTo(b.modifiedDate!));
+    }
+
+    notifyListeners();
+  }
+
+  // METHODS RELATED TO READ/SAVE OF DATA LOCALLY
 
   String listToJson(List<Note> noteList) {
     List<Map<String, dynamic>> mapList = noteList.map((note) => note.toJson()).toList();

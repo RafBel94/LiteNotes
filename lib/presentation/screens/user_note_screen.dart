@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/shared/note_groups_scroll_view.dart';
 
 class UserNoteScreen extends StatefulWidget {
   final Note note;
@@ -20,6 +24,7 @@ class UserNoteScreen extends StatefulWidget {
 class _UserNoteScreenState extends State<UserNoteScreen> {
   late String oldNoteText;
   late String oldNoteTitle;
+  final GlobalKey<NoteGroupsScrollViewState> groupsScrollViewKey = GlobalKey<NoteGroupsScrollViewState>();
 
   @override
   // Initialize values with the state
@@ -31,24 +36,14 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
   }
 
   @override
-  // Things to do when app closes
-  void dispose() {
-    compareAndUpdateNote(
-      widget.titleController.text,
-      widget.noteTextController.text,
-      oldNoteTitle,
-      oldNoteText,
-      widget.noteProvider,
-    );
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+
+    final GroupProvider groupProvider = context.read<GroupProvider>();
+
     return PopScope(
         onPopInvokedWithResult: (bool didPop, context) {
           if (didPop) {
-            compareAndUpdateNote(widget.titleController.text, widget.noteTextController.text, oldNoteTitle, oldNoteText, widget.noteProvider);
+            compareAndUpdateNote(widget.titleController.text, widget.noteTextController.text, oldNoteTitle, oldNoteText, widget.noteProvider, groupsScrollViewKey.currentState?.getSelectedGroup());
           }
         },
         child: Scaffold(
@@ -76,6 +71,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                groupProvider.groupList.isNotEmpty ? NoteGroupsScrollView(key: groupsScrollViewKey, note: widget.note,) : const SizedBox.shrink(),
                 _TitleTextField(
                   titleController: widget.titleController,
                 ),
@@ -112,9 +108,11 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
     return result ?? false;
   }
 
-  void compareAndUpdateNote(String title, String text, String oldTitle, String oldText, NoteProvider noteProvider) {
+  void compareAndUpdateNote(String title, String text, String oldTitle, String oldText, NoteProvider noteProvider, Group? group) {
     String trimmedText = text.trim();
     String trimmedTitle = title.trim();
+
+    widget.note.group = group;
 
     if (trimmedText.isNotEmpty || trimmedTitle.isNotEmpty) {
       if (trimmedTitle.isEmpty) {
