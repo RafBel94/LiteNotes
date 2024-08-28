@@ -9,10 +9,10 @@ class GroupProvider extends ChangeNotifier{
   List<Group> groupList = [];
 
   GroupProvider(){
-    _loadGroups();
+    loadGroups();
   }
 
-  Future<void> _loadGroups() async {
+  Future<void> loadGroups() async {
     groupList = await readJson('groups_data.json');
     notifyListeners();
   }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
+import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/reminders_screen.dart';
-import 'package:simple_notes/presentation/widgets/SortButton.dart';
+import 'package:simple_notes/presentation/widgets/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
 
 class Skeleton extends StatefulWidget {
@@ -18,13 +19,34 @@ class _SkeletonState extends State<Skeleton> {
   int currentPageIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Provider.of<ProviderType>(context, listen: false) is the same as context.read<ProviderType>();
+      final noteProvider = Provider.of<NoteProvider>(context, listen: false);
+      final groupProvider = Provider.of<GroupProvider>(context, listen: false);
+
+      // Inicializar NoteProvider con GroupProvider
+      noteProvider.initialize(groupProvider);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final NoteProvider noteProvider = context.watch<NoteProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        actions: const [
-          SortButton()
+        actions: [
+          if(noteProvider.filteredGroup != noteProvider.defaultGroup)
+            IconButton(
+              onPressed: (){
+                noteProvider.updateFilteredGroup(null);
+              },
+              icon: const Icon(Icons.filter_alt_off, color: Colors.black, size: 30,)
+            ),
+
+          const SortButton()
         ],
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -50,9 +72,9 @@ class _SkeletonState extends State<Skeleton> {
 
       drawer: const AppDrawer(),
 
-      body: <Widget>[NotesScreen(noteProvider: noteProvider), const RemindersScreen()][currentPageIndex],
+      body: <Widget>[const NotesScreen(), const RemindersScreen()][currentPageIndex],
 
-      floatingActionButton: currentPageIndex == 0 ? _NewNoteButton(noteProvider: noteProvider) : _NewReminderButton(),
+      floatingActionButton: currentPageIndex == 0 ? const _NewNoteButton() : _NewReminderButton(),
     );
   }
 }
@@ -62,9 +84,8 @@ class _SkeletonState extends State<Skeleton> {
 // WIDGETS
 
 class _NewNoteButton extends StatelessWidget {
-  final NoteProvider noteProvider;
 
-  const _NewNoteButton({required this.noteProvider});
+  const _NewNoteButton();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +94,7 @@ class _NewNoteButton extends StatelessWidget {
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
       icon: const Icon(Icons.note_add),
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => NewNoteScreen(noteProvider: noteProvider)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const NewNoteScreen()));
       },
     );
   }

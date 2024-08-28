@@ -1,5 +1,8 @@
 // TODO
+// - Edit groups
+// - Add deleted date to notes
 // - Recicle bin
 // - Notes inside the recible bin will be deleted after 30 days
-// - Select notes for deleting all at the same time
-// - Add deleted date to notes
+// - Select more than one note at a time
+
+// ignore_for_file: file_names

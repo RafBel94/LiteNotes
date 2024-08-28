@@ -5,17 +5,35 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 
 class NoteProvider extends ChangeNotifier {
   List<Note> noteList = [];
+  Group defaultGroup = Group.create(name: 'none', color: const Color.fromARGB(255, 103, 103, 103));
+  Group? filteredGroup;
 
-  NoteProvider() {
-    _loadNotes();
+  NoteProvider();
+
+  Future<void> initialize(GroupProvider groupProvider) async {
+    filteredGroup = defaultGroup;
+    await loadNotes(groupProvider);
   }
 
-  
-  Future<void> _loadNotes() async {
+  Future<void> loadNotes(GroupProvider groupProvider) async {
     noteList = await readJson('notes_data.json');
+
+    for (Note note in noteList) {
+      if (note.group != null) {
+        note.group = groupProvider.groupList
+            .firstWhere((group) => group.id == note.group!.id, orElse: () => defaultGroup);
+      }
+    }
+
+    notifyListeners();
+  }
+
+  void updateFilteredGroup(Group? group) {
+    filteredGroup = group ?? defaultGroup;
     notifyListeners();
   }
 
@@ -47,7 +65,7 @@ class NoteProvider extends ChangeNotifier {
   void updateNoteGroups(Group group) {
     for(Note n in noteList) {
       if(n.group == group){
-        n.group = null;
+        n.group = defaultGroup;
       }
     }
     notifyListeners();

@@ -22,7 +22,7 @@ class NoteGroupsScrollViewState extends State<NoteGroupsScrollView> {
   @override
   void initState() {
     super.initState();
-    selectedGroup = widget.note?.group; // Inicializa el grupo seleccionado
+    selectedGroup = widget.note?.group;
   }
 
   @override
@@ -68,7 +68,7 @@ class NoteGroupsScrollViewState extends State<NoteGroupsScrollView> {
                   ),
                 );
               }else{
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               }
             },
           ),

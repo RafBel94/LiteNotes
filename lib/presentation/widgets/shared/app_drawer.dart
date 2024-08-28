@@ -58,7 +58,8 @@ class AppDrawer extends StatelessWidget {
                                 style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent)),
                                 child: Text(provider.groupList[index].name, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, color: Colors.white),),
                                 onPressed: () {
-                                  
+                                  // Set current filtered group to the selected one
+                                  noteProvider.updateFilteredGroup(provider.groupList[index]);
                                 },
                               ),
                             ),

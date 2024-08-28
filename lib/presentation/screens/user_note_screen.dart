@@ -4,7 +4,7 @@ import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
-import 'package:simple_notes/presentation/widgets/shared/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_groups_scroll_view.dart';
 
 class UserNoteScreen extends StatefulWidget {

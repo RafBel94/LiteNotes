@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_groups_scroll_view.dart';
 
 class NewNoteScreen extends StatefulWidget {
-  final NoteProvider noteProvider;
 
-  const NewNoteScreen({super.key, required this.noteProvider});
+  const NewNoteScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _NewNoteScreenState();
@@ -22,12 +22,13 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
   @override
   Widget build(BuildContext context) {
 
+    final NoteProvider noteProvider = context.read<NoteProvider>();
     final GroupProvider groupProvider = context.read<GroupProvider>();
 
     return PopScope(
         onPopInvokedWithResult: (bool didPop, context) {
           if (didPop) {
-            addNote(titleController.text, noteTextController.text, widget.noteProvider);
+            addNote(titleController.text, noteTextController.text, noteProvider);
           }
         },
         child: Scaffold(
@@ -46,7 +47,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                groupProvider.groupList.isNotEmpty ? NoteGroupsScrollView(key: groupsScrollViewKey) : const SizedBox.shrink(),
+                if(groupProvider.groupList.isNotEmpty)
+                  NoteGroupsScrollView(key: groupsScrollViewKey),
                 
                 _TitleTextField(titleController: titleController),
                 const SizedBox(
@@ -63,7 +65,9 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
     String trimmedTitle = title.trim();
     String trimmedText = text.trim();
 
-    final selectedGroup = groupsScrollViewKey.currentState?.getSelectedGroup();
+    Group? selectedGroup = groupsScrollViewKey.currentState?.getSelectedGroup();
+
+    selectedGroup = selectedGroup ?? noteProvider.defaultGroup;
 
     if (trimmedText.isNotEmpty) {
       if (trimmedTitle.isEmpty) {
