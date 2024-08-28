@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/note_text_field.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
-import 'package:simple_notes/presentation/widgets/shared/note_groups_scroll_view.dart';
+import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
+import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
 
 class NewNoteScreen extends StatefulWidget {
 
@@ -31,6 +33,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             addNote(titleController.text, noteTextController.text, noteProvider);
           }
         },
+
         child: Scaffold(
           appBar: AppBar(
             leading: const BackButton(
@@ -43,18 +46,22 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
               style: TextStyle(color: Colors.black),
             ),
           ),
+
+
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
                 if(groupProvider.groupList.isNotEmpty)
-                  NoteGroupsScrollView(key: groupsScrollViewKey),
+                  GroupsScrollView(key: groupsScrollViewKey),
                 
-                _TitleTextField(titleController: titleController),
+                TitleTextField(titleController: titleController),
+
                 const SizedBox(
                   height: 10,
                 ),
-                Expanded(child: _NoteTextField(noteTextController: noteTextController)),
+
+                Expanded(child: NoteTextField(noteTextController: noteTextController)),
               ],
             ),
           ),
@@ -80,53 +87,5 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       Note note = Note.create(title: trimmedTitle, text: text, group: selectedGroup);
       noteProvider.addNote(note);
     }
-  }
-}
-
-class _TitleTextField extends StatelessWidget {
-  final FocusNode titleFocusNode = FocusNode();
-  final TextEditingController titleController;
-
-  _TitleTextField({required this.titleController});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: titleController,
-      focusNode: titleFocusNode,
-      style: const TextStyle(fontSize: 22),
-      decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)), hintText: 'Title', hintStyle: const TextStyle(fontSize: 18)),
-      onTapOutside: (event) {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-    );
-  }
-}
-
-class _NoteTextField extends StatelessWidget {
-  final FocusNode noteTextFocusNode = FocusNode();
-  final TextEditingController noteTextController;
-
-  _NoteTextField({required this.noteTextController});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: noteTextController,
-      focusNode: noteTextFocusNode,
-      maxLines: null,
-      expands: true,
-      textAlign: TextAlign.start,
-      textAlignVertical: TextAlignVertical.top,
-      style: const TextStyle(fontSize: 18),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        hintText: 'Text...',
-        hintStyle: const TextStyle(fontSize: 18),
-      ),
-      onTapOutside: (event) {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-    );
   }
 }

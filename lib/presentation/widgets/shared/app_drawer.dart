@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/new_group_dialog.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -19,6 +19,8 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
+
+
           Container(
             height: 80,
             decoration: const BoxDecoration(
@@ -32,11 +34,14 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
           ),
+
+
           ExpansionTile(
             title: const Text('Groups'),
             backgroundColor: const Color.fromARGB(255, 42, 38, 29),
             leading: const Icon(Icons.account_tree),
             children: <Widget>[
+
               Consumer<GroupProvider>(
                 builder: (context, provider, child) {
                   return ListView.builder(
@@ -53,6 +58,7 @@ class AppDrawer extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 20),
                               child: Icon(Icons.square, color: provider.groupList[index].color,),
                             ),
+
                             Expanded(
                               child: TextButton(
                                 style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent)),
@@ -63,6 +69,7 @@ class AppDrawer extends StatelessWidget {
                                 },
                               ),
                             ),
+                            
                             IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {
@@ -83,6 +90,8 @@ class AppDrawer extends StatelessWidget {
                   );
                 },
               ),
+
+
               Container(
                 margin: const EdgeInsets.only(bottom: 4),
                 decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 138, 115, 50))),
@@ -98,7 +107,7 @@ class AppDrawer extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    _newGroupDialog(context);
+                    NewGroupDialog().createGroupDialog(context);
                   },
                 ),
               ),
@@ -109,106 +118,7 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Future<dynamic> _newGroupDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          GroupProvider groupProvider = context.read<GroupProvider>();
-          final TextEditingController txtController = TextEditingController();
-          Color selectedColor = Colors.cyan;
-
-          return AlertDialog(
-            title: const Text('Insert new group name:'),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            actions: [
-              TextField(
-                style: const TextStyle(fontSize: 20),
-                controller: txtController,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Align(
-                  alignment: Alignment.center,
-                  child: TextButton(
-                      onPressed: () async {
-                        selectedColor = await _showColorPicker(context, selectedColor);
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 239, 208, 115))),
-                          child: const Text(
-                            'SELECT COLOR',
-                            style: TextStyle(fontSize: 20),
-                          )))),
-              const SizedBox(
-                height: 15,
-              ),
-              TextButton(
-                  onPressed: () {
-                    if(txtController.value.text.trim().isNotEmpty){
-                      groupProvider.addGroup(Group.create(name: txtController.value.text, color: selectedColor));
-                      Navigator.of(context).pop();
-                    }else{
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Warning', style: TextStyle(color: Color.fromARGB(255, 249, 208, 86))),
-                              content: const Text('The group name cannot be empty', style: TextStyle(fontSize: 20)),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('OK', style: TextStyle(fontSize: 20))
-                                )
-                              ],
-                            );
-                          });
-                    }
-                  },
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(fontSize: 20),
-                  ))
-            ],
-          );
-        });
-  }
   
-  Future<Color> _showColorPicker(BuildContext context, Color currentColor) async {
-    Color selectedColor = currentColor;
-
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select a color'),
-          content: SingleChildScrollView(
-            child: ColorPicker(
-              pickerColor: selectedColor,
-              onColorChanged: (Color color) {
-                selectedColor = color;
-              },
-              labelTypes: const [],
-              pickerAreaHeightPercent: 0.8,
-            ),
-          ),
-          actions: [
-            TextButton(
-              child: const Text('OK', style: TextStyle(fontSize: 20)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-
-    return selectedColor;
-  }
   
   Future<bool?> getDeleteConfirmation(BuildContext context) async {
     return showDialog<bool>(

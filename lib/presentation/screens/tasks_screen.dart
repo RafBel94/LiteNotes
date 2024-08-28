@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class RemindersScreen extends StatelessWidget {
+class TasksScreen extends StatelessWidget {
 
-  const RemindersScreen({super.key});
+  const TasksScreen({super.key});
 
 
   @override

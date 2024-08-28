@@ -4,7 +4,7 @@ import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
-import 'package:simple_notes/presentation/screens/reminders_screen.dart';
+import 'package:simple_notes/presentation/screens/tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
 
@@ -66,13 +66,13 @@ class _SkeletonState extends State<Skeleton> {
         indicatorColor: const Color.fromARGB(255, 117, 98, 48),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.description), label: 'Notes'),
-          NavigationDestination(icon: Icon(Icons.calendar_month), label: 'Reminders'),
+          NavigationDestination(icon: Icon(Icons.check_box_outlined), label: 'Tasks'),
         ],
       ),
 
       drawer: const AppDrawer(),
 
-      body: <Widget>[const NotesScreen(), const RemindersScreen()][currentPageIndex],
+      body: <Widget>[const NotesScreen(), const TasksScreen()][currentPageIndex],
 
       floatingActionButton: currentPageIndex == 0 ? const _NewNoteButton() : _NewReminderButton(),
     );

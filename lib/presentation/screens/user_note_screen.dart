@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
-import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
-import 'package:simple_notes/presentation/widgets/shared/note_groups_scroll_view.dart';
+import 'package:simple_notes/presentation/widgets/shared/modal_bottom_sheet.dart';
+import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
+
+import '../widgets/shared/title_text_field.dart';
+import 'note_text_field.dart';
 
 class UserNoteScreen extends StatefulWidget {
   final Note note;
@@ -54,7 +56,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 icon: const Icon(Icons.info),
                 color: Colors.black,
                 onPressed: () {
-                  showInfoMenu(context);
+                  ModalBottomSheet(widget.note.modifiedDate, creationDate: widget.note.creationDate).showInfoMenu(context);
                 },
               )
             ],
@@ -65,13 +67,15 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
               style: const TextStyle(color: Colors.black),
             ),
           ),
+
+
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                NoteGroupsScrollView(key: groupsScrollViewKey, note: widget.note,),
+                GroupsScrollView(key: groupsScrollViewKey, note: widget.note,),
 
-                _TitleTextField(
+                TitleTextField(
                   titleController: widget.titleController,
                 ),
 
@@ -80,18 +84,20 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 ),
 
                 Expanded(
-                    child: _NoteTextField(
+                    child: NoteTextField(
                   noteTextController: widget.noteTextController,
                 )),
               ],
             ),
           ),
+
+
           floatingActionButton: IconButton(
             icon: const Icon(Icons.delete),
             style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
             iconSize: 50,
             onPressed: () {
-              getDeleteConfirmation().then((confirmation) {
+              DeleteConfirmationDialog(context: context).showConfirmationDialog(context).then((confirmation) {
                 if (confirmation == true) {
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context);
@@ -101,12 +107,6 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
             },
           ),
         ));
-  }
-
-  Future<bool?> getDeleteConfirmation() async {
-    bool? result = await DeleteConfirmationDialog(context: context).showConfirmationDialog(context);
-
-    return result ?? false;
   }
 
   void compareAndUpdateNote(String title, String text, String oldTitle, String oldText, NoteProvider noteProvider, Group? group) {
@@ -136,97 +136,5 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
     }
   }
 
-  void showInfoMenu(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      builder: (context) {
-        return SizedBox(
-            width: size.width * 0.9,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Creation date:   ',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      TextSpan(text: widget.note.creationDate.toString().split('.').first, style: const TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Modified date:   ',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      TextSpan(text: widget.note.modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                )
-              ],
-            ));
-      },
-    );
-  }
-}
-
-class _TitleTextField extends StatelessWidget {
-  final TextEditingController titleController;
-  final FocusNode titleFocusNode = FocusNode();
-
-  _TitleTextField({required this.titleController}); // Aquí se inicializa el controlador con el título
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: titleController,
-      focusNode: titleFocusNode,
-      style: const TextStyle(fontSize: 22),
-      decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)), hintText: 'Title', hintStyle: const TextStyle(fontSize: 18)),
-      onTapOutside: (event) {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-    );
-  }
-}
-
-class _NoteTextField extends StatelessWidget {
-  final TextEditingController noteTextController;
-  final FocusNode noteTextFocusNode = FocusNode();
-
-  _NoteTextField({required this.noteTextController});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: noteTextController,
-      focusNode: noteTextFocusNode,
-      maxLines: null,
-      expands: true,
-      textAlign: TextAlign.start,
-      textAlignVertical: TextAlignVertical.top,
-      style: const TextStyle(fontSize: 18),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        hintText: 'Text...',
-        hintStyle: const TextStyle(fontSize: 18),
-      ),
-      onTapOutside: (event) {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-    );
-  }
+  
 }

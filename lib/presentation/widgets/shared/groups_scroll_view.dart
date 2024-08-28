@@ -4,16 +4,16 @@ import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 
-class NoteGroupsScrollView extends StatefulWidget {
+class GroupsScrollView extends StatefulWidget {
   final Note? note;
 
-  const NoteGroupsScrollView({super.key, this.note});
+  const GroupsScrollView({super.key, this.note});
 
   @override
   NoteGroupsScrollViewState createState() => NoteGroupsScrollViewState();
 }
 
-class NoteGroupsScrollViewState extends State<NoteGroupsScrollView> {
+class NoteGroupsScrollViewState extends State<GroupsScrollView> {
   Group? selectedGroup;
 
   @override
@@ -26,7 +26,15 @@ class NoteGroupsScrollViewState extends State<NoteGroupsScrollView> {
   Widget build(BuildContext context) {
     final GroupProvider groupProvider = context.read<GroupProvider>();
     final List<Group> filteredList = groupProvider.groupList.where((g) => g != widget.note?.group).toList();
-    final List<Widget> availableGroups = [
+    final List<Widget> availableGroups = getAvailableGroups(filteredList);
+
+    return filteredList.isEmpty ? const SizedBox.shrink() : Column(children: availableGroups);
+  }
+
+  
+  
+  List<Widget> getAvailableGroups(List<Group> filteredList) {
+    return [
       Align(
         alignment: Alignment.center,
         child: Container(
@@ -65,12 +73,6 @@ class NoteGroupsScrollViewState extends State<NoteGroupsScrollView> {
         ),
       ),
     ];
-
-    return filteredList.isEmpty ? 
-    const SizedBox.shrink() : 
-    Column(
-      children: availableGroups,
-    );
   }
 
   Group? getSelectedGroup() {
