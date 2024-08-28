@@ -38,8 +38,6 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final GroupProvider groupProvider = context.read<GroupProvider>();
-
     return PopScope(
         onPopInvokedWithResult: (bool didPop, context) {
           if (didPop) {
@@ -71,13 +69,16 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                groupProvider.groupList.isNotEmpty ? NoteGroupsScrollView(key: groupsScrollViewKey, note: widget.note,) : const SizedBox.shrink(),
+                NoteGroupsScrollView(key: groupsScrollViewKey, note: widget.note,),
+
                 _TitleTextField(
                   titleController: widget.titleController,
                 ),
+
                 const SizedBox(
                   height: 10,
                 ),
+
                 Expanded(
                     child: _NoteTextField(
                   noteTextController: widget.noteTextController,
@@ -112,7 +113,9 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
     String trimmedText = text.trim();
     String trimmedTitle = title.trim();
 
-    widget.note.group = group;
+    Group? selectedGroup = groupsScrollViewKey.currentState?.getSelectedGroup();
+
+    selectedGroup = selectedGroup ?? noteProvider.defaultGroup;
 
     if (trimmedText.isNotEmpty || trimmedTitle.isNotEmpty) {
       if (trimmedTitle.isEmpty) {
@@ -126,6 +129,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
         widget.note.modifiedDate = DateTime.now();
       }
 
+      widget.note.group = selectedGroup;
       noteProvider.updateNote(widget.note);
     } else {
       noteProvider.removeNote(widget.note);
