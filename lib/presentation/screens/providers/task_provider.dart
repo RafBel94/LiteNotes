@@ -32,6 +32,16 @@ class TaskProvider extends ChangeNotifier{
       notifyListeners();
     });
   }
+
+  void sortListByCreationDate({required bool recentFirst}) {
+    if(recentFirst) {
+      taskList.sort((a,b) => b.creationDate.compareTo(a.creationDate));
+    } else {
+      taskList.sort((a,b) => a.creationDate.compareTo(b.creationDate));
+    }
+
+    notifyListeners();
+  }
   
   // METHODS RELATED TO READ/SAVE OF DATA LOCALLY
 

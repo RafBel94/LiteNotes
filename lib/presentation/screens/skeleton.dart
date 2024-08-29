@@ -113,7 +113,7 @@ class _NewTaskButton extends StatelessWidget {
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
       icon: const Icon(Icons.add_box_outlined),
       onPressed: () {
-        // TODO: CREATE NewTaskScreen()
+        // TODO: Implement new task creation
       },
     );
   }
