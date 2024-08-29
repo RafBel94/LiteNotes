@@ -4,6 +4,7 @@ import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
@@ -12,10 +13,10 @@ class Skeleton extends StatefulWidget {
   const Skeleton({super.key});
 
   @override
-  State<StatefulWidget> createState() => _SkeletonState();
+  State<StatefulWidget> createState() => SkeletonState();
 }
 
-class _SkeletonState extends State<Skeleton> {
+class SkeletonState extends State<Skeleton> {
   int currentPageIndex = 0;
 
   @override
@@ -25,9 +26,13 @@ class _SkeletonState extends State<Skeleton> {
       // Provider.of<ProviderType>(context, listen: false) is the same as context.read<ProviderType>();
       final noteProvider = Provider.of<NoteProvider>(context, listen: false);
       final groupProvider = Provider.of<GroupProvider>(context, listen: false);
+      final taskProvider = Provider.of<TaskProvider>(context, listen: false);
 
       // Inicializar NoteProvider con GroupProvider
       noteProvider.initialize(groupProvider);
+
+      // Inicializar TaskProvider
+      taskProvider.initialize();
     });
   }
 
@@ -46,7 +51,7 @@ class _SkeletonState extends State<Skeleton> {
               icon: const Icon(Icons.filter_alt_off, color: Colors.black, size: 30,)
             ),
 
-          const SortButton()
+          SortButton()
         ],
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -66,7 +71,7 @@ class _SkeletonState extends State<Skeleton> {
         indicatorColor: const Color.fromARGB(255, 117, 98, 48),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.description), label: 'Notes'),
-          NavigationDestination(icon: Icon(Icons.check_box_outlined), label: 'Tasks'),
+          NavigationDestination(icon: Icon(Icons.checklist_sharp), label: 'Tasks'),
         ],
       ),
 
@@ -74,7 +79,7 @@ class _SkeletonState extends State<Skeleton> {
 
       body: <Widget>[const NotesScreen(), const TasksScreen()][currentPageIndex],
 
-      floatingActionButton: currentPageIndex == 0 ? const _NewNoteButton() : _NewReminderButton(),
+      floatingActionButton: currentPageIndex == 0 ? const _NewNoteButton() : _NewTaskButton(),
     );
   }
 }
@@ -100,14 +105,16 @@ class _NewNoteButton extends StatelessWidget {
   }
 }
 
-class _NewReminderButton extends StatelessWidget {
+class _NewTaskButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
       iconSize: 50,
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
-      icon: const Icon(Icons.event),
-      onPressed: () {},
+      icon: const Icon(Icons.add_box_outlined),
+      onPressed: () {
+        // TODO: CREATE NewTaskScreen()
+      },
     );
   }
 }

@@ -12,8 +12,6 @@ class NoteProvider extends ChangeNotifier {
   Group defaultGroup = Group.create(name: 'none', color: const Color.fromARGB(255, 103, 103, 103));
   Group? filteredGroup;
 
-  NoteProvider();
-
   Future<void> initialize(GroupProvider groupProvider) async {
     filteredGroup = defaultGroup;
     await loadNotes(groupProvider);

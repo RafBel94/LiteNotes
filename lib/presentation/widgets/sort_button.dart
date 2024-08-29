@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/skeleton.dart';
 
 class SortButton extends StatefulWidget {
+  
   const SortButton({
-    super.key,
+    super.key
   });
   
   @override
@@ -13,10 +15,11 @@ class SortButton extends StatefulWidget {
 
 class SortButtonState extends State<SortButton> {
   bool isMenuOpen = false;
-  // final GlobalKey<NotesScreenState> notesScreenKey = GlobalKey<NotesScreenState>();
 
   @override
   Widget build(BuildContext context) {
+    // Find the state of its ancestor to access its methods and attributes
+    final SkeletonState? skeletonState = context.findAncestorStateOfType<SkeletonState>();
 
     NoteProvider noteProvider = context.read<NoteProvider>();
 
@@ -41,20 +44,40 @@ class SortButtonState extends State<SortButton> {
       onSelected: (int selected) {
         switch(selected) {
           case 1: {
-            noteProvider.sortListAlphabetically(descendent: true);
+            if(skeletonState?.currentPageIndex == 0){
+              noteProvider.sortListAlphabetically(descendent: true);
+            } else {
+              // TODO - taskProvider.sortListAlphabetically(descendent: true);
+            }
+
             break;
           }
           case 2: {
-            noteProvider.sortListAlphabetically(descendent: false);
+            if(skeletonState?.currentPageIndex == 0){
+              noteProvider.sortListAlphabetically(descendent: false);
+            } else {
+              // TODO - taskProvider.sortListAlphabetically(descendent: false);
+            }
+
             break;
           }
           case 3: {
-            noteProvider.sortListByModifiedDate(recentFirst: true);
+            if(skeletonState?.currentPageIndex == 0){
+              noteProvider.sortListByModifiedDate(recentFirst: true);
+            } else {
+              // TODO - taskProvider.sortListByCreationDate(recentFirst : true);
+              print(skeletonState?.currentPageIndex);
+            }
+
             break;
           }
           case 4: {
-            noteProvider.sortListByModifiedDate(recentFirst: false);
-            break;
+            if(skeletonState?.currentPageIndex == 0){
+              noteProvider.sortListByModifiedDate(recentFirst: false);
+            } else {
+              // TODO - taskProvider.sortListByCreationDate(recentFirst : false);
+            }
+              break;
           }
         }
         setState(() {
@@ -63,14 +86,16 @@ class SortButtonState extends State<SortButton> {
       },
       itemBuilder: (context) {
         return <PopupMenuEntry<int>>[
-          const PopupMenuItem(
-            value: 1,
-            child: Text('Sort alphabetically (A-Z)'),
-          ),
-          const PopupMenuItem(
-            value: 2,
-            child: Text('Sort alphabetically (Z-A)'),
-          ),
+          if(skeletonState?.currentPageIndex == 0)
+            const PopupMenuItem(
+              value: 1,
+              child: Text('Sort alphabetically (A-Z)'),
+            ),
+          if(skeletonState?.currentPageIndex == 0)
+            const PopupMenuItem(
+              value: 2,
+              child: Text('Sort alphabetically (Z-A)'),
+            ),
           const PopupMenuItem(
             value: 3,
             child: Text('Sort by last modified (Recent)'),
