@@ -11,7 +11,7 @@ class DeleteConfirmationDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Delete Confirmation"),
-          content: const Text("Do you want to delete this note?"),
+          content: const Text("Do you want to delete?"),
           actions: <Widget>[
             TextButton(
               onPressed: () {

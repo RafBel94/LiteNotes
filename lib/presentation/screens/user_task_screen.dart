@@ -5,14 +5,17 @@ import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
 
-class NewTaskScreen extends StatefulWidget {
-  const NewTaskScreen({super.key});
+class UserTaskScreen extends StatefulWidget {
+
+  final Task task;
+
+  const UserTaskScreen({super.key, required this.task});
 
   @override
-  State<NewTaskScreen> createState() => _NewTaskScreenState();
+  State<UserTaskScreen> createState() => _UserTaskScreenState();
 }
 
-class _NewTaskScreenState extends State<NewTaskScreen> {
+class _UserTaskScreenState extends State<UserTaskScreen> {
 
   TextEditingController titleController = TextEditingController();
   ScrollController scrollController = ScrollController();
@@ -21,7 +24,18 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   List<FocusNode> focusList = [];
 
   @override
+  void initState() {
+    super.initState();
+
+    titleController.text = widget.task.title;
+    checkList = widget.task.checkList;
+    
+    _setControllersLists();
+  }
+
+  @override
   void dispose() {
+    titleController.dispose();
 
     for (TextEditingController controller in controllerList) {
       controller.dispose();
@@ -55,7 +69,15 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.check, color: Colors.black, size: 30,),
+                icon: const Icon(Icons.delete, color: Colors.black, size: 30),
+                onPressed: () {
+                  taskProvider.removeTask(widget.task);
+                  Navigator.of(context).pop();
+                }
+              ),
+
+              IconButton(
+                icon: const Icon(Icons.check, color: Colors.black, size: 30),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -79,13 +101,15 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     child: SingleChildScrollView(
                       child: Column(
                         // Here instead of using a ListView.builder, we use a SingleChildScrollView so we can scroll through
-                        // all the task checks, and in this column, instead of creating the widgets manually, we do it throug
+                        // all the task checks, and in this column, instead of creating the widgets manually, we do it through
                         // a List.generate that use the length of the checkList from the provider
                         children: List.generate(checkList.length, (index) {
                           return Align(
                             alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
+
+                                // Check Icon
                                 IconButton(
                                   icon: checkList[index].done ? const Icon(Icons.check_box_outlined, color: Color.fromARGB(255, 81, 81, 81)) : const Icon(Icons.check_box_outline_blank_outlined, color: Color.fromARGB(255, 165, 145, 86),),
                                   onPressed: () {
@@ -95,6 +119,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                   },
                                 ),
 
+                                // Checklist
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 15),
@@ -118,6 +143,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                   ),
                                 ),
 
+                                // Remove Icon
                                 Container(
                                   margin: const EdgeInsets.symmetric(vertical: 10),
                                   child: IconButton(
@@ -139,6 +165,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     ),
                   ),
 
+                  // Add Check Button
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
@@ -198,6 +225,33 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     });
   }
   
+  
+  void _setControllersLists() {
+    controllerList.clear();
+    focusList.clear();
+    
+    for(TaskCheck tc in checkList){
+      TextEditingController controller = TextEditingController(text: tc.text);
+      FocusNode focusNode = FocusNode();
+
+      focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        setState(() {
+          if (controller.text.trim().isEmpty) {
+            controller.text = 'No text';
+            tc.text = 'No text';
+          } else {
+            tc.text = controller.text;
+          }
+        });
+      }
+    });
+
+      controllerList.add(controller);
+      focusList.add(focusNode);
+    }
+  }
+
   void verifyTask(TaskProvider taskProvider) {
     String trimmedTitle = titleController.text.trim();
     Task task = Task.create(title: titleController.text, checkList: checkList);
@@ -206,7 +260,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       task.title = 'No title task';
     }
 
-    taskProvider.addTask(task);
+    taskProvider.updateTask(task);
   }
 }
 

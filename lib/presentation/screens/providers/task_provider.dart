@@ -9,16 +9,18 @@ class TaskProvider extends ChangeNotifier{
   List<Task> taskList = [];
 
   Future<void> initialize() async {
-    await loadNotes();
+    await loadTasks();
   }
 
   void addTask(Task task) {
     taskList.add(task);
+    saveTaskList(taskList);
     notifyListeners();
   }
 
   void removeTask(Task task) {
     taskList.remove(task);
+    saveTaskList(taskList);
     notifyListeners();
   }
 
@@ -57,7 +59,7 @@ class TaskProvider extends ChangeNotifier{
   
   // METHODS RELATED TO READ/SAVE OF DATA LOCALLY
 
-  Future<void> loadNotes() async {
+  Future<void> loadTasks() async {
     taskList = await readJson('tasks_data.json');
     notifyListeners();
   }

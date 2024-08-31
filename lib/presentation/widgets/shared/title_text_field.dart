@@ -8,6 +8,7 @@ class TitleTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return TextField(
       controller: titleController,
       focusNode: titleFocusNode,
@@ -23,7 +24,7 @@ class TitleTextField extends StatelessWidget {
         hintStyle: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 101, 101, 101))
       ),
       onTapOutside: (event) {
-        FocusManager.instance.primaryFocus?.unfocus();
+        FocusScope.of(context).unfocus();
       },
     );
   }

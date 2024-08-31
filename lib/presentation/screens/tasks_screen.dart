@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
-import 'package:simple_notes/presentation/screens/new_task_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
+import 'package:simple_notes/presentation/screens/user_task_screen.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -47,9 +49,9 @@ class TasksScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // TODO: UserTaskScreen
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => const NewTaskScreen(),),);
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => UserTaskScreen(task: taskProvider.taskList[index]),),);
                   },
+                  onLongPress: () => showLongPressMenu(context, taskProvider.taskList[index]),
                 ),
               ),
             );
@@ -69,5 +71,47 @@ class TasksScreen extends StatelessWidget {
     }
 
     return doneChecks.toString();
+  }
+
+  showLongPressMenu(BuildContext context, Task task) {
+
+    TaskProvider taskProvider = context.read<TaskProvider>();
+
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => UserTaskScreen(task: task)
+                    )
+                  );
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () async {
+                  DeleteConfirmationDialog(context: context).showConfirmationDialog(context).then((confirmation) {
+                    if (confirmation == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      taskProvider.removeTask(task);
+                    }
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
