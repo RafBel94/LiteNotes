@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
-import 'package:simple_notes/presentation/screens/note_text_field.dart';
+import 'package:simple_notes/presentation/widgets/shared/note_text_field.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
@@ -48,21 +48,24 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
           ),
 
 
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                if(groupProvider.groupList.isNotEmpty)
-                  GroupsScrollView(key: groupsScrollViewKey),
-                
-                TitleTextField(titleController: titleController),
-
-                const SizedBox(
-                  height: 10,
-                ),
-
-                Expanded(child: NoteTextField(noteTextController: noteTextController)),
-              ],
+          body: Container(
+            decoration: const BoxDecoration(color: Color.fromARGB(255, 15, 15, 15)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  if(groupProvider.groupList.isNotEmpty)
+                    GroupsScrollView(key: groupsScrollViewKey),
+                  
+                  TitleTextField(titleController: titleController),
+            
+                  const SizedBox(
+                    height: 10,
+                  ),
+            
+                  Expanded(child: NoteTextField(noteTextController: noteTextController)),
+                ],
+              ),
             ),
           ),
         ));

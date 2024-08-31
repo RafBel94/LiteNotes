@@ -17,9 +17,12 @@ class NoteTextField extends StatelessWidget {
       textAlignVertical: TextAlignVertical.top,
       style: const TextStyle(fontSize: 18),
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        hintText: 'Text...',
-        hintStyle: const TextStyle(fontSize: 18),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 43, 43, 42)), borderRadius: BorderRadius.circular(5)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 106, 106, 105)), borderRadius: BorderRadius.circular(5)
+        ),
       ),
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();

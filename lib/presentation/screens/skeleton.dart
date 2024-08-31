@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/presentation/screens/new_note_screen.dart';
+import 'package:simple_notes/presentation/screens/new_task_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
@@ -41,6 +42,7 @@ class SkeletonState extends State<Skeleton> {
     final NoteProvider noteProvider = context.watch<NoteProvider>();
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: [
           if(noteProvider.filteredGroup != noteProvider.defaultGroup)
@@ -51,13 +53,13 @@ class SkeletonState extends State<Skeleton> {
               icon: const Icon(Icons.filter_alt_off, color: Colors.black, size: 30,)
             ),
 
-          SortButton()
+          const SortButton()
         ],
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         title: Text(
-          currentPageIndex == 0 ? 'Notes' : 'Reminders',
+          currentPageIndex == 0 ? 'Notes' : 'Tasks',
           style: const TextStyle(color: Colors.black),
         )),
         
@@ -113,7 +115,7 @@ class _NewTaskButton extends StatelessWidget {
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
       icon: const Icon(Icons.add_box_outlined),
       onPressed: () {
-        // TODO: Implement new task creation
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const NewTaskScreen()));
       },
     );
   }

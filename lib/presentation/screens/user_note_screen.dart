@@ -3,11 +3,11 @@ import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
-import 'package:simple_notes/presentation/widgets/shared/modal_bottom_sheet.dart';
+import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
 
 import '../widgets/shared/title_text_field.dart';
-import 'note_text_field.dart';
+import '../widgets/shared/note_text_field.dart';
 
 class UserNoteScreen extends StatefulWidget {
   final Note note;
@@ -56,7 +56,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 icon: const Icon(Icons.info),
                 color: Colors.black,
                 onPressed: () {
-                  ModalBottomSheet(widget.note.modifiedDate, creationDate: widget.note.creationDate).showInfoMenu(context);
+                  NoteInfoBottomSheet(widget.note.modifiedDate, creationDate: widget.note.creationDate).showInfoMenu(context);
                 },
               )
             ],
@@ -69,25 +69,28 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
           ),
 
 
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                GroupsScrollView(key: groupsScrollViewKey, note: widget.note,),
-
-                TitleTextField(
-                  titleController: widget.titleController,
-                ),
-
-                const SizedBox(
-                  height: 10,
-                ),
-
-                Expanded(
-                    child: NoteTextField(
-                  noteTextController: widget.noteTextController,
-                )),
-              ],
+          body: Container(
+            decoration: const BoxDecoration(color: Color.fromARGB(255, 15, 15, 15)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  GroupsScrollView(key: groupsScrollViewKey, note: widget.note,),
+            
+                  TitleTextField(
+                    titleController: widget.titleController,
+                  ),
+            
+                  const SizedBox(
+                    height: 10,
+                  ),
+            
+                  Expanded(
+                      child: NoteTextField(
+                    noteTextController: widget.noteTextController,
+                  )),
+                ],
+              ),
             ),
           ),
 

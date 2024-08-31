@@ -15,6 +15,7 @@ class AppDrawer extends StatelessWidget {
 
     return Drawer(
       elevation: 40,
+      backgroundColor: const Color.fromARGB(255, 18, 18, 17),
       shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
       child: ListView(
         padding: EdgeInsets.zero,
@@ -37,8 +38,9 @@ class AppDrawer extends StatelessWidget {
 
 
           ExpansionTile(
-            title: const Text('Groups'),
-            backgroundColor: const Color.fromARGB(255, 42, 38, 29),
+            title: const Text('Note Groups'),
+            collapsedBackgroundColor: const Color.fromARGB(255, 39, 35, 21),
+            backgroundColor: const Color.fromARGB(255, 67, 60, 37),
             leading: const Icon(Icons.account_tree),
             children: <Widget>[
 
@@ -93,8 +95,7 @@ class AppDrawer extends StatelessWidget {
 
 
               Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 138, 115, 50))),
+                color: const Color.fromARGB(255, 30, 30, 27),
                 child: ListTile(
                   title: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

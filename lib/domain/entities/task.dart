@@ -1,16 +1,19 @@
+import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:uuid/uuid.dart';
 
 class Task {
  String id;
- String text;
+ String title;
+ List<TaskCheck> checkList;
  DateTime creationDate;
 
- Task({required this.id, required this.text, required this.creationDate});
+ Task({required this.id, required this.title, required this.checkList, required this.creationDate});
 
- factory Task.create({required String text}){
+ factory Task.create({required String title, required List<TaskCheck> checkList}){
   return Task(
     id: const Uuid().v4(),
-    text: text,
+    title: title,
+    checkList: checkList,
     creationDate: DateTime.now()
   );
  }
@@ -18,7 +21,8 @@ class Task {
  factory Task.fromJson(Map<String, dynamic> json){
   return Task(
     id: json['id'],
-    text: json['text'],
+    title: json['title'],
+    checkList: (json['checkList'] as List).map((taskCheckJson) => TaskCheck.fromJson(taskCheckJson)).toList(),
     creationDate: DateTime.parse(json['creationDate'])
   );
  }
@@ -26,7 +30,8 @@ class Task {
  Map<String, dynamic> toJson(){
   return {
     'id': id,
-    'text': text,
+    'title': title,
+    'checkList': checkList.map((taskCheck) => taskCheck.toJson()).toList(),
     'creationDate': creationDate.toIso8601String()
   };
  }

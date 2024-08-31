@@ -46,11 +46,19 @@ class SortButtonState extends State<SortButton> {
       onSelected: (int selected) {
         switch(selected) {
           case 1: {
-            noteProvider.sortListAlphabetically(descendent: true);
+            if(skeletonState?.currentPageIndex == 0){
+              noteProvider.sortListAlphabetically(descendent: true);
+            } else {
+              taskProvider.sortListAlphabetically(descendent: true);
+            }
             break;
           }
           case 2: {
-            noteProvider.sortListAlphabetically(descendent: false);
+            if(skeletonState?.currentPageIndex == 0){
+              noteProvider.sortListAlphabetically(descendent: false);
+            } else {
+              taskProvider.sortListAlphabetically(descendent: false);
+            }
             break;
           }
           case 3: {
@@ -59,7 +67,6 @@ class SortButtonState extends State<SortButton> {
             } else {
               taskProvider.sortListByCreationDate(recentFirst: true);
             }
-
             break;
           }
           case 4: {
@@ -77,16 +84,14 @@ class SortButtonState extends State<SortButton> {
       },
       itemBuilder: (context) {
         return <PopupMenuEntry<int>>[
-          if(skeletonState?.currentPageIndex == 0)
-            const PopupMenuItem(
-              value: 1,
-              child: Text('Sort alphabetically (A-Z)'),
-            ),
-          if(skeletonState?.currentPageIndex == 0)
-            const PopupMenuItem(
-              value: 2,
-              child: Text('Sort alphabetically (Z-A)'),
-            ),
+          const PopupMenuItem(
+            value: 1,
+            child: Text('Sort alphabetically (A-Z)'),
+          ),
+          const PopupMenuItem(
+            value: 2,
+            child: Text('Sort alphabetically (Z-A)'),
+          ),
           const PopupMenuItem(
             value: 3,
             child: Text('Sort by last modified (Recent)'),

@@ -33,6 +33,18 @@ class TaskProvider extends ChangeNotifier{
     });
   }
 
+  void sortListAlphabetically({required bool descendent}) {
+    if(descendent) {
+      // Ascendent ASCII value
+      taskList.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    } else {
+      // Descendent ASCII value
+      taskList.sort((a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
+    }
+
+    notifyListeners();
+  }
+
   void sortListByCreationDate({required bool recentFirst}) {
     if(recentFirst) {
       taskList.sort((a,b) => b.creationDate.compareTo(a.creationDate));

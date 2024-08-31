@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ModalBottomSheet {
+class NoteInfoBottomSheet {
   final DateTime? creationDate;
   final DateTime? modifiedDate;
 
-  ModalBottomSheet(this.modifiedDate, {required this.creationDate});
+  NoteInfoBottomSheet(this.modifiedDate, {required this.creationDate});
 
   void showInfoMenu(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

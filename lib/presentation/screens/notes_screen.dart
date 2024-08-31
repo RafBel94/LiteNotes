@@ -27,21 +27,18 @@ class NotesScreenState extends State<NotesScreen> {
             .where((note) => note.group == noteProvider.filteredGroup)
             .toList();
 
-    return Container(
-      decoration: const BoxDecoration(color: Color.fromARGB(255, 24, 24, 24)),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
-          itemCount: filteredNotes.length,
-          itemBuilder: (context, index) {
-            final Note note = filteredNotes[index];
-              return NoteButton(
-                note: note,
-                noteProvider: noteProvider,
-              );
-          },
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+        itemCount: filteredNotes.length,
+        itemBuilder: (context, index) {
+          final Note note = filteredNotes[index];
+            return NoteButton(
+              note: note,
+              noteProvider: noteProvider,
+            );
+        },
       ),
     );
   }
