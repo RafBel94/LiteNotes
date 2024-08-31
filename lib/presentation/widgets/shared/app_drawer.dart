@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
+import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/edit_group_dialog.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/new_group_dialog.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -12,17 +14,14 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final GroupProvider groupProvider = context.watch<GroupProvider>();
     final NoteProvider noteProvider = context.read<NoteProvider>();
-    final Size size = MediaQuery.of(context).size;
 
     return Drawer(
       elevation: 40,
-      width: size.width * 0.5,
       backgroundColor: const Color.fromARGB(255, 18, 18, 17),
       shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-
 
           Container(
             height: 80,
@@ -65,13 +64,28 @@ class AppDrawer extends StatelessWidget {
 
                             Expanded(
                               child: TextButton(
-                                style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent)),
-                                child: Text(provider.groupList[index].name, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, color: Colors.white),),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                ),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(provider.groupList[index].name,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                                  ),
+                                ),
                                 onPressed: () {
                                   // Set current filtered group to the selected one
                                   noteProvider.updateFilteredGroup(provider.groupList[index]);
                                 },
                               ),
+                            ),
+                            
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                EditGroupDialog().editGroup(context, provider.groupList[index]);
+                              },
                             ),
                             
                             IconButton(
