@@ -109,7 +109,7 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                             child: Row(
                               children: [
 
-                                // Check Icon
+                                // Check Button
                                 IconButton(
                                   icon: checkList[index].done ? const Icon(Icons.check_box_outlined, color: Color.fromARGB(255, 81, 81, 81)) : const Icon(Icons.check_box_outline_blank_outlined, color: Color.fromARGB(255, 165, 145, 86),),
                                   onPressed: () {
@@ -254,13 +254,12 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
 
   void verifyTask(TaskProvider taskProvider) {
     String trimmedTitle = titleController.text.trim();
-    Task task = Task.create(title: titleController.text, checkList: checkList);
 
     if(trimmedTitle.isEmpty){
-      task.title = 'No title task';
+      widget.task.title = 'No title task';
     }
 
-    taskProvider.updateTask(task);
+    taskProvider.updateTask(widget.task);
   }
 }
 
