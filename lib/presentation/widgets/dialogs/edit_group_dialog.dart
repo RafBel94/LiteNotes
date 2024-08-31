@@ -120,3 +120,5 @@ class EditGroupDialog {
     }
   }
 }
+
+// groupProvider.addGroup(Group.create(name: txtController.value.text, color: selectedColor));
