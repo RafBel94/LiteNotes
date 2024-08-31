@@ -35,15 +35,6 @@ class NoteGroupsScrollViewState extends State<GroupsScrollView> {
   
   List<Widget> getAvailableGroups(List<Group> filteredList) {
     return [
-      Align(
-        alignment: Alignment.center,
-        child: Container(
-            padding: const EdgeInsets.only(bottom: 5),
-            child: const Text(
-              'Groups:',
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            )),
-      ),
       Container(
         height: 40,
         margin: const EdgeInsets.only(bottom: 10),

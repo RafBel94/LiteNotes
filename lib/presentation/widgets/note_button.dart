@@ -79,7 +79,7 @@ class NoteButton extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
-                  DeleteConfirmationDialog(context: context).showConfirmationDialog(context).then((confirmation) {
+                  DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);

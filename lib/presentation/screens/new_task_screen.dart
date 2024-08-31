@@ -15,6 +15,7 @@ class NewTaskScreen extends StatefulWidget {
 class _NewTaskScreenState extends State<NewTaskScreen> {
 
   TextEditingController titleController = TextEditingController();
+  FocusNode titleFocusNode = FocusNode();
   ScrollController scrollController = ScrollController();
   List<TaskCheck> checkList = [];
   List<TextEditingController> controllerList = [];
@@ -71,7 +72,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 children: [
                   const SizedBox(height: 5),
 
-                  TitleTextField(titleController: titleController),
+                  TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode),
 
                   Container(margin: const EdgeInsets.only(top: 15, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
                   

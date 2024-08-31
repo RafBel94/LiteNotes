@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 
 class TitleTextField extends StatelessWidget {
   final TextEditingController titleController;
-  final FocusNode titleFocusNode = FocusNode();
+  final FocusNode? titleFocusNode;
 
-  TitleTextField({super.key, required this.titleController});
+  const TitleTextField({super.key, required this.titleController, this.titleFocusNode});
 
   @override
   Widget build(BuildContext context) {
 
     return TextField(
       controller: titleController,
-      focusNode: titleFocusNode,
+      focusNode: titleFocusNode ?? FocusNode(),
       style: const TextStyle(fontSize: 22),
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color.fromARGB(255, 43, 43, 42)), borderRadius: BorderRadius.circular(5)
         ),
@@ -24,7 +25,7 @@ class TitleTextField extends StatelessWidget {
         hintStyle: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 101, 101, 101))
       ),
       onTapOutside: (event) {
-        FocusScope.of(context).unfocus();
+        titleFocusNode?.unfocus();
       },
     );
   }

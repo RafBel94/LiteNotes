@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
 
 class UserTaskScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class UserTaskScreen extends StatefulWidget {
 class _UserTaskScreenState extends State<UserTaskScreen> {
 
   TextEditingController titleController = TextEditingController();
+  FocusNode titleFocusNode = FocusNode();
   ScrollController scrollController = ScrollController();
   List<TaskCheck> checkList = [];
   List<TextEditingController> controllerList = [];
@@ -36,6 +38,7 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
   @override
   void dispose() {
     titleController.dispose();
+    titleFocusNode.dispose();
 
     for (TextEditingController controller in controllerList) {
       controller.dispose();
@@ -69,12 +72,16 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.delete, color: Colors.black, size: 30),
-                onPressed: () {
-                  taskProvider.removeTask(widget.task);
-                  Navigator.of(context).pop();
-                }
-              ),
+                  icon: const Icon(Icons.delete, color: Colors.black, size: 30),
+                  onPressed: () {
+                    DeleteConfirmationDialog(context: context, type: 'task').showConfirmationDialog(context).then((confirmation) {
+                      if (confirmation == true) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context);
+                        taskProvider.removeTask(widget.task);
+                      }
+                    });
+                  }),
 
               IconButton(
                 icon: const Icon(Icons.check, color: Colors.black, size: 30),
@@ -93,9 +100,11 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                 children: [
                   const SizedBox(height: 5),
 
-                  TitleTextField(titleController: titleController),
+                  Container(margin: const EdgeInsets.only(bottom: 10), child: const Text('Task title', style: TextStyle(fontSize: 20))),
 
-                  Container(margin: const EdgeInsets.only(top: 15, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
+                  TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode),
+
+                  Container(margin: const EdgeInsets.only(top: 35, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
                   
                   Expanded(
                     child: SingleChildScrollView(
@@ -119,7 +128,7 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                                   },
                                 ),
 
-                                // Checklist
+                                // TaskCheck Text
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 15),
@@ -130,14 +139,14 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                                         const TextStyle(color: Color.fromARGB(255, 81, 81, 81), decoration: TextDecoration.lineThrough) :
                                         const TextStyle(color: Colors.white),
                                       decoration: const InputDecoration(
-                                        hintText: 'Insert the check text...',
+                                        hintText: 'Insert the subtask...',
                                         hintStyle: TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
                                         contentPadding: EdgeInsets.only(top: 15),
                                         enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(0, 41, 41, 41))),
                                         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 99, 93, 69))),
                                       ),
                                       onTapOutside: (event) {
-                                        FocusScope.of(context).unfocus();
+                                        focusList[index].unfocus();
                                       },
                                     ),
                                   ),
@@ -205,15 +214,15 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
       checkList.add(taskCheck);
 
       focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        setState(() {
-          if (controller.text.trim().isEmpty) {
-            controller.text = 'No text';
-            taskCheck.text = 'No text';
-          } else {
-            taskCheck.text = controller.text;
-          }
-        });
+        if (!focusNode.hasFocus) {
+          setState(() {
+            if (controller.text.trim().isEmpty) {
+              controller.text = 'Empty task';
+              taskCheck.text = 'Empty task';
+            } else {
+              taskCheck.text = controller.text;
+            }
+          });
       }
     });
 
@@ -238,8 +247,8 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
       if (!focusNode.hasFocus) {
         setState(() {
           if (controller.text.trim().isEmpty) {
-            controller.text = 'No text';
-            tc.text = 'No text';
+            controller.text = 'Empty task';
+            tc.text = 'Empty task';
           } else {
             tc.text = controller.text;
           }
@@ -256,7 +265,9 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
     String trimmedTitle = titleController.text.trim();
 
     if(trimmedTitle.isEmpty){
-      widget.task.title = 'No title task';
+      widget.task.title = 'No title';
+    } else {
+      widget.task.title = titleController.text.trim();
     }
 
     taskProvider.updateTask(widget.task);

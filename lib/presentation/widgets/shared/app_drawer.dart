@@ -12,9 +12,11 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final GroupProvider groupProvider = context.watch<GroupProvider>();
     final NoteProvider noteProvider = context.read<NoteProvider>();
+    final Size size = MediaQuery.of(context).size;
 
     return Drawer(
       elevation: 40,
+      width: size.width * 0.5,
       backgroundColor: const Color.fromARGB(255, 18, 18, 17),
       shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
       child: ListView(
