@@ -53,6 +53,18 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
             ),
             actions: [
               IconButton(
+                icon: const Icon(Icons.delete, color: Colors.black, size: 30),
+                onPressed: () {
+                  DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
+                    if (confirmation == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      widget.noteProvider.removeNote(widget.note);
+                    }
+                  });
+                }),
+
+              IconButton(
                 icon: const Icon(Icons.info),
                 color: Colors.black,
                 onPressed: () {
@@ -92,23 +104,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 ],
               ),
             ),
-          ),
-
-
-          floatingActionButton: IconButton(
-            icon: const Icon(Icons.delete),
-            style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
-            iconSize: 50,
-            onPressed: () {
-              DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
-                if (confirmation == true) {
-                  // ignore: use_build_context_synchronously
-                  Navigator.pop(context);
-                  widget.noteProvider.removeNote(widget.note);
-                }
-              });
-            },
-          ),
+          )
         ));
   }
 

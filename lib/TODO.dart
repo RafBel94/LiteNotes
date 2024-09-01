@@ -1,7 +1,6 @@
 // TODO
-// - Edit groups
-// - Add deleted date to notes
 // - Recicle bin
+// - Add deleted date to notes
 // - Notes inside the recible bin will be deleted after 30 days
 // - Select more than one note at a time
 

@@ -17,7 +17,7 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       elevation: 40,
       backgroundColor: const Color.fromARGB(255, 18, 18, 17),
-      shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -39,9 +39,9 @@ class AppDrawer extends StatelessWidget {
 
           ExpansionTile(
             title: const Text('Note Groups'),
-            collapsedBackgroundColor: const Color.fromARGB(255, 39, 35, 21),
-            backgroundColor: const Color.fromARGB(255, 67, 60, 37),
-            leading: const Icon(Icons.account_tree),
+            collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
+            backgroundColor: const Color.fromARGB(255, 90, 90, 90),
+            leading: const Icon(Icons.account_tree, color: Color.fromARGB(255, 235, 208, 125)),
             children: <Widget>[
 
               Consumer<GroupProvider>(
@@ -65,6 +65,9 @@ class AppDrawer extends StatelessWidget {
                               child: TextButton(
                                 style: TextButton.styleFrom(
                                   backgroundColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)
+                                  )
                                 ),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -129,6 +132,52 @@ class AppDrawer extends StatelessWidget {
               ),
             ],
           ),
+
+          ExpansionTile(
+            title: const Text('Recicle bin'),
+            collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
+            backgroundColor: const Color.fromARGB(255, 90, 90, 90),
+            leading: const Icon(Icons.delete, color: Color.fromARGB(255, 235, 208, 125)),
+            children: <Widget>[
+
+              Container(
+                color: const Color.fromARGB(255, 30, 30, 27),
+                width: double.infinity,
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+                  ),
+                  icon: const Icon(Icons.note_rounded),
+                  label: const Text('Notes', style: TextStyle(color: Colors.white)),
+                  onPressed: (){
+                    
+                  }
+                ),
+              ),
+
+              Container(
+                color: const Color.fromARGB(255, 30, 30, 27),
+                width: double.infinity,
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+                  ),
+                  icon: const Icon(Icons.checklist),
+                  label: const Text('Tasks', style: TextStyle(color: Colors.white)),
+                  onPressed: (){
+                    
+                  }
+                ),
+              ),
+              
+            ],
+          ),
+
+
         ],
       ),
     );

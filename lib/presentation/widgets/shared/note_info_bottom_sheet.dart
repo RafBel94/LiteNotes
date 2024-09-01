@@ -12,42 +12,40 @@ class NoteInfoBottomSheet {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      backgroundColor: const Color.fromARGB(255, 46, 46, 46),
       builder: (context) {
         return SizedBox(
-            width: size.width * 0.9,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  height: 10,
+          width: size.width * 0.75,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 10,),
+
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(text: 'Creation date:   ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                    TextSpan(text: creationDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
+                  ],
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Creation date:   ',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      TextSpan(text: creationDate.toString().split('.').first, style: const TextStyle(fontSize: 16)),
-                    ],
-                  ),
+              ),
+
+              const SizedBox(height: 10,),
+
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan( text: 'Modified date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                    TextSpan(text: modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
+                  ],
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Modified date:   ',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      TextSpan(text: modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                )
-              ],
-            ));
+              ),
+
+               const SizedBox(height: 10,)
+            ],
+          )
+        );
       },
     );
   }
