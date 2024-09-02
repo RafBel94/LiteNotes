@@ -91,7 +91,6 @@ class TaskProvider extends ChangeNotifier{
     if (await file.exists()) {
       String jsonContent = await file.readAsString();
       List<dynamic> jsonList = jsonDecode(jsonContent);
-
       return jsonList.map((json) => Task.fromJson(json)).toList();
     } else {
       return [];

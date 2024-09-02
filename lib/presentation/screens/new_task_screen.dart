@@ -72,7 +72,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 children: [
                   const SizedBox(height: 5),
 
-                  TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode),
+                  TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode, isEnabled: true,),
 
                   Container(margin: const EdgeInsets.only(top: 15, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
                   

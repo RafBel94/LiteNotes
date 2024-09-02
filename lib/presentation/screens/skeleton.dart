@@ -42,7 +42,7 @@ class SkeletonState extends State<Skeleton> {
     final NoteProvider noteProvider = context.watch<NoteProvider>();
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 23, 23, 23),
+      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: [
           if(noteProvider.filteredGroup != noteProvider.defaultGroup)

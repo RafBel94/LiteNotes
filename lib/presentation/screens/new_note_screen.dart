@@ -57,13 +57,13 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                   if(groupProvider.groupList.isNotEmpty)
                     GroupsScrollView(key: groupsScrollViewKey),
                   
-                  TitleTextField(titleController: titleController),
+                  TitleTextField(titleController: titleController, isEnabled: true,),
             
                   const SizedBox(
                     height: 10,
                   ),
             
-                  Expanded(child: NoteTextField(noteTextController: noteTextController)),
+                  Expanded(child: NoteTextField(noteTextController: noteTextController, isEnabled: true,)),
                 ],
               ),
             ),

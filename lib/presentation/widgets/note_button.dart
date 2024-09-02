@@ -1,36 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/deleted_note_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/user_note_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/remove_group_dialog.dart';
 
 class NoteButton extends StatelessWidget {
   final Note note;
-  final NoteProvider noteProvider;
+  final bool isDeleted;
 
-  const NoteButton({super.key, required this.note, required this.noteProvider});
+  const NoteButton({super.key, required this.note, required this.isDeleted});
 
   @override
   Widget build(BuildContext context) {
+
+    final RecicleBinProvider binProvider = context.read<RecicleBinProvider>();
+    final NoteProvider noteProvider = context.read<NoteProvider>();
+
     return TextButton(
       style: TextButton.styleFrom(
-        side: BorderSide(color: note.group != null ? note.group!.color : Colors.transparent),
+        side: BorderSide(color: (note.group != null && !isDeleted) ? note.group!.color : Colors.transparent),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         backgroundColor: const Color.fromARGB(25, 158, 158, 158)
       ),
       onPressed: () {
-        Navigator.push(context,
+        if(!isDeleted){
+          Navigator.push(context,
+            MaterialPageRoute(
+              builder: (context) => UserNoteScreen(
+                note: note,
+                noteProvider: noteProvider,
+              )
+            )
+          );
+        } else {
+          Navigator.push(context,
           MaterialPageRoute(
-            builder: (context) => UserNoteScreen(
+            builder: (context) => DeletedNoteScreen(
               note: note,
-              noteProvider: noteProvider,
+              binProvider: binProvider,
             )
           )
         );
+        }
       },
       onLongPress: () {
-        showLongPressMenu(context);
+        if(!isDeleted){
+          showLongPressMenu(context, binProvider, noteProvider);
+        }
       },
       child: Column(
         children: [
@@ -53,7 +73,7 @@ class NoteButton extends StatelessWidget {
     );
   }
 
-  showLongPressMenu(BuildContext context) {
+  showLongPressMenu(BuildContext context, RecicleBinProvider binProvider, NoteProvider noteProvider) {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -81,9 +101,10 @@ class NoteButton extends StatelessWidget {
                 onPressed: () async {
                   DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
+                      binProvider.addNote(note);
+                      noteProvider.removeNote(note);
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
-                      noteProvider.removeNote(note);
                     }
                   });
                 },

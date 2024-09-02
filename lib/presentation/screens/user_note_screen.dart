@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
@@ -40,10 +42,14 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
   @override
   Widget build(BuildContext context) {
 
+    final RecicleBinProvider binProvider = context.read<RecicleBinProvider>();
+
     return PopScope(
         onPopInvokedWithResult: (bool didPop, context) {
           if (didPop) {
-            compareAndUpdateNote(widget.titleController.text, widget.noteTextController.text, oldNoteTitle, oldNoteText, widget.noteProvider, groupsScrollViewKey.currentState?.getSelectedGroup());
+            if(widget.note.deletedDate == null){
+              compareAndUpdateNote(widget.titleController.text, widget.noteTextController.text, oldNoteTitle, oldNoteText, widget.noteProvider, groupsScrollViewKey.currentState?.getSelectedGroup());
+            }
           }
         },
         child: Scaffold(
@@ -57,9 +63,10 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                 onPressed: () {
                   DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
+                      binProvider.addNote(widget.note);
+                      widget.noteProvider.removeNote(widget.note);
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
-                      widget.noteProvider.removeNote(widget.note);
                     }
                   });
                 }),
@@ -91,6 +98,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
             
                   TitleTextField(
                     titleController: widget.titleController,
+                    isEnabled: true,
                   ),
             
                   const SizedBox(
@@ -100,6 +108,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
                   Expanded(
                       child: NoteTextField(
                     noteTextController: widget.noteTextController,
+                    isEnabled: true,
                   )),
                 ],
               ),

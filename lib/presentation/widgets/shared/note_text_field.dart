@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class NoteTextField extends StatelessWidget {
   final TextEditingController noteTextController;
   final FocusNode noteTextFocusNode = FocusNode();
+  final bool isEnabled;
 
-  NoteTextField({super.key, required this.noteTextController});
+  NoteTextField({super.key, required this.noteTextController, required this.isEnabled});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: noteTextController,
       focusNode: noteTextFocusNode,
+      enabled: isEnabled,
       maxLines: null,
       expands: true,
       textAlign: TextAlign.start,

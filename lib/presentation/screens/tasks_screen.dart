@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
+import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/user_task_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
@@ -76,6 +77,7 @@ class TasksScreen extends StatelessWidget {
   showLongPressMenu(BuildContext context, Task task) {
 
     TaskProvider taskProvider = context.read<TaskProvider>();
+    RecicleBinProvider recicleBinProvider = context.read<RecicleBinProvider>();
 
     showModalBottomSheet(
       context: context,
@@ -101,9 +103,10 @@ class TasksScreen extends StatelessWidget {
                 onPressed: () async {
                   DeleteConfirmationDialog(context: context, type: 'task').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
+                      recicleBinProvider.addTask(task);
+                      taskProvider.removeTask(task);
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
-                      taskProvider.removeTask(task);
                     }
                   });
                 },

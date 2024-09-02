@@ -17,6 +17,7 @@ class NewGroupDialog {
         return AlertDialog(
           title: const Text('New group', style: TextStyle(fontSize: 30),),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: const Color.fromARGB(255, 30, 30, 27),
           actions: [
 
             const Align(
@@ -43,23 +44,23 @@ class NewGroupDialog {
             const SizedBox(height: 15,),
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: () async {
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero
+                  ),
+                  onPressed: () async {
                     selectedColor = await CustomColorPicker().showColorPicker(context, selectedColor);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 239, 208, 115))),
-                      child: const Text('SELECT COLOR',style: TextStyle(fontSize: 20, color: Colors.white),)
-                    )
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 239, 208, 115))),
+                    child: const Text('SELECT COLOR',style: TextStyle(fontSize: 20, color: Colors.white),)
                   )
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
+                  // TODO: Reflect changes on icon color when it gets edited
                   child: Icon(Icons.square_rounded, color: selectedColor, size: 40,),
                 )
               ],

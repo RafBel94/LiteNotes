@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class NoteInfoBottomSheet {
   final DateTime? creationDate;
   final DateTime? modifiedDate;
+  final DateTime? deletedDate;
 
-  NoteInfoBottomSheet(this.modifiedDate, {required this.creationDate});
+  NoteInfoBottomSheet(this.modifiedDate, {required this.creationDate, this.deletedDate});
 
   void showInfoMenu(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -38,6 +39,18 @@ class NoteInfoBottomSheet {
                   children: [
                     const TextSpan( text: 'Modified date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
                     TextSpan(text: modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 10,),
+
+              if(deletedDate != null)
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan( text: 'Deletion date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                    TextSpan(text: deletedDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
                   ],
                 ),
               ),

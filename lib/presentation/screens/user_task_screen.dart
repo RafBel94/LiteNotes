@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
+import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
@@ -53,12 +54,15 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
   @override
   Widget build(BuildContext context) {
 
-  TaskProvider taskProvider = context.read<TaskProvider>();
+  final TaskProvider taskProvider = context.read<TaskProvider>();
+  final RecicleBinProvider binProvider = context.read<RecicleBinProvider>();
 
     return PopScope(
       onPopInvokedWithResult: (bool didPop, result) {
         if(didPop){
-          verifyTask(taskProvider);
+          if(widget.task.deletedDate == null){
+            verifyTask(taskProvider);
+          }
         }
       },
       child: Scaffold(
@@ -76,9 +80,10 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                   onPressed: () {
                     DeleteConfirmationDialog(context: context, type: 'task').showConfirmationDialog(context).then((confirmation) {
                       if (confirmation == true) {
+                        binProvider.addTask(widget.task);
+                        taskProvider.removeTask(widget.task);
                         // ignore: use_build_context_synchronously
                         Navigator.pop(context);
-                        taskProvider.removeTask(widget.task);
                       }
                     });
                   }),
@@ -102,7 +107,7 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
 
                   Container(margin: const EdgeInsets.only(bottom: 10), child: const Text('Task title', style: TextStyle(fontSize: 20))),
 
-                  TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode),
+                  TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode, isEnabled: true),
 
                   Container(margin: const EdgeInsets.only(top: 35, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
                   

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class TitleTextField extends StatelessWidget {
   final TextEditingController titleController;
   final FocusNode? titleFocusNode;
+  final bool isEnabled;
 
-  const TitleTextField({super.key, required this.titleController, this.titleFocusNode});
+  const TitleTextField({super.key, required this.titleController, this.titleFocusNode, required this.isEnabled});
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +13,10 @@ class TitleTextField extends StatelessWidget {
     return TextField(
       controller: titleController,
       focusNode: titleFocusNode ?? FocusNode(),
+      enabled: isEnabled,
       style: const TextStyle(fontSize: 22),
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color.fromARGB(255, 43, 43, 42)), borderRadius: BorderRadius.circular(5)
         ),

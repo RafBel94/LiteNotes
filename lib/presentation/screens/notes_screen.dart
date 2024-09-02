@@ -36,7 +36,7 @@ class NotesScreenState extends State<NotesScreen> {
           final Note note = filteredNotes[index];
             return NoteButton(
               note: note,
-              noteProvider: noteProvider,
+              isDeleted: false,
             );
         },
       ),

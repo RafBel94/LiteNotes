@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/recicle_bin_notes_screen.dart';
+import 'package:simple_notes/presentation/screens/recicle_bin_tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/edit_group_dialog.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/new_group_dialog.dart';
 
@@ -152,7 +154,7 @@ class AppDrawer extends StatelessWidget {
                   icon: const Icon(Icons.note_rounded),
                   label: const Text('Notes', style: TextStyle(color: Colors.white)),
                   onPressed: (){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RecicleBinNotesScreen()));
                   }
                 ),
               ),
@@ -169,7 +171,7 @@ class AppDrawer extends StatelessWidget {
                   icon: const Icon(Icons.checklist),
                   label: const Text('Tasks', style: TextStyle(color: Colors.white)),
                   onPressed: (){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RecicleBinTasksScreen()));
                   }
                 ),
               ),
@@ -192,6 +194,7 @@ class AppDrawer extends StatelessWidget {
         return AlertDialog(
           title: const Text("Delete Confirmation"),
           content: const Text("Do you want to delete this group?"),
+          backgroundColor: const Color.fromARGB(255, 30, 30, 27),
           actions: <Widget>[
             TextButton(
               onPressed: () {
