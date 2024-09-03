@@ -23,6 +23,15 @@ class RecicleBinProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addNotes (List<Note> notes) {
+    for(Note note in notes) {
+      note.deletedDate = DateTime.now();
+      noteList.add(note);
+    }
+    saveNoteList();
+    notifyListeners();
+  }
+
   void removeNote (Note note) {
     note.deletedDate = null;
     noteList.remove(note);

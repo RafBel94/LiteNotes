@@ -13,6 +13,10 @@ class RecicleBinNotesScreen extends StatefulWidget {
 }
 
 class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
+  // TODO: Implement multirestoration and multidelete
+
+  bool isMultiSelectMode = false;
+  List<Note> selectedNotes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +45,41 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
         itemCount: deletedNotesList.length,
         itemBuilder: (context, index) {
-          return NoteButton(note: deletedNotesList[index], isDeleted: true);
+          return NoteButton(
+            note: deletedNotesList[index],
+            isDeleted: true,
+            isMultiSelectMode: isMultiSelectMode,
+            isSelected: selectedNotes.contains(deletedNotesList[index]),
+            onLongPress: () {
+              toggleMultiSelectMode();
+            },
+            onSelected: () {
+              toggleSelection(deletedNotesList[index]);
+            },
+          );
         },
        ),
       )
     );
+  }
+
+  // Toggles multi select mode. If its activated, deactivates it and viceversa.
+  // Always clears the selected notes list
+  void toggleMultiSelectMode() {
+    setState(() {
+      isMultiSelectMode = !isMultiSelectMode;
+      selectedNotes.clear();
+    });
+  }
+
+  // Adds or removes note from selected notes list depending of it being already in the list or not
+  void toggleSelection(Note note) {
+    setState(() {
+      if (selectedNotes.contains(note)) {
+        selectedNotes.remove(note);
+      } else {
+        selectedNotes.add(note);
+      }
+    });
   }
 }

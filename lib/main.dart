@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/config/infracstructure/app_theme.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => GroupProvider()),
         ChangeNotifierProvider(create: (_) => NoteProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
-        ChangeNotifierProvider(create: (_) => RecicleBinProvider())
+        ChangeNotifierProvider(create: (_) => RecicleBinProvider()),
+        ChangeNotifierProvider(create: (_) => MultiselectProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

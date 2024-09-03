@@ -48,6 +48,14 @@ class NoteProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeNotes(List<Note> notes) {
+    for(Note note in notes) {
+      noteList.remove(note);
+    }
+    saveNoteList(noteList);
+    notifyListeners();
+  }
+
   void updateNote(Note note) {
     // Find the index of the note with same id as the parameter note
     int index = noteList.indexWhere((n) => n.id == note.id);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import '../widgets/note_button.dart';
 
@@ -20,6 +21,7 @@ class NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
 
     NoteProvider noteProvider = context.watch<NoteProvider>();
+    MultiselectProvider multiselectProvider = context.watch<MultiselectProvider>();
 
     List<Note> filteredNotes = noteProvider.filteredGroup == noteProvider.defaultGroup
         ? noteProvider.noteList
@@ -37,7 +39,15 @@ class NotesScreenState extends State<NotesScreen> {
             return NoteButton(
               note: note,
               isDeleted: false,
-            );
+              isMultiSelectMode: multiselectProvider.isMultiSelectMode,
+              isSelected: multiselectProvider.selectedNotes.contains(note),
+              onLongPress: () {
+                multiselectProvider.toggleMultiSelectMode();
+              },
+              onSelected: () {
+                multiselectProvider.toggleSelection(note);
+              },
+              );
         },
       ),
     );

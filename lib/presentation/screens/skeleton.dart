@@ -4,7 +4,9 @@ import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/new_task_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
@@ -40,11 +42,29 @@ class SkeletonState extends State<Skeleton> {
   @override
   Widget build(BuildContext context) {
     final NoteProvider noteProvider = context.watch<NoteProvider>();
+    final MultiselectProvider multiselectProvider = context.watch<MultiselectProvider>();
+    final RecicleBinProvider recicleBinProvider = context.read<RecicleBinProvider>();
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: [
+          if (multiselectProvider.isMultiSelectMode) 
+          IconButton(
+            icon: const Icon(Icons.cancel_outlined),
+            onPressed: () {
+              multiselectProvider.toggleMultiSelectMode();
+            },
+          ),
+
+          if (multiselectProvider.isMultiSelectMode) 
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              multiselectProvider.deleteSelectedNotes(noteProvider, recicleBinProvider);
+            },
+          ),
+          
           if(noteProvider.filteredGroup != noteProvider.defaultGroup)
             IconButton(
               onPressed: (){
@@ -66,6 +86,9 @@ class SkeletonState extends State<Skeleton> {
         bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int navigationIndex) {
           setState(() {
+            if(multiselectProvider.isMultiSelectMode){
+              multiselectProvider.toggleMultiSelectMode();
+            }
             currentPageIndex = navigationIndex;
           });
         },
@@ -96,11 +119,17 @@ class _NewNoteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final MultiselectProvider multiselectProvider = context.read<MultiselectProvider>();
+
     return IconButton(
       iconSize: 50,
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
       icon: const Icon(Icons.note_add),
       onPressed: () {
+        if(multiselectProvider.isMultiSelectMode){
+          multiselectProvider.toggleMultiSelectMode();
+        }
         Navigator.push(context, MaterialPageRoute(builder: (context) => const NewNoteScreen()));
       },
     );

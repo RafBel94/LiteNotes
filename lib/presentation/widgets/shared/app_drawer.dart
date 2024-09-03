@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/recicle_bin_notes_screen.dart';
 import 'package:simple_notes/presentation/screens/recicle_bin_tasks_screen.dart';
@@ -15,6 +16,9 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final GroupProvider groupProvider = context.watch<GroupProvider>();
     final NoteProvider noteProvider = context.read<NoteProvider>();
+    final MultiselectProvider multiselectProvider = context.read<MultiselectProvider>();
+    
+    disableMultiSelect(multiselectProvider);
 
     return Drawer(
       elevation: 40,
@@ -212,5 +216,11 @@ class AppDrawer extends StatelessWidget {
         );
       },
     );
+  }
+  
+  void disableMultiSelect(MultiselectProvider multiselectProvider) {
+    if(multiselectProvider.isMultiSelectMode){
+      multiselectProvider.toggleMultiSelectMode();
+    }
   }
 }
