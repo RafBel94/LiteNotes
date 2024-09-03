@@ -26,4 +26,4 @@ Deleted notes and tasks will be sent to the **recicle bin** so you can recover t
 
 Notes and Tasks inside the recicle bin can be sorted by its **delete date** to help you find notes or tasks easily.
 
-**IMPORTANT:** Notes and Tasks inside the recicle bin can't be edited.
+**IMPORTANT:** Notes and Tasks inside the recicle bin can't be edited and will be deleted automatically in 30 days.

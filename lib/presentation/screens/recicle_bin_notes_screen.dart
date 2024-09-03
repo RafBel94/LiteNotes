@@ -14,12 +14,14 @@ class RecicleBinNotesScreen extends StatefulWidget {
 
 class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
 
-
   @override
   Widget build(BuildContext context) {
 
   final RecicleBinProvider binProvider = context.watch<RecicleBinProvider>();
   final List<Note> deletedNotesList = binProvider.noteList;
+
+  // Delete notes older than 30 days
+  binProvider.deleteOldNotes();
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),

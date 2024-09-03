@@ -14,7 +14,10 @@ class RecicleBinTasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final RecicleBinProvider binProvider = context.watch<RecicleBinProvider>();
-    final List<Task> deletedTaskList = binProvider.taskList; 
+    final List<Task> deletedTaskList = binProvider.taskList;
+
+    // Delete tasks older than 30 days
+    binProvider.deleteOldTasks();
 
     return Scaffold(backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(

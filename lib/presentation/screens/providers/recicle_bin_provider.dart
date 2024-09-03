@@ -66,6 +66,27 @@ class RecicleBinProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Delete old notes and tasks
+
+  void deleteOldNotes() {
+    final now = DateTime.now();
+    noteList.removeWhere((note) => 
+      now.difference(note.deletedDate!).inDays > 30
+    );
+    saveNoteList();
+    notifyListeners();
+  }
+
+  void deleteOldTasks() {
+    final now = DateTime.now();
+    taskList.removeWhere((task) => 
+      now.difference(task.deletedDate!).inDays > 30
+    );
+    saveTaskList();
+    notifyListeners();
+  }
+
+
   // METHODS RELATED TO READ/SAVE DATA LOCALLY
 
   Future<void> loadDeletedObjects() async {
