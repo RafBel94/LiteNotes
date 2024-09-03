@@ -46,6 +46,26 @@ class RecicleBinProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Sort
+
+  void sortByDeleteDate({required bool recentFirst, required String type}) {
+    if(type == 'task'){
+      if(recentFirst) {
+        taskList.sort((a,b) => b.deletedDate!.compareTo(a.deletedDate!));
+      } else {
+        taskList.sort((a,b) => a.deletedDate!.compareTo(b.deletedDate!));
+      }
+    } else if (type == 'note'){
+      if(recentFirst) {
+        noteList.sort((a,b) => b.deletedDate!.compareTo(a.deletedDate!));
+      } else {
+        noteList.sort((a,b) => a.deletedDate!.compareTo(b.deletedDate!));
+      }
+    }
+
+    notifyListeners();
+  }
+
   // METHODS RELATED TO READ/SAVE DATA LOCALLY
 
   Future<void> loadDeletedObjects() async {

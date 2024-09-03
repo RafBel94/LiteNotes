@@ -4,7 +4,7 @@ import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
 
 class UserTaskScreen extends StatefulWidget {
@@ -78,7 +78,7 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
               IconButton(
                   icon: const Icon(Icons.delete, color: Colors.black, size: 30),
                   onPressed: () {
-                    DeleteConfirmationDialog(context: context, type: 'task').showConfirmationDialog(context).then((confirmation) {
+                    ConfirmationDialog(context: context, message: 'Do you really want to delete this task?').showConfirmationDialog(context).then((confirmation) {
                       if (confirmation == true) {
                         binProvider.addTask(widget.task);
                         taskProvider.removeTask(widget.task);

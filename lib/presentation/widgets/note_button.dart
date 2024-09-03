@@ -5,7 +5,7 @@ import 'package:simple_notes/presentation/screens/deleted_note_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/user_note_screen.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/remove_group_dialog.dart';
 
 class NoteButton extends StatelessWidget {
@@ -99,7 +99,7 @@ class NoteButton extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
-                  DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
+                  ConfirmationDialog(context: context, message: 'Do you really want to delete this note?').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       binProvider.addNote(note);
                       noteProvider.removeNote(note);

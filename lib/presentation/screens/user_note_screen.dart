@@ -4,7 +4,7 @@ import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
 
@@ -61,7 +61,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
               IconButton(
                 icon: const Icon(Icons.delete, color: Colors.black, size: 30),
                 onPressed: () {
-                  DeleteConfirmationDialog(context: context, type: 'note').showConfirmationDialog(context).then((confirmation) {
+                  ConfirmationDialog(context: context, message: 'Do you really want to delete this note?').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       binProvider.addNote(widget.note);
                       widget.noteProvider.removeNote(widget.note);

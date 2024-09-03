@@ -25,7 +25,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: const [
-          SortButton()
+          SortButton(isDeletedScreen: true, objectType: 'note',)
         ],
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         iconTheme: const IconThemeData(color: Colors.black),

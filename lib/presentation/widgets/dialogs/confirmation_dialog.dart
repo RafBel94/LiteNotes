@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 
-class DeleteConfirmationDialog {
+class ConfirmationDialog {
   BuildContext context;
-  String type;
+  String message;
 
-  DeleteConfirmationDialog({required this.context, required this.type});
+  ConfirmationDialog({required this.context, required this.message});
 
   Future<bool?> showConfirmationDialog(BuildContext context) {
-
-    final String entityType = (type == 'note') ? 'note' : 'task';
 
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: const Color.fromARGB(255, 53, 53, 53),
-          title: const Text("Delete Confirmation"),
-          content: Text("Do you want to delete this $entityType?", style: const TextStyle(fontSize: 18)),
+          title: const Text("Confirmation"),
+          content: Text(message, style: const TextStyle(fontSize: 18)),
           actions: <Widget>[
             TextButton(
               onPressed: () {

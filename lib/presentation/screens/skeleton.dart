@@ -53,7 +53,7 @@ class SkeletonState extends State<Skeleton> {
               icon: const Icon(Icons.filter_alt_off, color: Colors.black, size: 30,)
             ),
 
-          const SortButton()
+          const SortButton(isDeletedScreen: false,)
         ],
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         iconTheme: const IconThemeData(color: Colors.black),

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/skeleton.dart';
 
 // TODO: Make it sort deleted tasks or notes
 class SortButton extends StatefulWidget {
+
+  final bool isDeletedScreen;
+  final String? objectType;
   
   const SortButton({
-    super.key
+    super.key, required this.isDeletedScreen, this.objectType
   });
   
   @override
@@ -25,6 +29,7 @@ class SortButtonState extends State<SortButton> {
 
     NoteProvider noteProvider = context.read<NoteProvider>();
     TaskProvider taskProvider = context.read<TaskProvider>();
+    RecicleBinProvider binProvider = context.read<RecicleBinProvider>();
 
     return PopupMenuButton<int>(
       onOpened: () {
@@ -76,7 +81,15 @@ class SortButtonState extends State<SortButton> {
             } else {
               taskProvider.sortListByCreationDate(recentFirst: false);
             }
-              break;
+            break;
+          }
+          case 5: {
+            binProvider.sortByDeleteDate(recentFirst: true, type: widget.objectType!);
+            break;
+          }
+          case 6: {
+            binProvider.sortByDeleteDate(recentFirst: false, type: widget.objectType!);
+            break;
           }
         }
         setState(() {
@@ -84,25 +97,42 @@ class SortButtonState extends State<SortButton> {
         });
       },
       itemBuilder: (context) {
-        return <PopupMenuEntry<int>>[
-          const PopupMenuItem(
-            value: 1,
-            child: Text('Sort alphabetically (A-Z)'),
-          ),
-          const PopupMenuItem(
-            value: 2,
-            child: Text('Sort alphabetically (Z-A)'),
-          ),
-          const PopupMenuItem(
-            value: 3,
-            child: Text('Sort by last modified (Recent)'),
-          ),
-          const PopupMenuItem(
-            value: 4,
-            child: Text('Sort by last modified (Older)'),
-          ),
-        ];
+        return widget.isDeletedScreen ? deletedEntryList() : notDeletedEntryList();
       },
     );
+  }
+  
+  List<PopupMenuEntry<int>> notDeletedEntryList() {
+    return <PopupMenuEntry<int>>[
+      const PopupMenuItem(
+        value: 1,
+        child: Text('Sort alphabetically (A-Z)'),
+      ),
+      const PopupMenuItem(
+        value: 2,
+        child: Text('Sort alphabetically (Z-A)'),
+      ),
+      const PopupMenuItem(
+        value: 3,
+        child: Text('Sort by last modified (Recent)'),
+      ),
+      const PopupMenuItem(
+        value: 4,
+        child: Text('Sort by last modified (Older)'),
+      ),
+    ];
+  }
+  
+  List<PopupMenuEntry<int>> deletedEntryList() {
+    return <PopupMenuEntry<int>>[
+      const PopupMenuItem(
+        value: 5,
+        child: Text('Sort by deleted date (Recent)'),
+      ),
+      const PopupMenuItem(
+        value: 6,
+        child: Text('Sort by deleted date (Older)'),
+      ),
+    ];
   }
 }

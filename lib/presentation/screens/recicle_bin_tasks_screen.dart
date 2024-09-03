@@ -4,7 +4,7 @@ import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:simple_notes/presentation/screens/deleted_task_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/delete_confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 
 class RecicleBinTasksScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
     return Scaffold(backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: const [
-          SortButton()
+          SortButton(isDeletedScreen: true, objectType: 'task',)
         ],
         backgroundColor: const Color.fromARGB(255, 254, 204, 54),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -112,7 +112,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
-                  DeleteConfirmationDialog(context: context, type: 'task').showConfirmationDialog(context).then((confirmation) {
+                  ConfirmationDialog(context: context, message: 'Do you really want to delete this task?').showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       recicleBinProvider.removeTask(task);
                       // ignore: use_build_context_synchronously

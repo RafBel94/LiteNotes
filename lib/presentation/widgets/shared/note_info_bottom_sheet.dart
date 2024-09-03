@@ -12,7 +12,7 @@ class NoteInfoBottomSheet {
 
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       backgroundColor: const Color.fromARGB(255, 46, 46, 46),
       builder: (context) {
         return SizedBox(
@@ -26,8 +26,8 @@ class NoteInfoBottomSheet {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan(text: 'Creation date:   ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                    TextSpan(text: creationDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
+                    const TextSpan(text: 'Creation date:   ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                    TextSpan(text: creationDate.toString().split('.').first, style: const TextStyle(fontSize: 15)),
                   ],
                 ),
               ),
@@ -37,8 +37,8 @@ class NoteInfoBottomSheet {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan( text: 'Modified date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                    TextSpan(text: modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
+                    const TextSpan( text: 'Modified date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                    TextSpan(text: modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 15)),
                   ],
                 ),
               ),
@@ -49,8 +49,8 @@ class NoteInfoBottomSheet {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan( text: 'Deletion date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                    TextSpan(text: deletedDate.toString().split('.').first, style: const TextStyle(fontSize: 18)),
+                    const TextSpan( text: 'Deletion date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                    TextSpan(text: deletedDate.toString().split('.').first, style: const TextStyle(fontSize: 15)),
                   ],
                 ),
               ),
