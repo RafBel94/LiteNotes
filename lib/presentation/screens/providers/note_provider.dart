@@ -42,6 +42,15 @@ class NoteProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addNotes(List<Note> notes) {
+    for(Note note in notes) {
+      note.deletedDate = null;
+      noteList.add(note);
+    }
+    saveNoteList(noteList);
+    notifyListeners();
+  }
+
   void removeNote(Note note) {
     noteList.remove(note);
     saveNoteList(noteList);

@@ -7,7 +7,7 @@ Simple Notes is a Flutter application that aims to be a very simplified version 
 Create, edit, sort and delete simple notes that have a **title** and a **general text** where you can type anything you want to remember.
 Notes can also be added to a **group** too if you have created any.
 
-This notes can be long-pressed to display a quick access menu to **edit**, **delete** or **remove from group** if it has one.
+This notes can be long-pressed to select many notes at the same tame.
 
 ### Tasks
 Create, edit, sort and delete tasks that have a **title** and a **checklist** where you can add as many **subtasks** as you need.

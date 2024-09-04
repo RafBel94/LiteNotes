@@ -9,6 +9,7 @@ import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/tasks_screen.dart';
+import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
 
@@ -61,7 +62,11 @@ class SkeletonState extends State<Skeleton> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              multiselectProvider.deleteSelectedNotes(noteProvider, recicleBinProvider);
+              ConfirmationDialog(context: context, message: 'Do you want to delete all the selected notes?').showConfirmationDialog(context).then((confirmation) {
+                if(confirmation == true){
+                  multiselectProvider.deleteSelectedNotes(noteProvider, recicleBinProvider);
+                }
+              });
             },
           ),
           

@@ -16,14 +16,14 @@ class RecicleBinProvider extends ChangeNotifier {
 
   // Notes
 
-  void addNote (Note note) {
+  void addNote(Note note) {
     note.deletedDate = DateTime.now();
     noteList.add(note);
     saveNoteList();
     notifyListeners();
   }
 
-  void addNotes (List<Note> notes) {
+  void addNotes(List<Note> notes) {
     for(Note note in notes) {
       note.deletedDate = DateTime.now();
       noteList.add(note);
@@ -32,16 +32,24 @@ class RecicleBinProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeNote (Note note) {
+  void removeNote(Note note) {
     note.deletedDate = null;
     noteList.remove(note);
     saveNoteList();
     notifyListeners();
   }
 
+  void removeNotes(List<Note> notes) {
+    for(Note note in notes) {
+      noteList.remove(note);
+    }
+    saveNoteList();
+    notifyListeners();
+  }
+
   // Tasks
 
-  void addTask (Task task) {
+  void addTask(Task task) {
     task.deletedDate = DateTime.now();
     taskList.add(task);
     saveTaskList();

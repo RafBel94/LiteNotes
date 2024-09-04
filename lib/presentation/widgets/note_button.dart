@@ -5,8 +5,6 @@ import 'package:simple_notes/presentation/screens/deleted_note_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/user_note_screen.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/remove_group_dialog.dart';
 
 class NoteButton extends StatelessWidget {
   final Note note;
