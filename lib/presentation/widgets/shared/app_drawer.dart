@@ -10,7 +10,8 @@ import 'package:simple_notes/presentation/widgets/dialogs/edit_group_dialog.dart
 import 'package:simple_notes/presentation/widgets/dialogs/new_group_dialog.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  final Function(Locale) onLanguageChanged;
+  const AppDrawer({super.key, required this.onLanguageChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +177,50 @@ class AppDrawer extends StatelessWidget {
                   label: const Text('Tasks', style: TextStyle(color: Colors.white)),
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const RecicleBinTasksScreen()));
+                  }
+                ),
+              ),
+              
+            ],
+          ),
+
+          ExpansionTile(
+            title: const Text('Language'),
+            collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
+            backgroundColor: const Color.fromARGB(255, 90, 90, 90),
+            leading: const Icon(Icons.language, color: Color.fromARGB(255, 235, 208, 125)),
+            children: <Widget>[
+
+              Container(
+                color: const Color.fromARGB(255, 30, 30, 27),
+                width: double.infinity,
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+                  ),
+                  icon: const Icon(Icons.settings_applications_sharp),
+                  label: const Text('Spanish', style: TextStyle(color: Colors.white)),
+                  onPressed: (){
+                    onLanguageChanged(const Locale('es'));
+                  }
+                ),
+              ),
+
+              Container(
+                color: const Color.fromARGB(255, 30, 30, 27),
+                width: double.infinity,
+                child: TextButton.icon(
+                  style: TextButton.styleFrom(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+                  ),
+                  icon: const Icon(Icons.settings_applications_sharp),
+                  label: const Text('English', style: TextStyle(color: Colors.white)),
+                  onPressed: (){
+                    onLanguageChanged(const Locale('en'));
                   }
                 ),
               ),

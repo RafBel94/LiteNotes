@@ -8,11 +8,21 @@ import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/skeleton.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  Locale _locale = Locale('en');
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +38,25 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme(selectedColor: 0).getTheme(),
         title: 'Simple Notes',
-        home: const Skeleton()
+        locale: _locale,
+        supportedLocales: const [
+          Locale('en'),
+          Locale('es')
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+      ],
+        home: Skeleton(onLanguageChanged: _changeLanguage)
       )
     );
-    
-      
+  }
+
+  void _changeLanguage(Locale locale){
+    setState(() {
+      _locale = locale;
+    });
   }
 }

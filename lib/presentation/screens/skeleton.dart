@@ -12,9 +12,11 @@ import 'package:simple_notes/presentation/screens/tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Skeleton extends StatefulWidget {
-  const Skeleton({super.key});
+  final Function(Locale) onLanguageChanged;
+  const Skeleton({super.key, required this.onLanguageChanged});
 
   @override
   State<StatefulWidget> createState() => SkeletonState();
@@ -101,7 +103,7 @@ class SkeletonState extends State<Skeleton> {
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         title: Text(
-          currentPageIndex == 0 ? 'Notes' : 'Tasks',
+          currentPageIndex == 0 ? AppLocalizations.of(context)!.notes : AppLocalizations.of(context)!.tasks,
           style: const TextStyle(color: Colors.black),
         )),
         
@@ -125,7 +127,7 @@ class SkeletonState extends State<Skeleton> {
         ],
       ),
 
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(onLanguageChanged: widget.onLanguageChanged),
 
       body: <Widget>[const NotesScreen(), const TasksScreen()][currentPageIndex],
 

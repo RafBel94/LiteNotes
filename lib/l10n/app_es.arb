@@ -1,0 +1,11 @@
+{
+    "@@locale": "es",
+    "notes": "Notas",
+    "@notes": {
+        "description": "Titulo para la pantalla de notas"
+    },
+    "tasks": "Tareas",
+    "@tasks": {
+        "description": "Titulo para la pantalla de tareas"
+    }
+}
