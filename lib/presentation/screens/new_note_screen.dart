@@ -7,6 +7,7 @@ import 'package:simple_notes/presentation/screens/providers/group_provider.dart'
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewNoteScreen extends StatefulWidget {
 
@@ -41,9 +42,9 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             ),
             backgroundColor: const Color.fromARGB(255, 254, 204, 54),
             centerTitle: true,
-            title: const Text(
-              'New Note',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              AppLocalizations.of(context)!.new_note_screen_scaffold_title,
+              style: const TextStyle(color: Colors.black),
             ),
           ),
 
@@ -81,7 +82,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
 
     if (trimmedText.isNotEmpty) {
       if (trimmedTitle.isEmpty) {
-        trimmedTitle = 'No Title';
+        trimmedTitle = AppLocalizations.of(context)!.note_no_title;
       }
 
       Note note = Note.create(title: trimmedTitle, text: text, group: selectedGroup);

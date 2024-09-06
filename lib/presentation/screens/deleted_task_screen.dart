@@ -6,6 +6,7 @@ import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeletedTaskScreen extends StatefulWidget {
 
@@ -70,7 +71,7 @@ class _DeletedTaskScreenState extends State<DeletedTaskScreen> {
             IconButton(
                 icon: const Icon(Icons.delete, color: Colors.black, size: 30),
                 onPressed: () {
-                  ConfirmationDialog(context: context, message: 'Do you really want to delete this task?').showConfirmationDialog(context).then((confirmation) {
+                  ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_task).showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       // ignore: use_build_context_synchronously
                       Navigator.pop(context);
@@ -82,7 +83,7 @@ class _DeletedTaskScreenState extends State<DeletedTaskScreen> {
             IconButton(
             icon: const Icon(Icons.refresh, color: Colors.black, size: 30),
             onPressed: () {
-              ConfirmationDialog(context: context, message: 'Do you want to recover this task?').showConfirmationDialog(context).then((confirmation) {
+              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_recover_task).showConfirmationDialog(context).then((confirmation) {
                 if (confirmation == true) {
                   widget.task.deletedDate = null;
                   taskProvider.addTask(widget.task);
@@ -103,11 +104,11 @@ class _DeletedTaskScreenState extends State<DeletedTaskScreen> {
               children: [
                 const SizedBox(height: 5),
     
-                Container(margin: const EdgeInsets.only(bottom: 10), child: const Text('Task title', style: TextStyle(fontSize: 20))),
+                Container(margin: const EdgeInsets.only(bottom: 10), child: Text(AppLocalizations.of(context)!.task_screen_task_title, style: const TextStyle(fontSize: 20))),
     
                 TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode, isEnabled: false),
     
-                Container(margin: const EdgeInsets.only(top: 35, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
+                Container(margin: const EdgeInsets.only(top: 35, bottom: 10), child: Text(AppLocalizations.of(context)!.task_screen_task_checklist, style: const TextStyle(fontSize: 20))),
                 
                 Expanded(
                   child: IgnorePointer(
@@ -143,12 +144,12 @@ class _DeletedTaskScreenState extends State<DeletedTaskScreen> {
                                       style: checkList[index].done ? 
                                         const TextStyle(color: Color.fromARGB(255, 81, 81, 81), decoration: TextDecoration.lineThrough) :
                                         const TextStyle(color: Color.fromARGB(255, 81, 81, 81)),
-                                      decoration: const InputDecoration(
-                                        hintText: 'Insert the subtask...',
-                                        hintStyle: TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
-                                        contentPadding: EdgeInsets.only(top: 15),
-                                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 81, 81, 81))),
-                                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 81, 81, 81))),
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!.task_screen_todo_textfield_hint,
+                                        hintStyle: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
+                                        contentPadding: const EdgeInsets.only(top: 15),
+                                        enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 81, 81, 81))),
+                                        focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 81, 81, 81))),
                                       ),
                                       onTapOutside: (event) {
                                         focusList[index].unfocus();
@@ -186,8 +187,8 @@ class _DeletedTaskScreenState extends State<DeletedTaskScreen> {
       if (!focusNode.hasFocus) {
         setState(() {
           if (controller.text.trim().isEmpty) {
-            controller.text = 'Empty task';
-            tc.text = 'Empty task';
+            controller.text = AppLocalizations.of(context)!.task_screen_todo_empty_text;
+            tc.text = AppLocalizations.of(context)!.task_screen_todo_empty_text;
           } else {
             tc.text = controller.text;
           }

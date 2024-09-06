@@ -69,7 +69,7 @@ class SkeletonState extends State<Skeleton> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              ConfirmationDialog(context: context, message: 'Do you want to delete all the selected notes?').showConfirmationDialog(context).then((confirmation) {
+              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_notes).showConfirmationDialog(context).then((confirmation) {
                 if(confirmation == true){
                   multiselectProvider.deleteSelectedNotes(noteProvider, recicleBinProvider);
                 }
@@ -81,7 +81,7 @@ class SkeletonState extends State<Skeleton> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              ConfirmationDialog(context: context, message: 'Do you want to delete all the selected tasks?').showConfirmationDialog(context).then((confirmation) {
+              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_tasks).showConfirmationDialog(context).then((confirmation) {
                 if(confirmation == true){
                   multiselectProvider.deleteSelectedTasks(taskProvider, recicleBinProvider);
                 }
@@ -103,7 +103,7 @@ class SkeletonState extends State<Skeleton> {
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         title: Text(
-          currentPageIndex == 0 ? AppLocalizations.of(context)!.notes : AppLocalizations.of(context)!.tasks,
+          currentPageIndex == 0 ? AppLocalizations.of(context)!.skeleton_notes_screen_title : AppLocalizations.of(context)!.skeleton_tasks_screen_title,
           style: const TextStyle(color: Colors.black),
         )),
         
@@ -121,9 +121,9 @@ class SkeletonState extends State<Skeleton> {
         },
         selectedIndex: currentPageIndex,
         indicatorColor: const Color.fromARGB(255, 117, 98, 48),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.description), label: 'Notes'),
-          NavigationDestination(icon: Icon(Icons.checklist_sharp), label: 'Tasks'),
+        destinations: [
+          NavigationDestination(icon: const Icon(Icons.description), label: AppLocalizations.of(context)!.navigation_bar_notes),
+          NavigationDestination(icon: const Icon(Icons.checklist_sharp), label: AppLocalizations.of(context)!.navigation_bar_tasks),
         ],
       ),
 

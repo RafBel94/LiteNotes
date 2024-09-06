@@ -4,6 +4,7 @@ import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});
@@ -52,7 +53,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             ),
             backgroundColor: const Color.fromARGB(255, 254, 204, 54),
             centerTitle: true,
-            title: const Text('Task', style: TextStyle(color: Colors.black),
+            title: Text(AppLocalizations.of(context)!.new_task_screen_scaffold_title, style: const TextStyle(color: Colors.black),
             ),
             actions: [
               IconButton(
@@ -74,7 +75,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
 
                   TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode, isEnabled: true,),
 
-                  Container(margin: const EdgeInsets.only(top: 15, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
+                  Container(margin: const EdgeInsets.only(top: 15, bottom: 10), child: Text(AppLocalizations.of(context)!.task_screen_task_checklist, style: const TextStyle(fontSize: 20))),
                   
                   Expanded(
                     child: SingleChildScrollView(
@@ -105,12 +106,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                       style: checkList[index].done ? 
                                         const TextStyle(color: Color.fromARGB(255, 81, 81, 81), decoration: TextDecoration.lineThrough) :
                                         const TextStyle(color: Colors.white),
-                                      decoration: const InputDecoration(
-                                        hintText: 'Insert the check text...',
-                                        hintStyle: TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
-                                        contentPadding: EdgeInsets.only(top: 15),
-                                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(0, 41, 41, 41))),
-                                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 99, 93, 69))),
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!.task_screen_todo_textfield_hint,
+                                        hintStyle: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
+                                        contentPadding: const EdgeInsets.only(top: 15),
+                                        enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(0, 41, 41, 41))),
+                                        focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 99, 93, 69))),
                                       ),
                                       onTapOutside: (event) {
                                         FocusScope.of(context).unfocus();
@@ -147,8 +148,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         borderRadius: BorderRadius.circular(5)
                       ),
                       child: TextButton.icon(
-                        label: const Text('Add check',
-                        style: TextStyle(fontSize: 18, color: Colors.white),),
+                        label: Text(AppLocalizations.of(context)!.task_screen_new_todo_button,
+                        style: const TextStyle(fontSize: 18, color: Colors.white),),
                         icon: const Icon(Icons.add_box_outlined),
                         onPressed: () {
                           setState(() {
@@ -182,8 +183,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       if (!focusNode.hasFocus) {
         setState(() {
           if (controller.text.trim().isEmpty) {
-            controller.text = 'No text';
-            taskCheck.text = 'No text';
+            controller.text = AppLocalizations.of(context)!.task_screen_todo_empty_text;
+            taskCheck.text = AppLocalizations.of(context)!.task_screen_todo_empty_text;
           } else {
             taskCheck.text = controller.text;
           }
@@ -204,7 +205,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     Task task = Task.create(title: titleController.text, checkList: checkList);
 
     if(trimmedTitle.isEmpty){
-      task.title = 'No title task';
+      task.title = AppLocalizations.of(context)!.task_no_title;
     }
 
     taskProvider.addTask(task);

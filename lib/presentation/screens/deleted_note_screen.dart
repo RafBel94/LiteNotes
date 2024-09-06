@@ -7,6 +7,7 @@ import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.da
 import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_text_field.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeletedNoteScreen extends StatefulWidget {
   final Note note;
@@ -38,7 +39,7 @@ class _DeletedNoteScreenState extends State<DeletedNoteScreen> {
           IconButton(
             icon: const Icon(Icons.delete, color: Colors.black, size: 30),
             onPressed: () {
-              ConfirmationDialog(context: context, message: 'Do you really want to delete this note?').showConfirmationDialog(context).then((confirmation) {
+              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_note).showConfirmationDialog(context).then((confirmation) {
                 if (confirmation == true) {
                   widget.binProvider.removeNote(widget.note);
                   // ignore: use_build_context_synchronously
@@ -50,7 +51,7 @@ class _DeletedNoteScreenState extends State<DeletedNoteScreen> {
             IconButton(
             icon: const Icon(Icons.refresh, color: Colors.black, size: 30),
             onPressed: () {
-              ConfirmationDialog(context: context, message: 'Do you want to recover this note?').showConfirmationDialog(context).then((confirmation) {
+              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_recover_note).showConfirmationDialog(context).then((confirmation) {
                 if (confirmation == true) {
                   widget.note.deletedDate = null;
                   noteProvider.addNote(widget.note);
