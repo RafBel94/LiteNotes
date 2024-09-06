@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_text_field.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeletedNoteScreen extends StatefulWidget {
   final Note note;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
@@ -72,13 +73,13 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
             ),
             backgroundColor: const Color.fromARGB(255, 254, 204, 54),
             centerTitle: true,
-            title: const Text('Task', style: TextStyle(color: Colors.black),
+            title: Text(widget.task.title, style: const TextStyle(color: Colors.black),
             ),
             actions: [
               IconButton(
                   icon: const Icon(Icons.delete, color: Colors.black, size: 30),
                   onPressed: () {
-                    ConfirmationDialog(context: context, message: 'Do you really want to delete this task?').showConfirmationDialog(context).then((confirmation) {
+                    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_task).showConfirmationDialog(context).then((confirmation) {
                       if (confirmation == true) {
                         binProvider.addTask(widget.task);
                         taskProvider.removeTask(widget.task);
@@ -105,11 +106,11 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                 children: [
                   const SizedBox(height: 5),
 
-                  Container(margin: const EdgeInsets.only(bottom: 10), child: const Text('Task title', style: TextStyle(fontSize: 20))),
+                  Container(margin: const EdgeInsets.only(bottom: 10), child: Text(AppLocalizations.of(context)!.task_screen_task_title, style: const TextStyle(fontSize: 20))),
 
                   TitleTextField(titleController: titleController, titleFocusNode: titleFocusNode, isEnabled: true),
 
-                  Container(margin: const EdgeInsets.only(top: 35, bottom: 10), child: const Text('Checklist', style: TextStyle(fontSize: 20))),
+                  Container(margin: const EdgeInsets.only(top: 35, bottom: 10), child: Text(AppLocalizations.of(context)!.task_screen_task_checklist, style: const TextStyle(fontSize: 20))),
                   
                   Expanded(
                     child: SingleChildScrollView(
@@ -143,12 +144,12 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                                       style: checkList[index].done ? 
                                         const TextStyle(color: Color.fromARGB(255, 81, 81, 81), decoration: TextDecoration.lineThrough) :
                                         const TextStyle(color: Colors.white),
-                                      decoration: const InputDecoration(
-                                        hintText: 'Insert the subtask...',
-                                        hintStyle: TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
-                                        contentPadding: EdgeInsets.only(top: 15),
-                                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(0, 41, 41, 41))),
-                                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 99, 93, 69))),
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!.task_screen_todo_textfield_hint,
+                                        hintStyle: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 70, 69, 69)),
+                                        contentPadding: const EdgeInsets.only(top: 15),
+                                        enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(0, 41, 41, 41))),
+                                        focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 99, 93, 69))),
                                       ),
                                       onTapOutside: (event) {
                                         focusList[index].unfocus();
@@ -187,8 +188,8 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
                         borderRadius: BorderRadius.circular(5)
                       ),
                       child: TextButton.icon(
-                        label: const Text('Add check',
-                        style: TextStyle(fontSize: 18, color: Colors.white),),
+                        label: Text(AppLocalizations.of(context)!.task_screen_new_todo_button,
+                        style: const TextStyle(fontSize: 18, color: Colors.white),),
                         icon: const Icon(Icons.add_box_outlined),
                         onPressed: () {
                           setState(() {
@@ -222,8 +223,8 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
         if (!focusNode.hasFocus) {
           setState(() {
             if (controller.text.trim().isEmpty) {
-              controller.text = 'Empty task';
-              taskCheck.text = 'Empty task';
+              controller.text = AppLocalizations.of(context)!.task_screen_todo_empty_text;
+              taskCheck.text = AppLocalizations.of(context)!.task_screen_todo_empty_text;
             } else {
               taskCheck.text = controller.text;
             }
@@ -252,8 +253,8 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
       if (!focusNode.hasFocus) {
         setState(() {
           if (controller.text.trim().isEmpty) {
-            controller.text = 'Empty task';
-            tc.text = 'Empty task';
+            controller.text = AppLocalizations.of(context)!.task_no_title;
+            tc.text = AppLocalizations.of(context)!.task_no_title;
           } else {
             tc.text = controller.text;
           }
@@ -270,7 +271,7 @@ class _UserTaskScreenState extends State<UserTaskScreen> {
     String trimmedTitle = titleController.text.trim();
 
     if(trimmedTitle.isEmpty){
-      widget.task.title = 'No title';
+      widget.task.title = AppLocalizations.of(context)!.task_no_title;
     } else {
       widget.task.title = titleController.text.trim();
     }

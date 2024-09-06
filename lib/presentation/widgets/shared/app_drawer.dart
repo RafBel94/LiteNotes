@@ -8,6 +8,7 @@ import 'package:simple_notes/presentation/screens/recicle_bin_notes_screen.dart'
 import 'package:simple_notes/presentation/screens/recicle_bin_tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/edit_group_dialog.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/new_group_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppDrawer extends StatelessWidget {
   final Function(Locale) onLanguageChanged;
@@ -34,18 +35,18 @@ class AppDrawer extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 254, 204, 54),
             ),
-            child: const Align(
+            child: Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 16.0),
-                child: Text('Menu', style: TextStyle(color: Colors.black, fontSize: 24,),),
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(AppLocalizations.of(context)!.drawer_title, style: const TextStyle(color: Colors.black, fontSize: 24,),),
               ),
             ),
           ),
 
 
           ExpansionTile(
-            title: const Text('Note Groups'),
+            title: Text(AppLocalizations.of(context)!.drawer_groups_tile),
             collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
             backgroundColor: const Color.fromARGB(255, 90, 90, 90),
             leading: const Icon(Icons.account_tree, color: Color.fromARGB(255, 235, 208, 125)),
@@ -122,13 +123,13 @@ class AppDrawer extends StatelessWidget {
               Container(
                 color: const Color.fromARGB(255, 30, 30, 27),
                 child: ListTile(
-                  title: const Row(
+                  title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add),
+                      const Icon(Icons.add),
                       Text(
-                        '  New group',
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        AppLocalizations.of(context)!.drawer_new_group_button,
+                        style: const TextStyle(color: Colors.white, fontSize: 17),
                       )
                     ],
                   ),
@@ -141,7 +142,7 @@ class AppDrawer extends StatelessWidget {
           ),
 
           ExpansionTile(
-            title: const Text('Recicle bin'),
+            title: Text(AppLocalizations.of(context)!.drawer_recicle_bin),
             collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
             backgroundColor: const Color.fromARGB(255, 90, 90, 90),
             leading: const Icon(Icons.delete, color: Color.fromARGB(255, 235, 208, 125)),
@@ -157,7 +158,7 @@ class AppDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
                   ),
                   icon: const Icon(Icons.note_rounded),
-                  label: const Text('Notes', style: TextStyle(color: Colors.white)),
+                  label: Text(AppLocalizations.of(context)!.drawer_recicle_bin_notes, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const RecicleBinNotesScreen()));
                   }
@@ -174,7 +175,7 @@ class AppDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
                   ),
                   icon: const Icon(Icons.checklist),
-                  label: const Text('Tasks', style: TextStyle(color: Colors.white)),
+                  label: Text(AppLocalizations.of(context)!.drawer_recicle_bin_tasks, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const RecicleBinTasksScreen()));
                   }
@@ -185,7 +186,7 @@ class AppDrawer extends StatelessWidget {
           ),
 
           ExpansionTile(
-            title: const Text('Language'),
+            title: Text(AppLocalizations.of(context)!.drawer_language),
             collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
             backgroundColor: const Color.fromARGB(255, 90, 90, 90),
             leading: const Icon(Icons.language, color: Color.fromARGB(255, 235, 208, 125)),
@@ -201,7 +202,7 @@ class AppDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
                   ),
                   icon: const Icon(Icons.settings_applications_sharp),
-                  label: const Text('Spanish', style: TextStyle(color: Colors.white)),
+                  label: Text(AppLocalizations.of(context)!.language_spanish, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
                     onLanguageChanged(const Locale('es'));
                   }
@@ -218,7 +219,7 @@ class AppDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
                   ),
                   icon: const Icon(Icons.settings_applications_sharp),
-                  label: const Text('English', style: TextStyle(color: Colors.white)),
+                  label: Text(AppLocalizations.of(context)!.language_english, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
                     onLanguageChanged(const Locale('en'));
                   }
@@ -241,21 +242,21 @@ class AppDrawer extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Delete Confirmation"),
-          content: const Text("Do you want to delete this group?"),
+          title: Text(AppLocalizations.of(context)!.delete_confirmation),
+          content: Text(AppLocalizations.of(context)!.delete_group),
           backgroundColor: const Color.fromARGB(255, 30, 30, 27),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text("Cancel"),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: const Text("Accept"),
+              child: Text(AppLocalizations.of(context)!.accept),
             ),
           ],
         );

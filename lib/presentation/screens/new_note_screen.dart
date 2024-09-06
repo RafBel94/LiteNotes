@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_text_field.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewNoteScreen extends StatefulWidget {
 

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
-import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/user_task_screen.dart';
-import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -49,8 +47,10 @@ class TasksScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(taskProvider.taskList[index].title, style: const TextStyle(fontSize: 22, color: Colors.white),),
-                                Text('Creation date:  ${taskProvider.taskList[index].creationDate.toIso8601String().split('T').first}', style: const TextStyle(fontSize: 15, color: Colors.white70),),
+                                Text(taskProvider.taskList[index].title == AppLocalizations.of(context)!.note_no_title ? AppLocalizations.of(context)!.note_no_title : taskProvider.taskList[index].title,
+                                style: const TextStyle(fontSize: 22, color: Colors.white),
+                                ),
+                                Text('${AppLocalizations.of(context)!.creation_date}  ${taskProvider.taskList[index].creationDate.toIso8601String().split('T').first}', style: const TextStyle(fontSize: 15, color: Colors.white70),),
                               ],
                             ),
                             const Spacer(),
@@ -98,49 +98,5 @@ class TasksScreen extends StatelessWidget {
     }
 
     return doneChecks.toString();
-  }
-
-  showLongPressMenu(BuildContext context, Task task) {
-
-    TaskProvider taskProvider = context.read<TaskProvider>();
-    RecicleBinProvider recicleBinProvider = context.read<RecicleBinProvider>();
-
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => UserTaskScreen(task: task)
-                    )
-                  );
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () async {
-                  ConfirmationDialog(context: context, message: 'Do you really want to delete this task?').showConfirmationDialog(context).then((confirmation) {
-                    if (confirmation == true) {
-                      recicleBinProvider.addTask(task);
-                      taskProvider.removeTask(task);
-                      // ignore: use_build_context_synchronously
-                      Navigator.pop(context);
-                    }
-                  });
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 }

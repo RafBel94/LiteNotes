@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoteInfoBottomSheet {
   final DateTime? creationDate;
@@ -26,7 +27,7 @@ class NoteInfoBottomSheet {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan(text: 'Creation date:   ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                    TextSpan(text: '${AppLocalizations.of(context)!.creation_date}   ', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                     TextSpan(text: creationDate.toString().split('.').first, style: const TextStyle(fontSize: 15)),
                   ],
                 ),
@@ -37,7 +38,7 @@ class NoteInfoBottomSheet {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan( text: 'Modified date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                    TextSpan(text: '${AppLocalizations.of(context)!.modification_date}   ', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                     TextSpan(text: modifiedDate.toString().split('.').first, style: const TextStyle(fontSize: 15)),
                   ],
                 ),
@@ -49,7 +50,7 @@ class NoteInfoBottomSheet {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan( text: 'Deletion date:   ',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                    TextSpan(text: '${AppLocalizations.of(context)!.delete_date}   ', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                     TextSpan(text: deletedDate.toString().split('.').first, style: const TextStyle(fontSize: 15)),
                   ],
                 ),

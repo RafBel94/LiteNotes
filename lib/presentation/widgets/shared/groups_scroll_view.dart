@@ -4,6 +4,7 @@ import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupsScrollView extends StatefulWidget {
   final Note? note;
@@ -78,7 +79,7 @@ class NoteGroupsScrollViewState extends State<GroupsScrollView> {
                       });
                     },
                     icon: Icon(Icons.disabled_by_default_outlined, color: group.color),
-                    label: const Text('No group'),
+                    label: Text(AppLocalizations.of(context)!.no_group),
                     style: TextButton.styleFrom(
                         side: BorderSide(color: selectedGroup == group ? const Color.fromARGB(255, 255, 215, 95) : Colors.grey),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))

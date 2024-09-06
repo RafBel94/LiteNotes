@@ -4,6 +4,7 @@ import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/skeleton.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SortButton extends StatefulWidget {
 
@@ -103,34 +104,34 @@ class SortButtonState extends State<SortButton> {
   
   List<PopupMenuEntry<int>> notDeletedEntryList() {
     return <PopupMenuEntry<int>>[
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 1,
-        child: Text('Sort alphabetically (A-Z)'),
+        child: Text(AppLocalizations.of(context)!.sort_alphabetically_a_z),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 2,
-        child: Text('Sort alphabetically (Z-A)'),
+        child: Text(AppLocalizations.of(context)!.sort_alphabetically_z_a),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 3,
-        child: Text('Sort by last modified (Recent)'),
+        child: Text(AppLocalizations.of(context)!.sort_by_last_modified_recent),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 4,
-        child: Text('Sort by last modified (Older)'),
+        child: Text(AppLocalizations.of(context)!.sort_by_last_modified_older),
       ),
     ];
   }
   
   List<PopupMenuEntry<int>> deletedEntryList() {
     return <PopupMenuEntry<int>>[
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 5,
-        child: Text('Sort by deleted date (Recent)'),
+        child: Text(AppLocalizations.of(context)!.sort_by_delete_date_recent),
       ),
-      const PopupMenuItem(
+      PopupMenuItem(
         value: 6,
-        child: Text('Sort by deleted date (Older)'),
+        child: Text(AppLocalizations.of(context)!.sort_by_delete_date_older),
       ),
     ];
   }

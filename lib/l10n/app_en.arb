@@ -96,6 +96,36 @@
         "description": "Text for confirmation dialogs when recovering many notes"
     },
 
+    "delete_confirmation": "Delete confirmation",
+    "@delete_confirmation": {
+        "description": "Simple text for a dialog screen"
+    },
+
+    "delete_group": "Are you sure you want to delete this group?",
+    "@delete_group": {
+        "description": "Ask the user for a confirmation to delete a group"
+    },
+
+    "no_group": "No group",
+    "@no_group": {
+        "description": "Default group title"
+    },
+
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Simple text"
+    },
+
+    "accept": "Accept",
+    "@accept": {
+        "description": "Simple text"
+    },
+
+    "colorpicker_select_color": "Select a color",
+    "@colorpicker_select_color": {
+        "description": "Tells the user to select a color"
+    },
+
     "note_title_textfield_hint": "Title...",
     "@note_title_textfield_hint": {
         "description": "Hint for the title textfield"
@@ -111,7 +141,7 @@
         "description": "Default title for tasks"
     },
 
-    "creation_date": "Creation date",
+    "creation_date": "Creation date:",
     "@creation_date": {
         "description": "Simple text"
     },
@@ -121,7 +151,7 @@
         "description": "Simple text"
     },
 
-    "modification_date": "Modification date",
+    "modification_date": "Modification date:",
     "@modification_date": {
         "description": "Simple text"
     },
@@ -136,7 +166,7 @@
         "description": "Groups tile text"
     },
 
-    "drawer_new_group_button": "+  New Group",
+    "drawer_new_group_button": "  New Group",
     "@drawer_new_group_butto": {
         "description": "Text for the button inside the groups drawer's tile"
     },
@@ -186,8 +216,53 @@
         "description": "Title for the deleted tasks recicle bin screen"
     },
 
-    "select_color_button": "SELECT COLOR",
+    "select_color_button": "Select a color",
     "@select_color_button": {
         "description": "Text for the color selection button"
+    },
+
+    "drawer_language": "Language",
+    "@drawer_language": {
+        "description": "Simple text that says 'Language'"
+    },
+
+    "language_spanish": "Spanish",
+    "@language_spanish": {
+        "description": "Simple text that says 'Spanish'"
+    },
+
+    "language_english": "English",
+    "@language_english": {
+        "description": "Simple text that says 'English'"
+    },
+
+    "sort_alphabetically_a_z": "Sort alphabetically (A-Z)",
+    "@sort_alphabetically_a_z": {
+        "description": "Simple text"
+    },
+
+    "sort_alphabetically_z_a": "Sort alphabetically (Z-A)",
+    "@sort_alphabetically_z_a": {
+        "description": "Simple text"
+    },
+
+    "sort_by_last_modified_recent": "Sort by last modified (Recent)",
+    "@sort_by_last_modified_recent": {
+        "description": "Simple text"
+    },
+
+    "sort_by_last_modified_older": "Sort by last modified (Older)",
+    "@sort_by_last_modified_older": {
+        "description": "Simple text"
+    },
+
+    "sort_by_delete_date_recent": "Sort by delete date (Recent)",
+    "@sort_by_delete_date_recent": {
+        "description": "Simple text"
+    },
+
+    "sort_by_delete_date_older": "Sort by delete date (Older)",
+    "@sort_by_delete_date_older": {
+        "description": "Simple text"
     }
 }

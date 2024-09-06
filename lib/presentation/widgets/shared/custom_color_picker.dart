@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomColorPicker {
 
@@ -11,7 +12,8 @@ class CustomColorPicker {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Select a color'),
+          title: Text(AppLocalizations.of(context)!.colorpicker_select_color),
+          backgroundColor: const Color.fromARGB(255, 53, 53, 53),
           content: SingleChildScrollView(
             child: ColorPicker(
               pickerColor: selectedColor,

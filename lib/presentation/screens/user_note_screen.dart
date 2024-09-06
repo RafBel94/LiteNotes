@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
@@ -61,7 +62,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
               IconButton(
                 icon: const Icon(Icons.delete, color: Colors.black, size: 30),
                 onPressed: () {
-                  ConfirmationDialog(context: context, message: 'Do you really want to delete this note?').showConfirmationDialog(context).then((confirmation) {
+                  ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_note).showConfirmationDialog(context).then((confirmation) {
                     if (confirmation == true) {
                       binProvider.addNote(widget.note);
                       widget.noteProvider.removeNote(widget.note);
@@ -127,7 +128,7 @@ class _UserNoteScreenState extends State<UserNoteScreen> {
 
     if (trimmedText.isNotEmpty || trimmedTitle.isNotEmpty) {
       if (trimmedTitle.isEmpty) {
-        trimmedTitle = 'No title';
+        trimmedTitle = AppLocalizations.of(context)!.note_no_title;
       }
 
       widget.note.title = trimmedTitle;

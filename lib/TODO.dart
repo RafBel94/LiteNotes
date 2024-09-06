@@ -1,5 +1,5 @@
 // TODO
-// - MultiSelection auto deactivates in deleted tasks when longpressing
+// - MultiSelection auto deactivates in deleted tasks when longpressing (have to fix)
 // - Add languages
 // - Add themes
 

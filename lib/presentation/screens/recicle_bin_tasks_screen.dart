@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/deleted_task_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
@@ -65,7 +66,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 254, 204, 54),
           iconTheme: const IconThemeData(color: Colors.black),
           centerTitle: true,
-          title: const Text('Deleted Tasks', style: TextStyle(color: Colors.black)),
+          title: Text(AppLocalizations.of(context)!.recicle_bin_deleted_tasks_title, style: const TextStyle(color: Colors.black)),
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -99,7 +100,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(deletedTaskList[index].title, style: const TextStyle(fontSize: 22, color: Colors.white),),
-                                    Text('Deletion date:  ${deletedTaskList[index].deletedDate?.toIso8601String().split('T').first}', style: const TextStyle(fontSize: 15, color: Colors.white70),),
+                                    Text('${AppLocalizations.of(context)!.delete_date}  ${deletedTaskList[index].deletedDate?.toIso8601String().split('T').first}', style: const TextStyle(fontSize: 15, color: Colors.white70),),
                                   ],
                                 ),
                                 const Spacer(),
@@ -151,7 +152,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
   }
 
   void restoreSelectedTasks(BuildContext context, MultiselectProvider multiselectProvider, TaskProvider taskProvider, RecicleBinProvider binProvider) {
-    ConfirmationDialog(context: context, message: 'Do you want to restore all the selected tasks?').showConfirmationDialog(context).then((confirmation) {
+    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_recover_tasks).showConfirmationDialog(context).then((confirmation) {
       if (confirmation == true) {
         binProvider.removeTasks(multiselectProvider.selectedTasks);
         taskProvider.addTasks(multiselectProvider.selectedTasks);
@@ -161,7 +162,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
   }
   
   void deleteSelectedTasks(BuildContext context, RecicleBinProvider binProvider, MultiselectProvider multiselectProvider) {
-    ConfirmationDialog(context: context, message: 'Do you want to permanently delete all the selected tasks?').showConfirmationDialog(context).then((confirmation) {
+    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_tasks).showConfirmationDialog(context).then((confirmation) {
       if (confirmation == true) {
         binProvider.removeTasks(multiselectProvider.selectedTasks);
       }

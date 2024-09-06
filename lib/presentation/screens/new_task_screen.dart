@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});

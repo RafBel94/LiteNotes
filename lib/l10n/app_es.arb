@@ -1,11 +1,268 @@
 {
     "@@locale": "es",
-    "notes": "Notas",
-    "@notes": {
-        "description": "Titulo para la pantalla de notas"
+
+    "skeleton_notes_screen_title": "Notas",
+    "@skeleton_notes_screen_title": {
+        "description": "Title for skeleton scaffold when in notes screen"
     },
-    "tasks": "Tareas",
-    "@tasks": {
-        "description": "Titulo para la pantalla de tareas"
+
+    "skeleton_tasks_screen_title": "Tareas",
+    "@skeleton_tasks_screen_title": {
+        "description": "Title for skeleton's scaffold when in tasks screen"
+    },
+
+    "navigation_bar_notes": "Notas",
+    "@navigation_bar_notes": {
+        "description": "Label for note's button in the navigation bottom bar"
+    },
+
+    "navigation_bar_tasks": "Tareas",
+    "@navigation_bar_tasks": {
+        "description": "Label for tasks's button in the navigation bottom bar"
+    },
+
+    "new_note_screen_scaffold_title": "Nueva nota",
+    "@new_note_screen_scaffold_title": {
+        "description": "Title for new note screen scaffold"
+    },
+
+    "new_task_screen_scaffold_title": "Nueva tarea",
+    "@new_task_screen_scaffold_title": {
+        "description": "Title for new task screen scaffold"
+    },
+
+    "task_screen_task_title": "Titulo",
+    "@task_screen_task_title": {
+        "description": "Title for showing above the title's textfield when creating/editing a task"
+    },
+
+    "task_screen_task_checklist": "Lista de tareas",
+    "@task_screen_task_checklist": {
+        "description": "Text for showing above the task's to-do checklist when creating/editing a task"
+    },
+
+    "task_screen_new_todo_button": "Agregar tarea",
+    "@task_screen_new_todo_button": {
+        "description": "Text for the button that adds a new to-do to the checklist"
+    },
+
+    "task_screen_todo_textfield_hint": "Inserta la tarea...",
+    "@task_screen_todo_textfield_hint": {
+        "description": "Text for the to-do textfield hint"
+    },
+
+    "task_screen_todo_empty_text": "Tarea",
+    "@task_screen_todo_empty_text": {
+        "description": "Text for the to-do textfield when it is empty"
+    },
+
+    "confirmation_dialog_delete_task": "¿Seguro que quieres eliminar esta tarea?",
+    "@confirmation_dialog_delete_task": {
+        "description": "Text for confirmation dialogs when only deleting one task"
+    },
+
+    "confirmation_dialog_delete_tasks": "¿Seguro que quieres eliminar todas las tareas seleccionadas?",
+    "@confirmation_dialog_delete_tasks": {
+        "description": "Text for confirmation dialogs when deleting many tasks"
+    },
+
+    "confirmation_dialog_recover_task": "¿Seguro que quieres recuperar esta tarea?",
+    "@confirmation_dialog_recover_task": {
+        "description": "Text for confirmation dialogs when only recovering one task"
+    },
+
+    "confirmation_dialog_recover_tasks": "¿Seguro que quieres recuperar todas las tareas seleccionadas?",
+    "@confirmation_dialog_recover_tasks": {
+        "description": "Text for confirmation dialogs when recovering many tasks"
+    },
+
+    "confirmation_dialog_delete_note": "¿Seguro que quieres eliminar esta nota?",
+    "@confirmation_dialog_delete_note": {
+        "description": "Text for confirmation dialogs when only deleting one note"
+    },
+
+    "confirmation_dialog_delete_notes": "¿Seguro que quieres eliminar todas las notas seleccionadas?",
+    "@confirmation_dialog_delete_notes": {
+        "description": "Text for confirmation dialogs when deleting many notes"
+    },
+
+    "confirmation_dialog_recover_note": "¿Seguro que quieres recuperar esta nota?",
+    "@confirmation_dialog_recover_note": {
+        "description": "Text for confirmation dialogs when only recovering one note"
+    },
+
+    "confirmation_dialog_recover_notes": "¿Seguro que quieres recuperar todas las notas seleccionadas?",
+    "@confirmation_dialog_recover_notes": {
+        "description": "Text for confirmation dialogs when recovering many notes"
+    },
+
+    "delete_confirmation": "Confirmacion",
+    "@delete_confirmation": {
+        "description": "Simple text for a dialog screen"
+    },
+
+    "delete_group": "¿Seguro que quieres eliminar este grupo?",
+    "@delete_group": {
+        "description": "Ask the user for a confirmation to delete a group"
+    },
+
+    "no_group": "Sin grupo",
+    "@no_group": {
+        "description": "Default group title"
+    },
+
+    "cancel": "Cancelar",
+    "@cancel": {
+        "description": "Simple text"
+    },
+
+    "accept": "Aceptar",
+    "@accept": {
+        "description": "Simple text"
+    },
+
+    "colorpicker_select_color": "Selecciona un color",
+    "@colorpicker_select_color": {
+        "description": "Tells the user to select a color"
+    },
+
+    "note_title_textfield_hint": "Titulo...",
+    "@note_title_textfield_hint": {
+        "description": "Hint for the title textfield"
+    },
+
+    "note_no_title": "Sin titulo",
+    "@note_no_title": {
+        "description": "Default title for notes"
+    },
+
+    "task_no_title": "Sin titulo",
+    "@task_no_title": {
+        "description": "Default title for tasks"
+    },
+
+    "creation_date": "Creado el:",
+    "@creation_date": {
+        "description": "Simple text"
+    },
+
+    "delete_date": "Eliminado el:",
+    "@delete_date": {
+        "description": "Simple text"
+    },
+
+    "modification_date": "Modificado el:",
+    "@modification_date": {
+        "description": "Simple text"
+    },
+
+    "drawer_title": "Menu",
+    "@drawer_title": {
+        "description": "Title of the application drawer"
+    },
+
+    "drawer_groups_tile": "Grupos",
+    "@drawer_groups_tile": {
+        "description": "Groups tile text"
+    },
+
+    "drawer_new_group_button": "  Nuevo grupo",
+    "@drawer_new_group_butto": {
+        "description": "Text for the button inside the groups drawer's tile"
+    },
+
+    "drawer_recicle_bin": "Papelera",
+    "@drawer_recicle_bin": {
+        "description": "Recicle bin tile text"
+    },
+
+    "drawer_recicle_bin_notes": "Notas",
+    "@drawer_recicle_bin_notes": {
+        "description": "Recicle bin note's tile text"
+    },
+
+    "drawer_recicle_bin_tasks": "Tareas",
+    "@drawer_recicle_bin_tasks": {
+        "description": "Recicle bin tasks's tile text"
+    },
+
+    "dialog_new_group_title": "Crear nuevo grupo",
+    "@dialog_new_group_title": {
+        "description": "Title for the dialog when creating a new group"
+    },
+
+    "dialog_new_group_group_title_text": "Titulo del grupo",
+    "@dialog_new_group_group_title_text": {
+        "description": "Text for showing above the title textfield"
+    },
+
+    "dialog_new_group_title_textfield_hint": "Titulo del grupo...",
+    "@dialog_new_group_title_textfield_hint": {
+        "description": "Hint for the group's name textfield"
+    },
+
+    "dialog_edit_group_title": "Editar grupo",
+    "@dialog_edit_group_title": {
+        "description": "Title for the dialog when editing a new group"
+    },
+
+    "recicle_bin_deleted_notes_title": "Notas eliminadas",
+    "@recicle_bin_deleted_notes_title": {
+        "description": "Title for the deleted notes recicle bin screen"
+    },
+
+    "recicle_bin_deleted_tasks_title": "Tareas eliminadas",
+    "@recicle_bin_deleted_tasks_title": {
+        "description": "Title for the deleted tasks recicle bin screen"
+    },
+
+    "select_color_button": "Selecciona un color",
+    "@select_color_button": {
+        "description": "Text for the color selection button"
+    },
+
+    "drawer_language": "Idioma",
+    "@drawer_language": {
+        "description": "Simple text that says 'Language'"
+    },
+
+    "language_spanish": "Español",
+    "@language_spanish": {
+        "description": "Simple text that says 'Spanish'"
+    },
+
+    "language_english": "Ingles",
+    "@language_english": {
+        "description": "Simple text that says 'English'"
+    },
+
+    "sort_alphabetically_a_z": "Alfabeticamente (A-Z)",
+    "@sort_alphabetically_a_z": {
+        "description": "Simple text"
+    },
+
+    "sort_alphabetically_z_a": "Alfabeticamente (Z-A)",
+    "@sort_alphabetically_z_a": {
+        "description": "Simple text"
+    },
+
+    "sort_by_last_modified_recent": "Fecha de modificacion (Reciente)",
+    "@sort_by_last_modified_recent": {
+        "description": "Simple text"
+    },
+
+    "sort_by_last_modified_older": "Fecha de modificacion (Antiguo)",
+    "@sort_by_last_modified_older": {
+        "description": "Simple text"
+    },
+
+    "sort_by_delete_date_recent": "Fecha de eliminacion (Reciente)",
+    "@sort_by_delete_date_recent": {
+        "description": "Simple text"
+    },
+
+    "sort_by_delete_date_older": "Fecha de eliminacion (Antiguo)",
+    "@sort_by_delete_date_older": {
+        "description": "Simple text"
     }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
@@ -68,7 +69,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
           backgroundColor: const Color.fromARGB(255, 254, 204, 54),
           iconTheme: const IconThemeData(color: Colors.black),
           centerTitle: true,
-          title: const Text('Deleted Notes', style: TextStyle(color: Colors.black)),
+          title: Text(AppLocalizations.of(context)!.recicle_bin_deleted_notes_title, style: const TextStyle(color: Colors.black)),
         ),
       
         body: Padding(
@@ -97,7 +98,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
   }
   
   void restoreSelectedNotes(MultiselectProvider multiselectProvider, NoteProvider noteProvider, RecicleBinProvider binProvider) {
-    ConfirmationDialog(context: context, message: 'Do you want to restore all the selected notes?').showConfirmationDialog(context).then((confirmation) {
+    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_recover_notes).showConfirmationDialog(context).then((confirmation) {
       if (confirmation == true) {
         binProvider.removeNotes(multiselectProvider.selectedNotes);
         noteProvider.addNotes(multiselectProvider.selectedNotes);
@@ -107,7 +108,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
   }
   
   void deleteSelectedNotes(RecicleBinProvider binProvider, MultiselectProvider multiselectProvider) {
-    ConfirmationDialog(context: context, message: 'Do you want to permanently delete all the selected notes?').showConfirmationDialog(context).then((confirmation) {
+    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_notes).showConfirmationDialog(context).then((confirmation) {
       if (confirmation == true) {
         binProvider.removeNotes(multiselectProvider.selectedNotes);
       }

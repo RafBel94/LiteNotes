@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/new_note_screen.dart';
 import 'package:simple_notes/presentation/screens/new_task_screen.dart';
 import 'package:simple_notes/presentation/screens/notes_screen.dart';
@@ -12,7 +13,6 @@ import 'package:simple_notes/presentation/screens/tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Skeleton extends StatefulWidget {
   final Function(Locale) onLanguageChanged;
