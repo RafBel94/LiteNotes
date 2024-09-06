@@ -219,8 +219,10 @@ class AppDrawer extends StatelessWidget {
   }
   
   void disableMultiSelect(MultiselectProvider multiselectProvider) {
-    if(multiselectProvider.isMultiSelectMode){
-      multiselectProvider.toggleMultiSelectMode();
+    if(multiselectProvider.isNotesMultiSelectMode){
+      multiselectProvider.toggleNotesMultiSelectMode();
+    } else if (multiselectProvider.isTasksMultiSelectMode){
+      multiselectProvider.toggleTasksMultiSelectMode();
     }
   }
 }

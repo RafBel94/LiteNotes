@@ -18,8 +18,25 @@ class TaskProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  void addTasks(List<Task> tasks) {
+    for(Task task in tasks) {
+      task.deletedDate = null;
+      taskList.add(task);
+    }
+    saveTaskList(taskList);
+    notifyListeners();
+  }
+
   void removeTask(Task task) {
     taskList.remove(task);
+    saveTaskList(taskList);
+    notifyListeners();
+  }
+
+  void removeTasks(List<Task> tasks) {
+    for(Task task in tasks) {
+      taskList.remove(task);
+    }
     saveTaskList(taskList);
     notifyListeners();
   }

@@ -43,6 +43,7 @@ class SkeletonState extends State<Skeleton> {
   @override
   Widget build(BuildContext context) {
     final NoteProvider noteProvider = context.watch<NoteProvider>();
+    final TaskProvider taskProvider = context.watch<TaskProvider>();
     final MultiselectProvider multiselectProvider = context.watch<MultiselectProvider>();
     final RecicleBinProvider recicleBinProvider = context.read<RecicleBinProvider>();
 
@@ -50,21 +51,37 @@ class SkeletonState extends State<Skeleton> {
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: [
-          if (multiselectProvider.isMultiSelectMode) 
+          if (multiselectProvider.isNotesMultiSelectMode || multiselectProvider.isTasksMultiSelectMode) 
           IconButton(
             icon: const Icon(Icons.cancel_outlined),
             onPressed: () {
-              multiselectProvider.toggleMultiSelectMode();
+              if(multiselectProvider.isNotesMultiSelectMode){
+                multiselectProvider.toggleNotesMultiSelectMode();
+              } else {
+                multiselectProvider.toggleTasksMultiSelectMode();
+              }
             },
           ),
 
-          if (multiselectProvider.isMultiSelectMode) 
+          if (multiselectProvider.isNotesMultiSelectMode) 
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
               ConfirmationDialog(context: context, message: 'Do you want to delete all the selected notes?').showConfirmationDialog(context).then((confirmation) {
                 if(confirmation == true){
                   multiselectProvider.deleteSelectedNotes(noteProvider, recicleBinProvider);
+                }
+              });
+            },
+          ),
+
+          if (multiselectProvider.isTasksMultiSelectMode)
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              ConfirmationDialog(context: context, message: 'Do you want to delete all the selected tasks?').showConfirmationDialog(context).then((confirmation) {
+                if(confirmation == true){
+                  multiselectProvider.deleteSelectedTasks(taskProvider, recicleBinProvider);
                 }
               });
             },
@@ -91,8 +108,11 @@ class SkeletonState extends State<Skeleton> {
         bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int navigationIndex) {
           setState(() {
-            if(multiselectProvider.isMultiSelectMode){
-              multiselectProvider.toggleMultiSelectMode();
+            if(multiselectProvider.isNotesMultiSelectMode){
+              multiselectProvider.toggleNotesMultiSelectMode();
+            }
+            if(multiselectProvider.isTasksMultiSelectMode){
+              multiselectProvider.toggleTasksMultiSelectMode();
             }
             currentPageIndex = navigationIndex;
           });
@@ -132,8 +152,8 @@ class _NewNoteButton extends StatelessWidget {
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 187, 140, 0))),
       icon: const Icon(Icons.note_add),
       onPressed: () {
-        if(multiselectProvider.isMultiSelectMode){
-          multiselectProvider.toggleMultiSelectMode();
+        if(multiselectProvider.isNotesMultiSelectMode){
+          multiselectProvider.toggleNotesMultiSelectMode();
         }
         Navigator.push(context, MaterialPageRoute(builder: (context) => const NewNoteScreen()));
       },
@@ -144,11 +164,17 @@ class _NewNoteButton extends StatelessWidget {
 class _NewTaskButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final MultiselectProvider multiselectProvider = context.read<MultiselectProvider>();
+
     return IconButton(
       iconSize: 50,
       style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color.fromARGB(164, 255, 193, 7))),
       icon: const Icon(Icons.add_box_outlined),
       onPressed: () {
+        if(multiselectProvider.isTasksMultiSelectMode){
+          multiselectProvider.toggleTasksMultiSelectMode();
+        }
         Navigator.push(context, MaterialPageRoute(builder: (context) => const NewTaskScreen()));
       },
     );

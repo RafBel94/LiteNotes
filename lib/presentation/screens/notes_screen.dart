@@ -39,13 +39,13 @@ class NotesScreenState extends State<NotesScreen> {
             return NoteButton(
               note: note,
               isDeleted: false,
-              isMultiSelectMode: multiselectProvider.isMultiSelectMode,
+              isMultiSelectMode: multiselectProvider.isNotesMultiSelectMode,
               isSelected: multiselectProvider.selectedNotes.contains(note),
               onLongPress: () {
-                multiselectProvider.toggleMultiSelectMode();
+                multiselectProvider.toggleNotesMultiSelectMode();
               },
               onSelected: () {
-                multiselectProvider.toggleSelection(note);
+                multiselectProvider.toggleNoteSelection(note);
               },
               );
         },

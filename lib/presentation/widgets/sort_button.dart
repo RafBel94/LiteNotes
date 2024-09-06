@@ -5,7 +5,6 @@ import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/skeleton.dart';
 
-// TODO: Make it sort deleted tasks or notes
 class SortButton extends StatefulWidget {
 
   final bool isDeletedScreen;

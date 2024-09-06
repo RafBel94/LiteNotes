@@ -96,8 +96,8 @@ class NoteButton extends StatelessWidget {
           ),
           if (isMultiSelectMode)
             Positioned(
-              top: 8,
-              right: 8,
+              top: -2,
+              right: 0,
               child: Radio(
                 groupValue: true,
                 toggleable: true,

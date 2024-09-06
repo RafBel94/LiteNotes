@@ -30,8 +30,8 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if(didPop){
-          if(multiselectProvider.isMultiSelectMode){
-            multiselectProvider.toggleMultiSelectMode();
+          if(multiselectProvider.isNotesMultiSelectMode){
+            multiselectProvider.toggleNotesMultiSelectMode();
           }
         }
       },
@@ -39,15 +39,15 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
         backgroundColor: const Color.fromARGB(255, 23, 23, 23),
         appBar: AppBar(
           actions: [
-            if (multiselectProvider.isMultiSelectMode) 
+            if (multiselectProvider.isNotesMultiSelectMode) 
             IconButton(
               icon: const Icon(Icons.cancel_outlined),
               onPressed: () {
-                multiselectProvider.toggleMultiSelectMode();
+                multiselectProvider.toggleNotesMultiSelectMode();
               },
             ),
       
-            if (multiselectProvider.isMultiSelectMode) 
+            if (multiselectProvider.isNotesMultiSelectMode) 
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
@@ -55,7 +55,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
               },
             ),
       
-            if (multiselectProvider.isMultiSelectMode) 
+            if (multiselectProvider.isNotesMultiSelectMode) 
             IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: () {
@@ -80,13 +80,13 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
             return NoteButton(
               note: deletedNotesList[index],
               isDeleted: true,
-              isMultiSelectMode: multiselectProvider.isMultiSelectMode,
+              isMultiSelectMode: multiselectProvider.isNotesMultiSelectMode,
               isSelected: multiselectProvider.selectedNotes.contains(deletedNotesList[index]),
               onLongPress: () {
-                multiselectProvider.toggleMultiSelectMode();
+                multiselectProvider.toggleNotesMultiSelectMode();
               },
               onSelected: () {
-                multiselectProvider.toggleSelection(deletedNotesList[index]);
+                multiselectProvider.toggleNoteSelection(deletedNotesList[index]);
               },
             );
           },
@@ -102,7 +102,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
         binProvider.removeNotes(multiselectProvider.selectedNotes);
         noteProvider.addNotes(multiselectProvider.selectedNotes);
       }
-        multiselectProvider.toggleMultiSelectMode();
+        multiselectProvider.toggleNotesMultiSelectMode();
     });
   }
   
@@ -111,7 +111,7 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
       if (confirmation == true) {
         binProvider.removeNotes(multiselectProvider.selectedNotes);
       }
-        multiselectProvider.toggleMultiSelectMode();
+        multiselectProvider.toggleNotesMultiSelectMode();
     });
   }
 }

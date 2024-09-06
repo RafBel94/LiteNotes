@@ -1,5 +1,4 @@
 // TODO
-// - Add sort by creation date to notes
 // - Add themes
 // - Add languages
 

@@ -56,9 +56,26 @@ class RecicleBinProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeTask (Task task) {
+  void addTasks(List<Task> tasks) {
+    for(Task task in tasks) {
+      task.deletedDate = DateTime.now();
+      taskList.add(task);
+    }
+    saveTaskList();
+    notifyListeners();
+  }
+
+  void removeTask(Task task) {
     task.deletedDate = null;
     taskList.remove(task);
+    saveTaskList();
+    notifyListeners();
+  }
+
+  void removeTasks(List<Task> tasks) {
+    for(Task task in tasks) {
+      taskList.remove(task);
+    }
     saveTaskList();
     notifyListeners();
   }

@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:simple_notes/domain/entities/note.dart';
+import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
+import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 
 class MultiselectProvider extends ChangeNotifier {
   List<Note> selectedNotes = [];
-  bool isMultiSelectMode = false;
+  List<Task> selectedTasks = [];
+  bool isNotesMultiSelectMode = false;
+  bool isTasksMultiSelectMode = false;
 
 
-
-
-
-  // Toggles multi select mode. If its activated, deactivates it and viceversa.
-  // Always clears the selected notes list
-  void toggleMultiSelectMode() {
-      isMultiSelectMode = !isMultiSelectMode;
+  void toggleNotesMultiSelectMode() {
+      isNotesMultiSelectMode = !isNotesMultiSelectMode;
       selectedNotes.clear();
       
       WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifyListeners();
-    });
+        notifyListeners();
+      });
+  }
+
+  void toggleTasksMultiSelectMode() {
+      isTasksMultiSelectMode = !isTasksMultiSelectMode;
+      selectedTasks.clear();
+      
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
   }
 
   // Adds or removes note from selected notes list depending of it being already in the list or not
-  void toggleSelection(Note note) {
+  void toggleNoteSelection(Note note) {
       if (selectedNotes.contains(note)) {
         selectedNotes.remove(note);
       } else {
@@ -33,10 +41,27 @@ class MultiselectProvider extends ChangeNotifier {
       notifyListeners();
   }
 
+  void toggleTaskSelection(Task task) {
+    if(selectedTasks.contains(task)){
+      selectedTasks.remove(task);
+    } else {
+      selectedTasks.add(task);
+    }
+
+    notifyListeners();
+  }
+
   // Deletes all selected notes
   void deleteSelectedNotes(NoteProvider noteProvider, RecicleBinProvider recicleBinProvider) {
     recicleBinProvider.addNotes(selectedNotes);
     noteProvider.removeNotes(selectedNotes);
-    toggleMultiSelectMode();
+    toggleNotesMultiSelectMode();
+  }
+
+  // Deletes all selected tasks
+  void deleteSelectedTasks(TaskProvider taskProvider, RecicleBinProvider recicleBinProvider) {
+    recicleBinProvider.addTasks(selectedTasks);
+    taskProvider.removeTasks(selectedTasks);
+    toggleTasksMultiSelectMode();
   }
 }
