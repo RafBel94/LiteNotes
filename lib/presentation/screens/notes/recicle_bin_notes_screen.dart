@@ -6,11 +6,11 @@ import 'package:simple_notes/presentation/screens/providers/multiselect_provider
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
-import 'package:simple_notes/presentation/widgets/note_button.dart';
-import 'package:simple_notes/presentation/widgets/shared/multi_delete_button.dart';
-import 'package:simple_notes/presentation/widgets/shared/multi_restore_button.dart';
-import 'package:simple_notes/presentation/widgets/shared/multiselection_cancel_button.dart';
-import 'package:simple_notes/presentation/widgets/sort_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/note_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multi_delete_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multi_restore_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multiselection_cancel_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/sort_button.dart';
 
 class RecicleBinNotesScreen extends StatefulWidget {
   const RecicleBinNotesScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
-import 'package:simple_notes/presentation/screens/skeleton.dart';
+import 'package:simple_notes/presentation/widgets/shared/skeleton.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SortButton extends StatefulWidget {

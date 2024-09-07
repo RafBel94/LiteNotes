@@ -8,7 +8,7 @@ import 'package:simple_notes/presentation/screens/providers/multiselect_provider
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
-import 'package:simple_notes/presentation/screens/skeleton.dart';
+import 'package:simple_notes/presentation/widgets/shared/skeleton.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(const MyApp());
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme(selectedColor: 0).getTheme(),
-        title: 'Simple Notes',
+        title: 'LiteNotes',
         locale: _locale,
         supportedLocales: const [
           Locale('en'),

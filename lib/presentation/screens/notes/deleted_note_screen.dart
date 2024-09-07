@@ -6,8 +6,8 @@ import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
-import 'package:simple_notes/presentation/widgets/shared/note_text_field.dart';
-import 'package:simple_notes/presentation/widgets/shared/title_text_field.dart';
+import 'package:simple_notes/presentation/widgets/shared/textfields/note_text_field.dart';
+import 'package:simple_notes/presentation/widgets/shared/textfields/title_text_field.dart';
 
 class DeletedNoteScreen extends StatefulWidget {
   final Note note;

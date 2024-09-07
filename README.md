@@ -1,6 +1,6 @@
-# Simple Notes App
+# LiteNotes App
 
-Simple Notes is a Flutter application that aims to be a very simplified version of a common note/task saving app.
+LiteNotes is a Flutter application that aims to be a very simplified version of a common note/task saving app.
 
 ## Features
 ### Notes

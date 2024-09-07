@@ -4,7 +4,7 @@ import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
-import 'package:simple_notes/presentation/screens/user_task_screen.dart';
+import 'package:simple_notes/presentation/screens/tasks/user_task_screen.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});

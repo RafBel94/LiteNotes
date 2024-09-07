@@ -3,15 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/task.dart';
 import 'package:simple_notes/domain/entities/task_check.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:simple_notes/presentation/screens/deleted_task_screen.dart';
+import 'package:simple_notes/presentation/screens/tasks/deleted_task_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
-import 'package:simple_notes/presentation/widgets/shared/multi_delete_button.dart';
-import 'package:simple_notes/presentation/widgets/shared/multi_restore_button.dart';
-import 'package:simple_notes/presentation/widgets/shared/multiselection_cancel_button.dart';
-import 'package:simple_notes/presentation/widgets/sort_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multi_delete_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multi_restore_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multiselection_cancel_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/sort_button.dart';
 
 class RecicleBinTasksScreen extends StatefulWidget {
   const RecicleBinTasksScreen({super.key});

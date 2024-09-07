@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/note.dart';
 import 'package:simple_notes/presentation/screens/providers/multiselect_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
-import '../widgets/note_button.dart';
+import '../../widgets/shared/buttons/note_button.dart';
 
 class NotesScreen extends StatefulWidget {
 

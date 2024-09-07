@@ -9,8 +9,8 @@ import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.da
 import 'package:simple_notes/presentation/widgets/shared/note_info_bottom_sheet.dart';
 import 'package:simple_notes/presentation/widgets/shared/groups_scroll_view.dart';
 
-import '../widgets/shared/title_text_field.dart';
-import '../widgets/shared/note_text_field.dart';
+import '../../widgets/shared/textfields/title_text_field.dart';
+import '../../widgets/shared/textfields/note_text_field.dart';
 
 class UserNoteScreen extends StatefulWidget {
   final Note note;

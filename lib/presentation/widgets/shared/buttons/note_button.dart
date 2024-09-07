@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/note.dart';
-import 'package:simple_notes/presentation/screens/deleted_note_screen.dart';
+import 'package:simple_notes/presentation/screens/notes/deleted_note_screen.dart';
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
-import 'package:simple_notes/presentation/screens/user_note_screen.dart';
+import 'package:simple_notes/presentation/screens/notes/user_note_screen.dart';
 
 class NoteButton extends StatelessWidget {
   final Note note;
