@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConfirmationDialog {
   BuildContext context;
@@ -13,20 +14,20 @@ class ConfirmationDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: const Color.fromARGB(255, 53, 53, 53),
-          title: const Text("Confirmation"),
+          title: Text(AppLocalizations.of(context)!.confirmation),
           content: Text(message, style: const TextStyle(fontSize: 18)),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text("Cancel", style: TextStyle(fontSize: 18)),
+              child: Text(AppLocalizations.of(context)!.accept, style: const TextStyle(fontSize: 18)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: const Text("Accept", style: TextStyle(fontSize: 18)),
+              child: Text(AppLocalizations.of(context)!.cancel, style: const TextStyle(fontSize: 18)),
             ),
           ],
         );

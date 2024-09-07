@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TitleTextField extends StatelessWidget {
   final TextEditingController titleController;
@@ -23,7 +24,7 @@ class TitleTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color.fromARGB(255, 106, 106, 105)), borderRadius: BorderRadius.circular(5)
         ),
-        hintText: 'Title...',
+        hintText: AppLocalizations.of(context)!.note_title_textfield_hint,
         hintStyle: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 101, 101, 101))
       ),
       onTapOutside: (event) {

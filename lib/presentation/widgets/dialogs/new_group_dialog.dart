@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_notes/domain/entities/group.dart';
 import 'package:simple_notes/presentation/screens/providers/group_provider.dart';
 import 'package:simple_notes/presentation/widgets/shared/custom_color_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewGroupDialog {
   
@@ -17,14 +18,14 @@ class NewGroupDialog {
         return StatefulBuilder(
           builder: (context, setState){
           return AlertDialog(
-            title: const Text('New group', style: TextStyle(fontSize: 30),),
+            title: Text(AppLocalizations.of(context)!.dialog_new_group_title, style: const TextStyle(fontSize: 30),),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             backgroundColor: const Color.fromARGB(255, 30, 30, 27),
             actions: [
           
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Group title:', style: TextStyle(fontSize: 22, color: Colors.white),)
+                child: Text(AppLocalizations.of(context)!.dialog_new_group_group_title_text, style: const TextStyle(fontSize: 22, color: Colors.white),)
               ),
           
               const SizedBox(height: 5,),
@@ -32,7 +33,7 @@ class NewGroupDialog {
               TextField(
                 style: const TextStyle(fontSize: 20),
                 decoration: InputDecoration(
-                  hintText: 'Insert group name...',
+                  hintText: AppLocalizations.of(context)!.dialog_new_group_title_textfield_hint,
                   hintStyle: const TextStyle(color: Color.fromARGB(255, 79, 79, 79)),
                   contentPadding: const EdgeInsets.all(10),
                   border: OutlineInputBorder(
@@ -60,7 +61,7 @@ class NewGroupDialog {
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(border: Border.all(color: const Color.fromARGB(255, 239, 208, 115))),
-                      child: const Text('SELECT COLOR',style: TextStyle(fontSize: 20, color: Colors.white),)
+                      child: Text(AppLocalizations.of(context)!.select_color_button,style: const TextStyle(fontSize: 20, color: Colors.white),)
                     )
                   ),
                   Padding(
@@ -86,8 +87,8 @@ class NewGroupDialog {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text('Warning', style: TextStyle(color: Color.fromARGB(255, 249, 208, 86))),
-                          content: const Text('The group name cannot be empty', style: TextStyle(fontSize: 20)),
+                          title: Text(AppLocalizations.of(context)!.warning, style: const TextStyle(color: Color.fromARGB(255, 249, 208, 86))),
+                          content: Text(AppLocalizations.of(context)!.empty_group_name, style: const TextStyle(fontSize: 20)),
                           actions: [
                             TextButton(
                               onPressed: () {

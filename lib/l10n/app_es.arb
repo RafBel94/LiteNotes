@@ -269,5 +269,20 @@
     "snackbar_subtask": "Tienes que agregar al menos una tarea",
     "@snackbar_subtask": {
         "description": "Text to show when the user tries to create a task without subtasks"
+    },
+
+    "warning": "Aviso",
+    "@warning": {
+        "description": "Simple text"
+    },
+
+    "empty_group_name": "No puedes crear un grupo sin nombre",
+    "@empty_group_name": {
+        "description": "Text to show when the user tries to create a nameless group"
+    },
+
+    "confirmation": "Confirmacion",
+    "@confirmation": {
+        "description": "Simple text"
     }
 }
