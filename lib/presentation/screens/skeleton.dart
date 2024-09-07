@@ -127,7 +127,7 @@ class SkeletonState extends State<Skeleton> {
         ],
       ),
 
-      drawer: AppDrawer(onLanguageChanged: widget.onLanguageChanged),
+      drawer: AppDrawer(onLanguageChanged: widget.onLanguageChanged, multiselectProvider: multiselectProvider,),
 
       body: <Widget>[const NotesScreen(), const TasksScreen()][currentPageIndex],
 

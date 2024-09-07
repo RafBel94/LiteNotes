@@ -25,9 +25,6 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
   final NoteProvider noteProvider = context.read<NoteProvider>();
   final List<Note> deletedNotesList = binProvider.noteList;
 
-  // Delete notes older than 30 days
-  binProvider.deleteOldNotes();
-
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if(didPop){

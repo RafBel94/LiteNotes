@@ -12,6 +12,8 @@ class RecicleBinProvider extends ChangeNotifier {
 
   RecicleBinProvider() {
     loadDeletedObjects();
+    deleteOldNotes();
+    deleteOldTasks();
   }
 
   // Notes
@@ -108,9 +110,6 @@ class RecicleBinProvider extends ChangeNotifier {
       now.difference(note.deletedDate!).inDays > 30
     );
     saveNoteList();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifyListeners();
-    });
   }
 
   void deleteOldTasks() {
@@ -119,9 +118,6 @@ class RecicleBinProvider extends ChangeNotifier {
       now.difference(task.deletedDate!).inDays > 30
     );
     saveTaskList();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifyListeners();
-    });
   }
 
 

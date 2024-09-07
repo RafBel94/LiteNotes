@@ -47,7 +47,7 @@ class TasksScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(taskProvider.taskList[index].title == AppLocalizations.of(context)!.note_no_title ? AppLocalizations.of(context)!.note_no_title : taskProvider.taskList[index].title,
+                                Text(taskProvider.taskList[index].title,
                                 style: const TextStyle(fontSize: 22, color: Colors.white),
                                 ),
                                 Text('${AppLocalizations.of(context)!.creation_date}  ${taskProvider.taskList[index].creationDate.toIso8601String().split('T').first}', style: const TextStyle(fontSize: 15, color: Colors.white70),),

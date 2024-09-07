@@ -13,32 +13,26 @@ class MultiselectProvider extends ChangeNotifier {
 
 
   void toggleNotesMultiSelectMode() {
-      isNotesMultiSelectMode = !isNotesMultiSelectMode;
-      selectedNotes.clear();
-      
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        notifyListeners();
-      });
+    isNotesMultiSelectMode = !isNotesMultiSelectMode;
+    selectedNotes.clear();
+    notifyListeners();
   }
 
   void toggleTasksMultiSelectMode() {
-      isTasksMultiSelectMode = !isTasksMultiSelectMode;
-      selectedTasks.clear();
-      
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        notifyListeners();
-      });
+    isTasksMultiSelectMode = !isTasksMultiSelectMode;
+    selectedTasks.clear();
+    notifyListeners();
   }
 
   // Adds or removes note from selected notes list depending of it being already in the list or not
   void toggleNoteSelection(Note note) {
-      if (selectedNotes.contains(note)) {
-        selectedNotes.remove(note);
-      } else {
-        selectedNotes.add(note);
-      }
+    if (selectedNotes.contains(note)) {
+      selectedNotes.remove(note);
+    } else {
+      selectedNotes.add(note);
+    }
 
-      notifyListeners();
+    notifyListeners();
   }
 
   void toggleTaskSelection(Task task) {

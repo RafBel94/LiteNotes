@@ -17,19 +17,15 @@ class RecicleBinTasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final RecicleBinProvider binProvider = context.watch<RecicleBinProvider>();
-    final MultiselectProvider multiselectProvider = context.watch<MultiselectProvider>();
     final TaskProvider taskProvider = context.read<TaskProvider>();
+    final MultiselectProvider multiselectProvider = context.watch<MultiselectProvider>();
     final List<Task> deletedTaskList = binProvider.taskList;
 
-    // Delete tasks older than 30 days
-    binProvider.deleteOldTasks();
+    print('Recicle bin tasks build');
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if(didPop){
-          if(multiselectProvider.isNotesMultiSelectMode){
-            multiselectProvider.toggleNotesMultiSelectMode();
-          }
           if(multiselectProvider.isTasksMultiSelectMode){
             multiselectProvider.toggleTasksMultiSelectMode();
           }
@@ -54,10 +50,10 @@ class RecicleBinTasksScreen extends StatelessWidget {
               ),
             if (multiselectProvider.isTasksMultiSelectMode)
               IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () {
-                    restoreSelectedTasks(context, multiselectProvider, taskProvider, binProvider);
-                  }),
+              icon: const Icon(Icons.refresh),
+              onPressed: () {
+                restoreSelectedTasks(context, multiselectProvider, taskProvider, binProvider);
+              }),
             const SortButton(
               isDeletedScreen: true,
               objectType: 'task',
@@ -91,7 +87,10 @@ class RecicleBinTasksScreen extends StatelessWidget {
                               multiselectProvider.toggleTaskSelection(deletedTaskList[index]);
                             }
                           },
-                          onLongPress: multiselectProvider.toggleTasksMultiSelectMode,
+                          onLongPress: () {
+                            print('triggered');
+                            multiselectProvider.toggleTasksMultiSelectMode();
+                          },
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Row(

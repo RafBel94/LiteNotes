@@ -65,7 +65,7 @@ class _DeletedTaskScreenState extends State<DeletedTaskScreen> {
           ),
           backgroundColor: const Color.fromARGB(255, 254, 204, 54),
           centerTitle: true,
-          title: const Text('Task', style: TextStyle(color: Colors.black),
+          title: Text(widget.task.title, style: const TextStyle(color: Colors.black),
           ),
           actions: [
             IconButton(

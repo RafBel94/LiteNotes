@@ -10,17 +10,28 @@ import 'package:simple_notes/presentation/widgets/dialogs/edit_group_dialog.dart
 import 'package:simple_notes/presentation/widgets/dialogs/new_group_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   final Function(Locale) onLanguageChanged;
-  const AppDrawer({super.key, required this.onLanguageChanged});
+  final MultiselectProvider multiselectProvider;
+  const AppDrawer({super.key, required this.onLanguageChanged, required this.multiselectProvider});
+
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+
+  @override
+  void initState() {
+    super.initState();
+    disableMultiSelect(widget.multiselectProvider);
+
+  }
 
   @override
   Widget build(BuildContext context) {
     final GroupProvider groupProvider = context.watch<GroupProvider>();
     final NoteProvider noteProvider = context.read<NoteProvider>();
-    final MultiselectProvider multiselectProvider = context.read<MultiselectProvider>();
-    
-    disableMultiSelect(multiselectProvider);
 
     return Drawer(
       elevation: 40,
@@ -204,7 +215,7 @@ class AppDrawer extends StatelessWidget {
                   icon: const Icon(Icons.settings_applications_sharp),
                   label: Text(AppLocalizations.of(context)!.language_spanish, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
-                    onLanguageChanged(const Locale('es'));
+                    widget.onLanguageChanged(const Locale('es'));
                   }
                 ),
               ),
@@ -221,7 +232,7 @@ class AppDrawer extends StatelessWidget {
                   icon: const Icon(Icons.settings_applications_sharp),
                   label: Text(AppLocalizations.of(context)!.language_english, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
-                    onLanguageChanged(const Locale('en'));
+                    widget.onLanguageChanged(const Locale('en'));
                   }
                 ),
               ),
@@ -235,8 +246,6 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  
-  
   Future<bool?> getDeleteConfirmation(BuildContext context) async {
     return showDialog<bool>(
       context: context,
@@ -263,7 +272,7 @@ class AppDrawer extends StatelessWidget {
       },
     );
   }
-  
+
   void disableMultiSelect(MultiselectProvider multiselectProvider) {
     if(multiselectProvider.isNotesMultiSelectMode){
       multiselectProvider.toggleNotesMultiSelectMode();
