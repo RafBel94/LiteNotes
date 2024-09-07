@@ -43,7 +43,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     return PopScope(
       onPopInvokedWithResult: (bool didPop, result) {
         if(didPop){
-          verifyTask(taskProvider);
+          verifyTask(taskProvider, context);
         }
       },
       child: Scaffold(
@@ -200,15 +200,19 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     });
   }
   
-  void verifyTask(TaskProvider taskProvider) {
+  void verifyTask(TaskProvider taskProvider, BuildContext context) {
     String trimmedTitle = titleController.text.trim();
     Task task = Task.create(title: titleController.text, checkList: checkList);
+    
+    if(task.checkList.isNotEmpty){
+      if(trimmedTitle.isEmpty){
+        task.title = AppLocalizations.of(context)!.task_no_title;
+      }
 
-    if(trimmedTitle.isEmpty){
-      task.title = AppLocalizations.of(context)!.task_no_title;
+      taskProvider.addTask(task);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.snackbar_subtask),));
     }
-
-    taskProvider.addTask(task);
   }
 }
 

@@ -8,11 +8,19 @@ import 'package:simple_notes/presentation/screens/providers/multiselect_provider
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/shared/multi_delete_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/multi_restore_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/multiselection_cancel_button.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 
-class RecicleBinTasksScreen extends StatelessWidget {
+class RecicleBinTasksScreen extends StatefulWidget {
   const RecicleBinTasksScreen({super.key});
 
+  @override
+  State<RecicleBinTasksScreen> createState() => _RecicleBinTasksScreenState();
+}
+
+class _RecicleBinTasksScreenState extends State<RecicleBinTasksScreen> {
   @override
   Widget build(BuildContext context) {
 
@@ -20,8 +28,6 @@ class RecicleBinTasksScreen extends StatelessWidget {
     final TaskProvider taskProvider = context.read<TaskProvider>();
     final MultiselectProvider multiselectProvider = context.watch<MultiselectProvider>();
     final List<Task> deletedTaskList = binProvider.taskList;
-
-    print('Recicle bin tasks build');
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
@@ -34,30 +40,13 @@ class RecicleBinTasksScreen extends StatelessWidget {
       child: Scaffold(backgroundColor: const Color.fromARGB(255, 23, 23, 23),
         appBar: AppBar(
           actions: [
-            if (multiselectProvider.isTasksMultiSelectMode)
-              IconButton(
-                icon: const Icon(Icons.cancel_outlined),
-                onPressed: () {
-                  multiselectProvider.toggleTasksMultiSelectMode();
-                },
-              ),
-            if (multiselectProvider.isTasksMultiSelectMode)
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  deleteSelectedTasks(context, binProvider, multiselectProvider);
-                },
-              ),
-            if (multiselectProvider.isTasksMultiSelectMode)
-              IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () {
-                restoreSelectedTasks(context, multiselectProvider, taskProvider, binProvider);
-              }),
-            const SortButton(
-              isDeletedScreen: true,
-              objectType: 'task',
-            )
+            if (multiselectProvider.isTasksMultiSelectMode) ...[
+              MultiselectionCancelButton(multiselectProvider: multiselectProvider, type: 'task',),
+              MultiDeleteButton(onDelete: () =>  deleteSelectedTasks(binProvider, multiselectProvider)),
+              MultiRestoreButton(onRestore: () => restoreSelectedTasks(multiselectProvider, taskProvider, binProvider)),
+            ],
+              
+            const SortButton(isDeletedScreen: true, objectType: 'task',)
           ],
           backgroundColor: const Color.fromARGB(255, 254, 204, 54),
           iconTheme: const IconThemeData(color: Colors.black),
@@ -88,7 +77,6 @@ class RecicleBinTasksScreen extends StatelessWidget {
                             }
                           },
                           onLongPress: () {
-                            print('triggered');
                             multiselectProvider.toggleTasksMultiSelectMode();
                           },
                           child: Align(
@@ -137,7 +125,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   String countDoneChecks(int index, List<TaskCheck> checkList) {
     int doneChecks = 0;
 
@@ -150,7 +138,7 @@ class RecicleBinTasksScreen extends StatelessWidget {
     return doneChecks.toString();
   }
 
-  void restoreSelectedTasks(BuildContext context, MultiselectProvider multiselectProvider, TaskProvider taskProvider, RecicleBinProvider binProvider) {
+  void restoreSelectedTasks(MultiselectProvider multiselectProvider, TaskProvider taskProvider, RecicleBinProvider binProvider) {
     ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_recover_tasks).showConfirmationDialog(context).then((confirmation) {
       if (confirmation == true) {
         binProvider.removeTasks(multiselectProvider.selectedTasks);
@@ -159,8 +147,8 @@ class RecicleBinTasksScreen extends StatelessWidget {
         multiselectProvider.toggleTasksMultiSelectMode();
     });
   }
-  
-  void deleteSelectedTasks(BuildContext context, RecicleBinProvider binProvider, MultiselectProvider multiselectProvider) {
+
+  void deleteSelectedTasks(RecicleBinProvider binProvider, MultiselectProvider multiselectProvider) {
     ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_tasks).showConfirmationDialog(context).then((confirmation) {
       if (confirmation == true) {
         binProvider.removeTasks(multiselectProvider.selectedTasks);

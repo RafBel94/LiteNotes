@@ -264,5 +264,10 @@
     "sort_by_delete_date_older": "Sort by delete date (Older)",
     "@sort_by_delete_date_older": {
         "description": "Simple text"
+    },
+
+    "snackbar_subtask": "You have to add at least one subtask",
+    "@snackbar_subtask": {
+        "description": "Text to show when the user tries to create a task without subtasks"
     }
 }

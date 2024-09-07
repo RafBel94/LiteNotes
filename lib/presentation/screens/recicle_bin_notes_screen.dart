@@ -7,6 +7,9 @@ import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
 import 'package:simple_notes/presentation/widgets/note_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/multi_delete_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/multi_restore_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/multiselection_cancel_button.dart';
 import 'package:simple_notes/presentation/widgets/sort_button.dart';
 
 class RecicleBinNotesScreen extends StatefulWidget {
@@ -37,29 +40,11 @@ class _RecicleBinNotesScreenState extends State<RecicleBinNotesScreen> {
         backgroundColor: const Color.fromARGB(255, 23, 23, 23),
         appBar: AppBar(
           actions: [
-            if (multiselectProvider.isNotesMultiSelectMode) 
-            IconButton(
-              icon: const Icon(Icons.cancel_outlined),
-              onPressed: () {
-                multiselectProvider.toggleNotesMultiSelectMode();
-              },
-            ),
-      
-            if (multiselectProvider.isNotesMultiSelectMode) 
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                deleteSelectedNotes(binProvider, multiselectProvider);
-              },
-            ),
-      
-            if (multiselectProvider.isNotesMultiSelectMode) 
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () {
-                restoreSelectedNotes(multiselectProvider, noteProvider, binProvider);
-              }
-            ),
+            if (multiselectProvider.isNotesMultiSelectMode) ...[
+              MultiselectionCancelButton(multiselectProvider: multiselectProvider, type: 'note',),
+              MultiDeleteButton(onDelete: () =>  deleteSelectedNotes(binProvider, multiselectProvider)),
+              MultiRestoreButton(onRestore: () => restoreSelectedNotes(multiselectProvider, noteProvider, binProvider)),
+            ],
       
             const SortButton(isDeletedScreen: true, objectType: 'note',)
           ],

@@ -33,16 +33,11 @@ class GroupProvider extends ChangeNotifier{
     for(Group g in groupList){
       if(g.id == group.id){
         g = group;
-        saveGroupList(groupList);
-
-        // Wait to all operations to finish before notify listeners
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          notifyListeners();
-        });
-
       break;
       }
     }
+    saveGroupList(groupList);
+    notifyListeners();
   }
 
   String listToJson(List<Group> groupList) {

@@ -72,9 +72,7 @@ class NoteProvider extends ChangeNotifier {
       noteList[index] = note;
       saveNoteList(noteList);
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifyListeners();
-    });
+    notifyListeners();
   }
 
   void updateNoteGroups(Group group) {

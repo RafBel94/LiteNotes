@@ -47,9 +47,7 @@ class TaskProvider extends ChangeNotifier{
       taskList[index] = task;
       saveTaskList(taskList);
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifyListeners();
-    });
+    notifyListeners();
   }
 
   void sortListAlphabetically({required bool descendent}) {
