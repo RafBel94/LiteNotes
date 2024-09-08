@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_notes/config/infracstructure/app_theme.dart';
@@ -23,6 +25,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   Locale _locale = const Locale('en');
+
+  @override
+  void initState() {
+    super.initState();
+    _locale = Locale(Platform.localeName.split('_')[0]);
+  }
 
   @override
   Widget build(BuildContext context) {
