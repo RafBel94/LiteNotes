@@ -22,13 +22,6 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
 
   @override
-  void initState() {
-    super.initState();
-    disableMultiSelect(widget.multiselectProvider);
-
-  }
-
-  @override
   Widget build(BuildContext context) {
     final GroupProvider groupProvider = context.watch<GroupProvider>();
     final NoteProvider noteProvider = context.read<NoteProvider>();
@@ -279,13 +272,5 @@ class _AppDrawerState extends State<AppDrawer> {
         );
       },
     );
-  }
-
-  void disableMultiSelect(MultiselectProvider multiselectProvider) {
-    if(multiselectProvider.isNotesMultiSelectMode){
-      multiselectProvider.toggleNotesMultiSelectMode();
-    } else if (multiselectProvider.isTasksMultiSelectMode){
-      multiselectProvider.toggleTasksMultiSelectMode();
-    }
   }
 }

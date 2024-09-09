@@ -104,6 +104,8 @@ class MainScaffoldState extends State<MainScaffold> {
       ),
 
       drawer: AppDrawer(onLanguageChanged: widget.onLanguageChanged, multiselectProvider: multiselectProvider,),
+      drawerEdgeDragWidth: 50,
+      onDrawerChanged: (action) => disableMultiSelect(multiselectProvider),
 
       body: PageView(
         controller: _pageController,
@@ -116,6 +118,14 @@ class MainScaffoldState extends State<MainScaffold> {
 
       floatingActionButton: currentPageIndex == 0 ? const _NewNoteButton() : _NewTaskButton(),
     );
+  }
+
+  void disableMultiSelect(MultiselectProvider multiselectProvider) {
+    if(multiselectProvider.isNotesMultiSelectMode){
+      multiselectProvider.toggleNotesMultiSelectMode();
+    } else if (multiselectProvider.isTasksMultiSelectMode){
+      multiselectProvider.toggleTasksMultiSelectMode();
+    }
   }
 
   void onPageChanged(int pageIndex) {
