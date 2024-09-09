@@ -11,6 +11,8 @@ import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
 import 'package:simple_notes/presentation/screens/tasks/tasks_screen.dart';
 import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multi_delete_button.dart';
+import 'package:simple_notes/presentation/widgets/shared/buttons/multiselection_cancel_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/buttons/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
 
@@ -63,41 +65,15 @@ class MainScaffoldState extends State<MainScaffold> {
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       appBar: AppBar(
         actions: [
-          if (multiselectProvider.isNotesMultiSelectMode || multiselectProvider.isTasksMultiSelectMode) 
-          IconButton(
-            icon: const Icon(Icons.cancel_outlined),
-            onPressed: () {
-              if(multiselectProvider.isNotesMultiSelectMode){
-                multiselectProvider.toggleNotesMultiSelectMode();
-              } else {
-                multiselectProvider.toggleTasksMultiSelectMode();
-              }
-            },
-          ),
+          if (multiselectProvider.isNotesMultiSelectMode) ...[
+              MultiselectionCancelButton(multiselectProvider: multiselectProvider, type: 'note'),
+              MultiDeleteButton(onDelete: () => deleteSelectedNotes(noteProvider, multiselectProvider, recicleBinProvider))
+            ],
 
-          if (multiselectProvider.isNotesMultiSelectMode) 
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_notes).showConfirmationDialog(context).then((confirmation) {
-                if(confirmation == true){
-                  multiselectProvider.deleteSelectedNotes(noteProvider, recicleBinProvider);
-                }
-              });
-            },
-          ),
-
-          if (multiselectProvider.isTasksMultiSelectMode)
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_tasks).showConfirmationDialog(context).then((confirmation) {
-                if(confirmation == true){
-                  multiselectProvider.deleteSelectedTasks(taskProvider, recicleBinProvider);
-                }
-              });
-            },
-          ),
+          if (multiselectProvider.isTasksMultiSelectMode) ...[
+              MultiselectionCancelButton(multiselectProvider: multiselectProvider, type: 'task'),
+              MultiDeleteButton(onDelete: () => deleteSelectedTasks(taskProvider, multiselectProvider, recicleBinProvider))
+            ],
           
           if(noteProvider.filteredGroup != noteProvider.defaultGroup)
             IconButton(
@@ -118,17 +94,7 @@ class MainScaffoldState extends State<MainScaffold> {
         )),
         
       bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int navigationIndex) {
-          setState(() {
-            if(multiselectProvider.isNotesMultiSelectMode){
-              multiselectProvider.toggleNotesMultiSelectMode();
-            }
-            if(multiselectProvider.isTasksMultiSelectMode){
-              multiselectProvider.toggleTasksMultiSelectMode();
-            }
-            currentPageIndex = navigationIndex;
-          });
-        },
+        onDestinationSelected: onNavigationItemSelected,
         selectedIndex: currentPageIndex,
         indicatorColor: const Color.fromARGB(255, 117, 98, 48),
         destinations: [
@@ -174,6 +140,22 @@ class MainScaffoldState extends State<MainScaffold> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+    });
+  }
+
+  void deleteSelectedNotes(NoteProvider noteProvider, MultiselectProvider multiselectProvider, RecicleBinProvider binProvider) {
+    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_notes).showConfirmationDialog(context).then((confirmation) {
+      if (confirmation == true) {
+        multiselectProvider.deleteSelectedNotes(noteProvider, binProvider);
+      }
+    });
+  }
+
+  void deleteSelectedTasks(TaskProvider taskProvider, MultiselectProvider multiselectProvider, RecicleBinProvider binProvider) {
+    ConfirmationDialog(context: context, message: AppLocalizations.of(context)!.confirmation_dialog_delete_tasks).showConfirmationDialog(context).then((confirmation) {
+      if (confirmation == true) {
+        multiselectProvider.deleteSelectedTasks(taskProvider, binProvider);
+      }
     });
   }
 }
