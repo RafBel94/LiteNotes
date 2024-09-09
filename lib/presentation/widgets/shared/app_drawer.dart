@@ -59,8 +59,8 @@ class _AppDrawerState extends State<AppDrawer> {
           // Groups tile
           ExpansionTile(
             title: Text(AppLocalizations.of(context)!.drawer_groups_tile),
-            collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
-            backgroundColor: const Color.fromARGB(255, 90, 90, 90),
+            // collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
+            // backgroundColor: const Color.fromARGB(255, 90, 90, 90),
             leading: const Icon(Icons.account_tree, color: Color.fromARGB(255, 235, 208, 125)),
             children: <Widget>[
 
@@ -73,7 +73,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     itemCount: provider.groupList.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        color: const Color.fromARGB(255, 30, 30, 27),
+                        margin: const EdgeInsets.only(left: 20),
                         child: Row(
                           children: [
                             Padding(
@@ -84,6 +84,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             Expanded(
                               child: TextButton(
                                 style: TextButton.styleFrom(
+                                  padding: EdgeInsets.only(left: 5),
                                   backgroundColor: Colors.transparent,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)
@@ -99,6 +100,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                 onPressed: () {
                                   // Set current filtered group to the selected one
                                   noteProvider.updateFilteredGroup(provider.groupList[index]);
+                                  Navigator.pop(context);
                                 },
                               ),
                             ),
@@ -131,9 +133,14 @@ class _AppDrawerState extends State<AppDrawer> {
                 },
               ),
 
-
+              if(groupProvider.groupList.isNotEmpty)
               Container(
-                color: const Color.fromARGB(255, 30, 30, 27),
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                width: double.infinity,
+                child: Center(child: Text(AppLocalizations.of(context)!.drawer_groups_filter_text, style: const TextStyle(fontSize: 15),)),
+              ),
+
+              SizedBox(
                 child: ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -156,13 +163,13 @@ class _AppDrawerState extends State<AppDrawer> {
           // Recicle bin tile
           ExpansionTile(
             title: Text(AppLocalizations.of(context)!.drawer_recicle_bin),
-            collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
-            backgroundColor: const Color.fromARGB(255, 90, 90, 90),
+            // collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
+            // backgroundColor: const Color.fromARGB(255, 90, 90, 90),
             leading: const Icon(Icons.delete, color: Color.fromARGB(255, 235, 208, 125)),
             children: <Widget>[
 
               Container(
-                color: const Color.fromARGB(255, 30, 30, 27),
+                margin: EdgeInsets.only(left: 20),
                 width: double.infinity,
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
@@ -179,7 +186,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
 
               Container(
-                color: const Color.fromARGB(255, 30, 30, 27),
+                margin: EdgeInsets.only(left: 20),
                 width: double.infinity,
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
@@ -201,13 +208,13 @@ class _AppDrawerState extends State<AppDrawer> {
           // Language tile
           ExpansionTile(
             title: Text(AppLocalizations.of(context)!.drawer_language),
-            collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
-            backgroundColor: const Color.fromARGB(255, 90, 90, 90),
+            // collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
+            // backgroundColor: const Color.fromARGB(255, 90, 90, 90),
             leading: const Icon(Icons.language, color: Color.fromARGB(255, 235, 208, 125)),
             children: <Widget>[
 
               Container(
-                color: const Color.fromARGB(255, 30, 30, 27),
+                margin: const EdgeInsets.only(left: 20),
                 width: double.infinity,
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
@@ -215,7 +222,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     padding: const EdgeInsets.only(left: 20),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
                   ),
-                  icon: const Icon(Icons.settings_applications_sharp),
+                  icon: const Icon(Icons.arrow_right),
                   label: Text(AppLocalizations.of(context)!.language_spanish, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
                     widget.onLanguageChanged(const Locale('es'));
@@ -224,7 +231,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
 
               Container(
-                color: const Color.fromARGB(255, 30, 30, 27),
+                margin: const EdgeInsets.only(left: 20),
                 width: double.infinity,
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
@@ -232,7 +239,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     padding: const EdgeInsets.only(left: 20),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
                   ),
-                  icon: const Icon(Icons.settings_applications_sharp),
+                  icon: const Icon(Icons.arrow_right),
                   label: Text(AppLocalizations.of(context)!.language_english, style: const TextStyle(color: Colors.white)),
                   onPressed: (){
                     widget.onLanguageChanged(const Locale('en'));

@@ -22,9 +22,7 @@ class TasksScreen extends StatelessWidget {
               isMultiSelectMode: multiselectProvider.isTasksMultiSelectMode,
               isSelected: multiselectProvider.selectedTasks.contains(taskProvider.taskList[index]),
               onLongPress: multiselectProvider.toggleTasksMultiSelectMode,
-              onSelected: () {
-                multiselectProvider.toggleTaskSelection(taskProvider.taskList[index]);
-              },
+              onSelected: () => multiselectProvider.toggleTaskSelection(taskProvider.taskList[index]),
               isDeleted: false,
             );
           }),

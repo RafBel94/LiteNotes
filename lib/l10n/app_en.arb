@@ -166,6 +166,11 @@
         "description": "Groups tile text"
     },
 
+    "drawer_groups_filter_text": "Tap on a group to filter",
+    "@drawer_groups_filter_text": {
+        "description": "Text that displays on top of groups tiles"
+    },
+
     "drawer_new_group_button": "  New Group",
     "@drawer_new_group_butto": {
         "description": "Text for the button inside the groups drawer's tile"
