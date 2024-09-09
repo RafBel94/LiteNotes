@@ -14,20 +14,24 @@ import 'package:simple_notes/presentation/widgets/dialogs/confirmation_dialog.da
 import 'package:simple_notes/presentation/widgets/shared/buttons/sort_button.dart';
 import 'package:simple_notes/presentation/widgets/shared/app_drawer.dart';
 
-class Skeleton extends StatefulWidget {
+class MainScaffold extends StatefulWidget {
   final Function(Locale) onLanguageChanged;
-  const Skeleton({super.key, required this.onLanguageChanged});
+  const MainScaffold({super.key, required this.onLanguageChanged});
 
   @override
-  State<StatefulWidget> createState() => SkeletonState();
+  State<StatefulWidget> createState() => MainScaffoldState();
 }
 
-class SkeletonState extends State<Skeleton> {
+class MainScaffoldState extends State<MainScaffold> {
   int currentPageIndex = 0;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+
+    _pageController = PageController(initialPage: currentPageIndex);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Provider.of<ProviderType>(context, listen: false) is the same as context.read<ProviderType>();
       final noteProvider = Provider.of<NoteProvider>(context, listen: false);
@@ -40,6 +44,12 @@ class SkeletonState extends State<Skeleton> {
       // Inicializar TaskProvider
       taskProvider.initialize();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
   }
 
   @override
@@ -107,7 +117,7 @@ class SkeletonState extends State<Skeleton> {
           style: const TextStyle(color: Colors.black),
         )),
         
-        bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int navigationIndex) {
           setState(() {
             if(multiselectProvider.isNotesMultiSelectMode){
@@ -129,10 +139,42 @@ class SkeletonState extends State<Skeleton> {
 
       drawer: AppDrawer(onLanguageChanged: widget.onLanguageChanged, multiselectProvider: multiselectProvider,),
 
-      body: <Widget>[const NotesScreen(), const TasksScreen()][currentPageIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: onPageChanged,
+        children: const [
+          NotesScreen(),
+          TasksScreen(),
+        ],
+      ),
 
       floatingActionButton: currentPageIndex == 0 ? const _NewNoteButton() : _NewTaskButton(),
     );
+  }
+
+  void onPageChanged(int pageIndex) {
+    setState(() {
+      currentPageIndex = pageIndex;
+    });
+  }
+
+  void onNavigationItemSelected(int navigationIndex) {
+    setState(() {
+      if (context.read<MultiselectProvider>().isNotesMultiSelectMode) {
+        context.read<MultiselectProvider>().toggleNotesMultiSelectMode();
+      }
+      if (context.read<MultiselectProvider>().isTasksMultiSelectMode) {
+        context.read<MultiselectProvider>().toggleTasksMultiSelectMode();
+      }
+
+      currentPageIndex = navigationIndex;
+
+      _pageController.animateToPage(
+        navigationIndex,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 }
 

@@ -161,7 +161,7 @@
         "description": "Title of the application drawer"
     },
 
-    "drawer_groups_tile": "Groups",
+    "drawer_groups_tile": "Note Groups",
     "@drawer_groups_tile": {
         "description": "Groups tile text"
     },

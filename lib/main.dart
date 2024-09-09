@@ -10,7 +10,7 @@ import 'package:simple_notes/presentation/screens/providers/multiselect_provider
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
-import 'package:simple_notes/presentation/widgets/shared/skeleton.dart';
+import 'package:simple_notes/presentation/widgets/shared/main_scaffold.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(const MyApp());
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
       ],
-        home: Skeleton(onLanguageChanged: _changeLanguage)
+        home: MainScaffold(onLanguageChanged: _changeLanguage)
       )
     );
   }
