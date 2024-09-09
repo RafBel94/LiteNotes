@@ -41,6 +41,7 @@ class _AppDrawerState extends State<AppDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
 
+          // Drawer header
           Container(
             height: 80,
             decoration: const BoxDecoration(
@@ -55,7 +56,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
           ),
 
-
+          // Groups tile
           ExpansionTile(
             title: Text(AppLocalizations.of(context)!.drawer_groups_tile),
             collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
@@ -152,6 +153,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ],
           ),
 
+          // Recicle bin tile
           ExpansionTile(
             title: Text(AppLocalizations.of(context)!.drawer_recicle_bin),
             collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
@@ -196,6 +198,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ],
           ),
 
+          // Language tile
           ExpansionTile(
             title: Text(AppLocalizations.of(context)!.drawer_language),
             collapsedBackgroundColor: const Color.fromARGB(255, 48, 48, 47),
@@ -239,8 +242,6 @@ class _AppDrawerState extends State<AppDrawer> {
               
             ],
           ),
-
-
         ],
       ),
     );

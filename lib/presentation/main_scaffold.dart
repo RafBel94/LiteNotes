@@ -161,7 +161,6 @@ class MainScaffoldState extends State<MainScaffold> {
 }
 
 
-
 // WIDGETS
 
 class _NewNoteButton extends StatelessWidget {

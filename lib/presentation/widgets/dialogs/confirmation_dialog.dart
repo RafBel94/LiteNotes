@@ -21,13 +21,13 @@ class ConfirmationDialog {
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: Text(AppLocalizations.of(context)!.accept, style: const TextStyle(fontSize: 18)),
+              child: Text(AppLocalizations.of(context)!.cancel, style: const TextStyle(fontSize: 18)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text(AppLocalizations.of(context)!.cancel, style: const TextStyle(fontSize: 18)),
+              child: Text(AppLocalizations.of(context)!.accept, style: const TextStyle(fontSize: 18)),
             ),
           ],
         );

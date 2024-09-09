@@ -10,7 +10,7 @@ import 'package:simple_notes/presentation/screens/providers/multiselect_provider
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/recicle_bin_provider.dart';
 import 'package:simple_notes/presentation/screens/providers/task_provider.dart';
-import 'package:simple_notes/presentation/widgets/shared/main_scaffold.dart';
+import 'package:simple_notes/presentation/main_scaffold.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(const MyApp());
@@ -63,8 +63,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _changeLanguage(Locale locale){
-    setState(() {
-      _locale = locale;
-    });
+    if(locale.languageCode == 'es' || locale.languageCode == 'en'){
+      setState(() {
+        _locale = locale;
+      });
+    } else {
+      _locale = const Locale('en');
+    }
   }
 }

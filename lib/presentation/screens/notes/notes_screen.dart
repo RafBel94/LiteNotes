@@ -5,17 +5,8 @@ import 'package:simple_notes/presentation/screens/providers/multiselect_provider
 import 'package:simple_notes/presentation/screens/providers/note_provider.dart';
 import '../../widgets/shared/buttons/note_button.dart';
 
-class NotesScreen extends StatefulWidget {
-
-  const NotesScreen({
-    super.key,
-  });
-
-  @override
-  State<NotesScreen> createState() => NotesScreenState();
-}
-
-class NotesScreenState extends State<NotesScreen> {
+class NotesScreen extends StatelessWidget {
+  const NotesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
